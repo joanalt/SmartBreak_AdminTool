@@ -10,7 +10,7 @@ import {
   ListItemText,
 } from "@mui/material";
 
-const products = [
+const consumo = [
   {
     id: uuid(),
     name: "Energia gasta no último mês",
@@ -30,16 +30,23 @@ const products = [
 
 export const LatestOrders = (props) => (
   <Card {...props}>
-    <CardHeader subtitle={`${products.length} in total`} title="Consumos gerais" />
+    <CardHeader subtitle={`${consumo.length} in total`} title="Consumos gerais" />
     <Divider />
     <List>
-      {products.map((product, i) => (
+      {consumo.map((consumo) => (
         <>
-          <ListItem divider={i < products.length - 1} key={product.id}>
-            <ListItemText primary={product.name} />
+          <ListItem>
+            <ListItemText primary={consumo.name} />
           </ListItem>
-          <Box sx={{ pt: 3 }}>
-            <LinearProgress value={product.value} variant="determinate" />
+          <Box
+            sx={{ pt: 3 }}
+            style={{
+              marginLeft: "15px",
+              marginRight: "30px",
+              marginBottom: "24px",
+            }}
+          >
+            <LinearProgress value={consumo.value} variant="determinate" />
           </Box>
         </>
       ))}
