@@ -3,10 +3,8 @@ import NextLink from "next/link";
 import Router from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Box, Button, Container, Grid, Link, TextField, Typography } from "@mui/material";
+import { Box, Button, Container, Link, TextField, Typography } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Facebook as FacebookIcon } from "../icons/facebook";
-import { Google as GoogleIcon } from "../icons/google";
 
 const Login = () => {
   const formik = useFormik({
@@ -26,7 +24,7 @@ const Login = () => {
   return (
     <>
       <Head>
-        <title>Login | Material Kit</title>
+        <title>Smart Break</title>
       </Head>
       <Box
         component="main"
@@ -46,53 +44,23 @@ const Login = () => {
           <form onSubmit={formik.handleSubmit}>
             <Box sx={{ my: 3 }}>
               <Typography color="textPrimary" variant="h4">
-                Sign in
+                Entrar
               </Typography>
               <Typography color="textSecondary" gutterBottom variant="body2">
-                Sign in on the internal platform
+                Estamos contentes por continuares a melhorar o teu local de trabalho.
               </Typography>
             </Box>
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={6}>
-                <Button
-                  color="info"
-                  fullWidth
-                  startIcon={<FacebookIcon />}
-                  onClick={() => formik.handleSubmit()}
-                  size="large"
-                  variant="contained"
-                >
-                  Login with Facebook
-                </Button>
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <Button
-                  color="error"
-                  fullWidth
-                  onClick={() => formik.handleSubmit()}
-                  size="large"
-                  startIcon={<GoogleIcon />}
-                  variant="contained"
-                >
-                  Login with Google
-                </Button>
-              </Grid>
-            </Grid>
             <Box
               sx={{
                 pb: 1,
                 pt: 3,
               }}
-            >
-              <Typography align="center" color="textSecondary" variant="body1">
-                or login with email address
-              </Typography>
-            </Box>
+            ></Box>
             <TextField
               error={Boolean(formik.touched.email && formik.errors.email)}
               fullWidth
               helperText={formik.touched.email && formik.errors.email}
-              label="Email Address"
+              label="Email"
               margin="normal"
               name="email"
               onBlur={formik.handleBlur}
@@ -105,7 +73,7 @@ const Login = () => {
               error={Boolean(formik.touched.password && formik.errors.password)}
               fullWidth
               helperText={formik.touched.password && formik.errors.password}
-              label="Password"
+              label="Palavra-passe"
               margin="normal"
               name="password"
               onBlur={formik.handleBlur}
@@ -123,21 +91,21 @@ const Login = () => {
                 type="submit"
                 variant="contained"
               >
-                Sign In Now
+                Entrar
               </Button>
             </Box>
             <Typography color="textSecondary" variant="body2">
-              Don&apos;t have an account?{" "}
-              <NextLink href="/register">
+              Ainda não tens conta?{" "}
+              <NextLink href="/registar">
                 <Link
-                  to="/register"
+                  to="/registar"
                   variant="subtitle2"
                   underline="hover"
                   sx={{
                     cursor: "pointer",
                   }}
                 >
-                  Sign Up
+                  Regista-te
                 </Link>
               </NextLink>
             </Typography>

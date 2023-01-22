@@ -6,7 +6,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 const Page = () => (
   <>
     <Head>
-      <title>404 | Material Kit</title>
+      <title>Smart Break</title>
     </Head>
     <Box
       style={{ backgroundColor: "#0051BA" }}

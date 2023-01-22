@@ -22,12 +22,12 @@ const items = [
     title: "Objetivos",
   },
   {
-    href: "/products",
+    href: "/equipas",
     icon: <People fontSize="small" />,
     title: "Equipas",
   },
   {
-    href: "/customers",
+    href: "/funcionarios",
     icon: <Personalcard fontSize="small" />,
     title: "Funcionários",
   },
@@ -37,7 +37,7 @@ const items = [
     title: "Estruturação",
   },
   {
-    href: "/account",
+    href: "/editar_perfil",
     icon: <Edit fontSize="small" />,
     title: "Editar perfil",
   },
@@ -46,8 +46,8 @@ const items = [
     title: "Login",
   },
   {
-    href: "/register",
-    title: "Register",
+    href: "/registar",
+    title: "Registar",
   },
 ];
 

@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Avatar, Box, Card, CardContent, Divider, Grid, Typography } from "@mui/material";
+import { Box, Card, CardContent, Divider, Grid, Typography } from "@mui/material";
 import { People } from "iconsax-react";
 
 export const ProductCard = ({ product, ...rest }) => (

@@ -39,7 +39,7 @@ const Register = () => {
   return (
     <>
       <Head>
-        <title>Register | Material Kit</title>
+        <title>Smart Break</title>
       </Head>
       <Box
         component="main"
@@ -59,17 +59,17 @@ const Register = () => {
           <form onSubmit={formik.handleSubmit}>
             <Box sx={{ my: 3 }}>
               <Typography color="textPrimary" variant="h4">
-                Create a new account
+                Regista-te
               </Typography>
               <Typography color="textSecondary" gutterBottom variant="body2">
-                Use your email to create a new account
+                Estamos contentes por teres tomado esta iniciativa. Vem fazer energy breaks.
               </Typography>
             </Box>
             <TextField
               error={Boolean(formik.touched.firstName && formik.errors.firstName)}
               fullWidth
               helperText={formik.touched.firstName && formik.errors.firstName}
-              label="First Name"
+              label="Nome prórpio"
               margin="normal"
               name="firstName"
               onBlur={formik.handleBlur}
@@ -81,7 +81,7 @@ const Register = () => {
               error={Boolean(formik.touched.lastName && formik.errors.lastName)}
               fullWidth
               helperText={formik.touched.lastName && formik.errors.lastName}
-              label="Last Name"
+              label="Apelido"
               margin="normal"
               name="lastName"
               onBlur={formik.handleBlur}
@@ -93,7 +93,7 @@ const Register = () => {
               error={Boolean(formik.touched.email && formik.errors.email)}
               fullWidth
               helperText={formik.touched.email && formik.errors.email}
-              label="Email Address"
+              label="Email"
               margin="normal"
               name="email"
               onBlur={formik.handleBlur}
@@ -106,7 +106,7 @@ const Register = () => {
               error={Boolean(formik.touched.password && formik.errors.password)}
               fullWidth
               helperText={formik.touched.password && formik.errors.password}
-              label="Password"
+              label="Palavra-passe"
               margin="normal"
               name="password"
               onBlur={formik.handleBlur}
@@ -128,10 +128,10 @@ const Register = () => {
                 onChange={formik.handleChange}
               />
               <Typography color="textSecondary" variant="body2">
-                I have read the{" "}
+                Eu li os{" "}
                 <NextLink href="#" passHref>
                   <Link color="primary" underline="always" variant="subtitle2">
-                    Terms and Conditions
+                    Termos e Condições
                   </Link>
                 </NextLink>
               </Typography>
@@ -148,14 +148,14 @@ const Register = () => {
                 type="submit"
                 variant="contained"
               >
-                Sign Up Now
+                Registar
               </Button>
             </Box>
             <Typography color="textSecondary" variant="body2">
-              Have an account?{" "}
+              Já tens conta?{" "}
               <NextLink href="/login" passHref>
                 <Link variant="subtitle2" underline="hover">
-                  Sign In
+                  Clica aqui para entrar
                 </Link>
               </NextLink>
             </Typography>

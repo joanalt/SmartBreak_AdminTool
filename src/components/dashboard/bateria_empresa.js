@@ -1,5 +1,4 @@
-import { Bar } from "react-chartjs-2";
-import { Box, Card, CardContent, Divider, useTheme } from "@mui/material";
+import { Card, CardContent, Divider, useTheme } from "@mui/material";
 
 export const Sales = (props) => {
   const theme = useTheme();

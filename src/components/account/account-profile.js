@@ -11,9 +11,7 @@ import {
 
 const user = {
   avatar: "/static/images/avatars/ester.png",
-  city: "Lisboa",
   country: "Portugal",
-  jobTitle: "CEO",
   name: "Ester Carvalho",
 };
 
@@ -39,14 +37,14 @@ export const AccountProfile = (props) => (
           {user.name}
         </Typography>
         <Typography color="textSecondary" variant="body2">
-          {`${user.city} ${user.country}`}
+          {`${user.country}`}
         </Typography>
       </Box>
     </CardContent>
     <Divider />
     <CardActions>
       <Button color="primary" fullWidth variant="text">
-        Upload picture
+        Escolher foto
       </Button>
     </CardActions>
   </Card>

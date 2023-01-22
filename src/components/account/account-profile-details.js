@@ -15,7 +15,6 @@ export const AccountProfileDetails = (props) => {
     firstName: "Ester",
     lastName: "Carvalho",
     email: "estercarvalho@ua.pt",
-    city: "Lisboa",
     country: "Portugal",
   });
 
@@ -29,15 +28,15 @@ export const AccountProfileDetails = (props) => {
   return (
     <form autoComplete="off" noValidate {...props}>
       <Card>
-        <CardHeader subheader="The information can be edited" title="Profile" />
+        <CardHeader subheader="Esta secção pode ser editada" title="Perfil" />
         <Divider />
         <CardContent>
           <Grid container spacing={3}>
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
-                helperText="Please specify the first name"
-                label="First name"
+                helperText="Escreva o primeiro nome"
+                label="Nome próprio"
                 name="firstName"
                 onChange={handleChange}
                 required
@@ -48,7 +47,7 @@ export const AccountProfileDetails = (props) => {
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
-                label="Last name"
+                label="Apelido"
                 name="lastName"
                 onChange={handleChange}
                 required
@@ -59,7 +58,7 @@ export const AccountProfileDetails = (props) => {
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
-                label="Email Address"
+                label="Email"
                 name="email"
                 onChange={handleChange}
                 required
@@ -70,7 +69,7 @@ export const AccountProfileDetails = (props) => {
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
-                label="Country"
+                label="País"
                 name="country"
                 onChange={handleChange}
                 required
@@ -89,7 +88,7 @@ export const AccountProfileDetails = (props) => {
           }}
         >
           <Button color="primary" variant="contained">
-            Save details
+            Guardar alterações
           </Button>
         </Box>
       </Card>

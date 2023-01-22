@@ -1,18 +1,17 @@
 import Head from "next/head";
 import { Box, Container, Grid } from "@mui/material";
-import { Budget } from "../components/dashboard/budget";
-import { LatestOrders } from "../components/dashboard/latest-orders";
-import { LatestProducts } from "../components/dashboard/latest-products";
-import { Sales } from "../components/dashboard/sales";
-import { TasksProgress } from "../components/dashboard/tasks-progress";
-import { TotalCustomers } from "../components/dashboard/total-customers";
-import { TrafficByDevice } from "../components/dashboard/traffic-by-device";
+import { Budget } from "../components/dashboard/ganhos";
+import { LatestOrders } from "../components/dashboard/consumos_gerais";
+import { LatestProducts } from "../components/dashboard/atividade_recente";
+import { Sales } from "../components/dashboard/bateria_empresa";
+import { TasksProgress } from "../components/dashboard/objetivos_painel";
+import { TotalCustomers } from "../components/dashboard/pausas";
 import { DashboardLayout } from "../components/dashboard-layout";
 
 const Page = () => (
   <>
     <Head>
-      <title>Dashboard | Material Kit</title>
+      <title>Smart Break</title>
     </Head>
     <Box
       component="main"
