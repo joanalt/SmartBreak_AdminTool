@@ -7,7 +7,7 @@ import { NavItem } from "./nav-item";
 
 const items = [
   {
-    href: "/",
+    href: "/painel",
     icon: <Category fontSize="small" />,
     title: "Painel",
   },

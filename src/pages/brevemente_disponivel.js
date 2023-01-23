@@ -45,7 +45,7 @@ const Page = () => (
               }}
             />
           </Box>
-          <NextLink href="/" passHref>
+          <NextLink href="/painel" passHref>
             <Button
               component="a"
               startIcon={<ArrowBackIcon fontSize="small" />}
