@@ -3,17 +3,7 @@ import NextLink from "next/link";
 import Router from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import {
-  Box,
-  Button,
-  Checkbox,
-  Container,
-  FormHelperText,
-  Link,
-  TextField,
-  Typography,
-} from "@mui/material";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Box, Button, Container, FormHelperText, Link, TextField, Typography } from "@mui/material";
 
 const Register = () => {
   const formik = useFormik({
@@ -25,11 +15,11 @@ const Register = () => {
       policy: false,
     },
     validationSchema: Yup.object({
-      email: Yup.string().email("Must be a valid email").max(255).required("Email is required"),
-      firstName: Yup.string().max(255).required("First name is required"),
-      lastName: Yup.string().max(255).required("Last name is required"),
-      password: Yup.string().max(255).required("Password is required"),
-      policy: Yup.boolean().oneOf([true], "This field must be checked"),
+      email: Yup.string().email("Deve ser um email válido").max(255).required("Campo obrigatório"),
+      firstName: Yup.string().max(255).required("Campo obrigatório"),
+      lastName: Yup.string().max(255).required("Campo obrigatório"),
+      password: Yup.string().max(255).required("Campo obrigatório"),
+      policy: Yup.boolean().oneOf([true], "Campo obrigatório"),
     }),
     onSubmit: () => {
       Router.push("/").catch(console.error);
