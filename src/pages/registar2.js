@@ -25,11 +25,11 @@ const Register = () => {
       policy: false,
     },
     validationSchema: Yup.object({
-      email: Yup.string().email("Must be a valid email").max(255).required("Email is required"),
-      firstName: Yup.string().max(255).required("First name is required"),
-      lastName: Yup.string().max(255).required("Last name is required"),
-      password: Yup.string().max(255).required("Password is required"),
-      policy: Yup.boolean().oneOf([true], "This field must be checked"),
+      email: Yup.string().email("Deve ser um email válido").max(255).required("Campo obrigatório"),
+      firstName: Yup.string().max(255).required("Campo obrigatório"),
+      lastName: Yup.string().max(255).required("Campo obrigatório"),
+      password: Yup.string().max(255).required("Campo obrigatório"),
+      policy: Yup.boolean().oneOf([true], "Campo obrigatório"),
     }),
     onSubmit: () => {
       Router.push("/").catch(console.error);
@@ -59,7 +59,7 @@ const Register = () => {
           <form onSubmit={formik.handleSubmit}>
             <Box sx={{ my: 3 }}>
               <Typography color="textPrimary" variant="h4">
-                Regista-te
+                Regista a tua empresa
               </Typography>
               <Typography color="textSecondary" gutterBottom variant="body2">
                 Estamos contentes por teres tomado esta iniciativa. Vem fazer energy breaks.
@@ -69,7 +69,7 @@ const Register = () => {
               error={Boolean(formik.touched.firstName && formik.errors.firstName)}
               fullWidth
               helperText={formik.touched.firstName && formik.errors.firstName}
-              label="Nome prórpio"
+              label="Nome"
               margin="normal"
               name="firstName"
               onBlur={formik.handleBlur}
@@ -78,10 +78,8 @@ const Register = () => {
               variant="outlined"
             />
             <TextField
-              error={Boolean(formik.touched.lastName && formik.errors.lastName)}
               fullWidth
-              helperText={formik.touched.lastName && formik.errors.lastName}
-              label="Apelido"
+              label="Área de atuação (opcional)"
               margin="normal"
               name="lastName"
               onBlur={formik.handleBlur}
@@ -90,29 +88,28 @@ const Register = () => {
               variant="outlined"
             />
             <TextField
-              error={Boolean(formik.touched.email && formik.errors.email)}
+              error={Boolean(formik.touched.lastName && formik.errors.lastName)}
               fullWidth
-              helperText={formik.touched.email && formik.errors.email}
-              label="Email"
+              helperText={formik.touched.lastName && formik.errors.lastName}
+              label="Contacto telefónico"
               margin="normal"
-              name="email"
+              name="lastName"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              type="email"
-              value={formik.values.email}
+              value={formik.values.lastName}
               variant="outlined"
             />
+
             <TextField
-              error={Boolean(formik.touched.password && formik.errors.password)}
+              error={Boolean(formik.touched.lastName && formik.errors.lastName)}
               fullWidth
-              helperText={formik.touched.password && formik.errors.password}
-              label="Palavra-passe"
+              helperText={formik.touched.lastName && formik.errors.lastName}
+              label="Morada"
               margin="normal"
-              name="password"
+              name="lastName"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              type="password"
-              value={formik.values.password}
+              value={formik.values.lastName}
               variant="outlined"
             />
             <Box

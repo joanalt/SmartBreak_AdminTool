@@ -46,7 +46,7 @@ const items = [
     title: "Login",
   },
   {
-    href: "/registar",
+    href: "/registar1",
     title: "Registar",
   },
 ];

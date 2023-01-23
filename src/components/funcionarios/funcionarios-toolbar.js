@@ -56,7 +56,7 @@ export const CustomerListToolbar = (props) => (
                   </InputAdornment>
                 ),
               }}
-              placeholder="procurar funcionário"
+              placeholder="Procurar funcionário"
               variant="outlined"
             />
           </Box>

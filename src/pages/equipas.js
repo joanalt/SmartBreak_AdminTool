@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { Box, Container, Grid, Pagination } from "@mui/material";
 import { products } from "../__mocks__/products";
-import { ProductListToolbar } from "../components/equipas/adicionar-equipa-toolbar";
+import { ProductListToolbar } from "../components/equipas/equipas-toolbar";
 import { ProductCard } from "../components/equipas/equipas-card";
 import { DashboardLayout } from "../components/dashboard-layout";
 

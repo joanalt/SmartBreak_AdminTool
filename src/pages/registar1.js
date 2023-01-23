@@ -3,18 +3,33 @@ import NextLink from "next/link";
 import Router from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Box, Button, Container, Link, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Checkbox,
+  Container,
+  FormHelperText,
+  Link,
+  TextField,
+  Typography,
+} from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-const Login = () => {
+const Register = () => {
   const formik = useFormik({
     initialValues: {
-      email: "demo@devias.io",
-      password: "Password123",
+      email: "",
+      firstName: "",
+      lastName: "",
+      password: "",
+      policy: false,
     },
     validationSchema: Yup.object({
       email: Yup.string().email("Must be a valid email").max(255).required("Email is required"),
+      firstName: Yup.string().max(255).required("First name is required"),
+      lastName: Yup.string().max(255).required("Last name is required"),
       password: Yup.string().max(255).required("Password is required"),
+      policy: Yup.boolean().oneOf([true], "This field must be checked"),
     }),
     onSubmit: () => {
       Router.push("/").catch(console.error);
@@ -44,18 +59,36 @@ const Login = () => {
           <form onSubmit={formik.handleSubmit}>
             <Box sx={{ my: 3 }}>
               <Typography color="textPrimary" variant="h4">
-                Entrar
+                Regista-te
               </Typography>
               <Typography color="textSecondary" gutterBottom variant="body2">
-                Estamos contentes por continuares a melhorar o teu local de trabalho.
+                Estamos contentes por teres tomado esta iniciativa. Vem fazer energy breaks.
               </Typography>
             </Box>
-            <Box
-              sx={{
-                pb: 1,
-                pt: 3,
-              }}
-            ></Box>
+            <TextField
+              error={Boolean(formik.touched.firstName && formik.errors.firstName)}
+              fullWidth
+              helperText={formik.touched.firstName && formik.errors.firstName}
+              label="Nome prórpio"
+              margin="normal"
+              name="firstName"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              value={formik.values.firstName}
+              variant="outlined"
+            />
+            <TextField
+              error={Boolean(formik.touched.lastName && formik.errors.lastName)}
+              fullWidth
+              helperText={formik.touched.lastName && formik.errors.lastName}
+              label="Apelido"
+              margin="normal"
+              name="lastName"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              value={formik.values.lastName}
+              variant="outlined"
+            />
             <TextField
               error={Boolean(formik.touched.email && formik.errors.email)}
               fullWidth
@@ -82,30 +115,28 @@ const Login = () => {
               value={formik.values.password}
               variant="outlined"
             />
+            {Boolean(formik.touched.policy && formik.errors.policy) && (
+              <FormHelperText error>{formik.errors.policy}</FormHelperText>
+            )}
             <Box sx={{ py: 2 }}>
-              <Button
-                color="primary"
-                disabled={formik.isSubmitting}
-                fullWidth
-                size="large"
-                type="submit"
-                variant="contained"
-              >
-                Entrar
-              </Button>
+              <NextLink href="/registar2" passHref>
+                <Button
+                  color="primary"
+                  disabled={formik.isSubmitting}
+                  fullWidth
+                  size="large"
+                  type="submit"
+                  variant="contained"
+                >
+                  Seguinte
+                </Button>
+              </NextLink>
             </Box>
             <Typography color="textSecondary" variant="body2">
-              Ainda não tens conta?{" "}
-              <NextLink href="/registar1">
-                <Link
-                  to="/registar1"
-                  variant="subtitle2"
-                  underline="hover"
-                  sx={{
-                    cursor: "pointer",
-                  }}
-                >
-                  Regista-te
+              Já tens conta?{" "}
+              <NextLink href="/login" passHref>
+                <Link variant="subtitle2" underline="hover">
+                  Clica aqui para entrar
                 </Link>
               </NextLink>
             </Typography>
@@ -116,4 +147,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
