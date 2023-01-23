@@ -27,16 +27,15 @@ const Page = () => (
           }}
         >
           <Typography align="center" color="white" variant="h1">
-            Brevemente disponível
+            Erro
           </Typography>
           <Typography align="center" color="white" variant="subtitle2">
-            Estamos a recarregar as nossas baterias para que possas ter esta funcionalidade
-            brevemente.
+            Sobrecarga na bateria. Esta página não existe.
           </Typography>
           <Box sx={{ textAlign: "center" }}>
             <img
               alt="Under development"
-              src="/static/images/brevemente.svg"
+              src="/static/images/erro.svg"
               style={{
                 marginTop: 50,
                 display: "inline-block",

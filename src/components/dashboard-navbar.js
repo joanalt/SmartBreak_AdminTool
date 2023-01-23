@@ -35,6 +35,8 @@ export const DashboardNavbar = (props) => {
             minHeight: 64,
             left: 0,
             px: 2,
+            display: "flex",
+            justifyContent: "space-between",
           }}
         >
           <IconButton

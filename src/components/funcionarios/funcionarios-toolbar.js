@@ -25,7 +25,18 @@ export const CustomerListToolbar = (props) => (
         Funcionários da empresa
       </Typography>
       <Box sx={{ m: 1 }}>
-        <Button color="primary" variant="contained">
+        <Button
+          color="primary"
+          variant="contained"
+          style={{ marginLeft: "10px", marginTop: "10px" }}
+        >
+          Eliminar funcionário
+        </Button>
+        <Button
+          color="primary"
+          variant="contained"
+          style={{ marginLeft: "10px", marginTop: "10px" }}
+        >
           Adicionar funcionário
         </Button>
       </Box>
@@ -45,7 +56,7 @@ export const CustomerListToolbar = (props) => (
                   </InputAdornment>
                 ),
               }}
-              placeholder="procurar funcionário"
+              placeholder="Procurar funcionário"
               variant="outlined"
             />
           </Box>
