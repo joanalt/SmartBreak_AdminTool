@@ -49,6 +49,8 @@ export const ProductListToolbar = (props) => {
   const [allUsers, setAllUsers] = useState({});
   const [users, setUsers] = useState([]);
 
+  
+
   const theme = useTheme();
 
   useEffect(() => {
@@ -175,6 +177,7 @@ export const ProductListToolbar = (props) => {
               id: docRef.id,
             });
             setOpen(false);
+            window.location.reload(false);
             }} autoFocus>
             Adicionar
           </Button>
@@ -193,13 +196,13 @@ export const ProductListToolbar = (props) => {
         Equipas da empresa
       </Typography>
       <Box sx={{ m: 1 }}>
-        <Button
+        {/* <Button
           color="primary"
           variant="contained"
           style={{ marginLeft: "10px", marginTop: "10px" }}
         >
           Eliminar equipa
-        </Button>
+        </Button> */}
         <Button
           color="primary"
           variant="contained"
