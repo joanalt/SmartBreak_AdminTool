@@ -22,24 +22,13 @@ const Page = () => {
       email: Yup.string().email("Must be a valid email").max(255).required("Email is required"),
     }),
     onSubmit: async (values, helpers) => {
-      if (!ENABLE_AUTH) {
-        helpers.setFieldError("submit", "Zalter authentication not enabled");
-        helpers.setSubmitting(false);
-        return;
-      }
-
+     
       try {
         // When in development, this will be 'http://localhost:3000/sign-in/confirm'
         // Remember to configure it in your project settings
         const redirectUri = window.location.href + "/confirm";
 
-        // This can be call inside AuthProvider component, but we do it here for simplicity
-        await auth.signInWithLink("start", {
-          email: values.email,
-          redirectUri,
-        });
-        helpers.setSubmitting(false);
-        setEmailSent(true);
+       
       } catch (err) {
         console.error(err);
         helpers.setFieldError("submit", err.message || "Something went wrong");
@@ -265,9 +254,7 @@ const Page = () => {
                   zalter.com
                 </Box>
               </Typography>
-              <Typography align="center" sx={{ mb: 3 }} variant="subtitle1">
-                Create secure, seamless user experiences with Zalter Passwordless Authentication.
-              </Typography>
+             
               <img alt="" src="/static/images/sign-in-illustration.svg" />
             </Box>
           </Grid>

@@ -7,7 +7,7 @@ import { NavItem } from "./nav-item";
 
 const items = [
   {
-    href: "/",
+    href: "/painel",
     icon: <Category fontSize="small" />,
     title: "Painel",
   },
@@ -40,14 +40,6 @@ const items = [
     href: "/editar_perfil",
     icon: <Edit fontSize="small" />,
     title: "Editar perfil",
-  },
-  {
-    href: "/login",
-    title: "Login",
-  },
-  {
-    href: "/registar1",
-    title: "Registar",
   },
 ];
 
@@ -83,25 +75,30 @@ export const DashboardSidebar = (props) => {
         }}
       >
         <div>
-          <Box sx={{ p: 3 }}>
+          <Box>
             <Box
               sx={{
                 display: "flex",
+                justifyContent: "center",
                 mt: 2,
-                mx: "auto",
-                width: "160px",
                 "& img": {
                   width: "100%",
                 },
               }}
             >
-              <img alt="Smart Break" src="../../public/static/images/navlogo.png" />
+              <img alt="Smart Break" src="static/images/navlogo.png" style={{ width: "60px" }} />
             </Box>
           </Box>
         </div>
         <Box sx={{ flexGrow: 1 }}>
           {items.map((item) => (
-            <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+            <NavItem
+              key={item.title}
+              icon={item.icon}
+              href={item.href}
+              title={item.title}
+              style={{ marginTop: "20px" }}
+            />
           ))}
         </Box>
         <Box
