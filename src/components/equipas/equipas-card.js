@@ -57,7 +57,7 @@ export const ProductCard = ({ product }) => {
               window.location.reload(false);
             }}
           >
-            Adicionar
+            Eliminar
           </Button>
         </DialogActions>
       </Dialog>
