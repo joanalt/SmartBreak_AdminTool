@@ -20,11 +20,11 @@ import {
   SvgIcon,
 } from "@mui/material";
 import { Search as SearchIcon } from "../../icons/search";
+import { doc, deleteDoc, updateDoc, getDoc   } from "@firebase/firestore";
+import { firestore } from "../../firebase_setup/firebase";
 
 export const CustomerListResults = ({ customers, ...rest }, props) => {
   const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
-  const [limit, setLimit] = useState(10);
-  const [page, setPage] = useState(0);
   const [search, setSearch] = useState("");
 
   const handleSelectAll = (event) => {
@@ -60,13 +60,6 @@ export const CustomerListResults = ({ customers, ...rest }, props) => {
     
   };
 
-  const handleLimitChange = (event) => {
-    setLimit(event.target.value);
-  };
-
-  const handlePageChange = (event, newPage) => {
-    setPage(newPage);
-  };
 
   const handleChange = (e) => {
     setSearch(e.target.value);
@@ -94,15 +87,7 @@ export const CustomerListResults = ({ customers, ...rest }, props) => {
           <Typography sx={{ m: 1 }} variant="h4">
             Funcionários da empresa
           </Typography>
-          <Box sx={{ m: 1 }}>
-            <Button
-              color="primary"
-              variant="contained"
-              style={{ marginLeft: "10px", marginTop: "10px" }}
-            >
-              Eliminar funcionário
-            </Button>
-          </Box>
+         
         </Box>
         <Box sx={{ mt: 3 }}>
           <Card>
@@ -135,55 +120,83 @@ export const CustomerListResults = ({ customers, ...rest }, props) => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={selectedCustomerIds.length === customers.length}
-                      color="primary"
-                      indeterminate={
-                        selectedCustomerIds.length > 0 &&
-                        selectedCustomerIds.length < customers.length
-                      }
-                      onChange={handleSelectAll}
-                    />
-                  </TableCell>
+                  
                   <TableCell>Nome</TableCell>
                   <TableCell>Email</TableCell>
-                  <TableCell>Equipa</TableCell>
+                  <TableCell></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {search == "" ?
                   <>
-                    {customers.slice(0, limit).map((customer) => (
+                    {customers && customers.map((customer) => (
                       <TableRow
                         hover
                         key={customer.id}
                         selected={selectedCustomerIds.indexOf(customer.id) !== -1}
                       >
-                        <TableCell padding="checkbox">
-                          <Checkbox
-                            checked={selectedCustomerIds.indexOf(customer.id) !== -1}
-                            onChange={(event) => handleSelectOne(event, customer.id)}
-                            value="true"
-                          />
-                        </TableCell>
-                        <TableCell>
+                   
+                        <TableCell >
                           <Box
                             sx={{
                               alignItems: "center",
                               display: "flex",
                             }}
                           >
-                            <Avatar src={customer.avatarUrl} sx={{ mr: 2 }}>
-                              {customer.name}
-                            </Avatar>
+                            
                             <Typography color="textPrimary" variant="body1">
                               {customer.name}
                             </Typography>
                           </Box>
                         </TableCell>
                         <TableCell>{customer.email}</TableCell>
-                        <TableCell>{`${customer.equipa}`}</TableCell>
+                        <TableCell> 
+                          <Button
+                            color="primary"
+                            variant="contained"
+                            style={{ marginLeft: 10 }}
+                            onClick={async () => {
+                              await deleteDoc(doc(firestore, "users_data", customer.id));
+                              window.location.reload(false);
+                              }
+                            }
+                          >
+                            Eliminar funcionário
+                          </Button>
+                          <Button
+                            color="primary"
+                            variant="contained"
+                            style={{ marginLeft: 40}}
+                            onClick={async () => {
+                              const docRef = doc(firestore, "users_data", customer.id);
+
+                            // Set the "capital" field of the city 'DC'
+                            await updateDoc(docRef, {
+                              admin: true
+                            });
+                            alert("Utilizador " + customer.name + " promovido a administrador.")
+
+                          }}
+                        >
+                          Pomover a administrador
+                        </Button>
+                        <Button
+                          color="primary"
+                          variant="outlined"
+                          style={{ marginLeft: 40}}
+                          onClick={async () => {
+                              const docRef = doc(firestore, "users_data", customer.id);
+
+                            // Set the "capital" field of the city 'DC'
+                            await updateDoc(docRef, {
+                              admin: false
+                            });
+                            alert("Utilizador " + customer.name + " desprovido.")
+                          }}
+                        >
+                          Despromover
+                        </Button>
+                      </TableCell>
                       </TableRow>
                     ))}
                   </> : <>
@@ -224,15 +237,7 @@ export const CustomerListResults = ({ customers, ...rest }, props) => {
             </Table>
           </Box>
         </PerfectScrollbar>
-        <TablePagination
-          component="div"
-          count={customers.length}
-          onPageChange={handlePageChange}
-          onRowsPerPageChange={handleLimitChange}
-          page={page}
-          rowsPerPage={limit}
-          rowsPerPageOptions={[5, 10, 25]}
-        />
+        
       </Card>
     </>
 

@@ -63,7 +63,7 @@ export const ProductCard = ({ product }) => {
         <Button
           color="primary"
           variant="contained"
-          style={{ marginLeft: "10px", marginTop: "10px" }}
+          style={{ marginLeft: "10px"}}
           onClick={ async () => {
             await deleteDoc(doc(firestore, "teams", product.id));
             window.location.reload(false);
