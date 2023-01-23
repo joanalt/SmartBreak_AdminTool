@@ -58,6 +58,9 @@ export const DashboardNavbar = (props) => {
               height: 40,
               width: 40,
               ml: 1,
+              overflow: "hidden",
+              marginLeft: "auto",
+              marginRight: "0",
             }}
             src="/static/images/avatars/ester.png"
           >

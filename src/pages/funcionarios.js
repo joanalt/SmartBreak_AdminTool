@@ -1,11 +1,43 @@
 import Head from "next/head";
 import { Box, Container } from "@mui/material";
 import { CustomerListResults } from "../components/funcionarios/funcionarios-results";
-import { CustomerListToolbar } from "../components/funcionarios/funcionarios-toolbar";
 import { DashboardLayout } from "../components/dashboard-layout";
 import { customers } from "../__mocks__/customers";
+import { getDocs, collection } from "@firebase/firestore"
+import { firestore } from "../firebase_setup/firebase"
+import { useEffect, useState } from "react";
 
-const Page = () => (
+
+const Page = () => {
+
+  const [allDocs, setAllDocs] = useState([]);
+
+
+  useEffect(() => {
+    getInfo()
+  }, [])
+
+  const getInfo = async () => { 
+    let temp = [];
+  
+    const ref = await getDocs(collection(firestore, 'users_data'));
+    ref.forEach((doc) => {
+      
+      // console.log(doc.id, " => ", doc.data())
+      temp.push({
+        name : doc.data().name + " " + doc.data().lastName,
+        id : doc.data().uid,
+        email : doc.data().email,
+        team : doc.data().teams[0],
+      })
+    })
+  
+    console.log("DEBUG: ", temp);
+    setAllDocs(temp);
+  }
+
+
+  return(
   <>
     <Head>
       <title>Smart Break</title>
@@ -18,14 +50,16 @@ const Page = () => (
       }}
     >
       <Container maxWidth={false}>
-        <CustomerListToolbar />
-        <Box sx={{ mt: 3 }}>
-          <CustomerListResults customers={customers} />
-        </Box>
+      {allDocs && allDocs.length == 0 ?
+          <></>
+          :
+          <CustomerListResults customers={allDocs} />
+      }
+        
       </Container>
     </Box>
   </>
-);
+)};
 
 Page.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
