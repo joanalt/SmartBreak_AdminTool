@@ -7,7 +7,7 @@ import { NavItem } from "./nav-item";
 
 const items = [
   {
-    href: "/",
+    href: "/painel",
     icon: <Category fontSize="small" />,
     title: "Painel",
   },
@@ -40,14 +40,6 @@ const items = [
     href: "/editar_perfil",
     icon: <Edit fontSize="small" />,
     title: "Editar perfil",
-  },
-  {
-    href: "/login",
-    title: "Login",
-  },
-  {
-    href: "/registar1",
-    title: "Registar",
   },
 ];
 

@@ -172,7 +172,7 @@ const Register = () => {
             </Box>
             <Typography color="textSecondary" variant="body2">
               Já tens conta?{" "}
-              <NextLink href="/login" passHref>
+              <NextLink href="/" passHref>
                 <Link variant="subtitle2" underline="hover">
                   Clica aqui para entrar
                 </Link>
