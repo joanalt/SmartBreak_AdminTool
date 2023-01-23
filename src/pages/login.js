@@ -4,17 +4,16 @@ import Router from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Box, Button, Container, Link, TextField, Typography } from "@mui/material";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const Login = () => {
   const formik = useFormik({
     initialValues: {
-      email: "demo@devias.io",
-      password: "Password123",
+      email: "",
+      password: "",
     },
     validationSchema: Yup.object({
-      email: Yup.string().email("Must be a valid email").max(255).required("Email is required"),
-      password: Yup.string().max(255).required("Password is required"),
+      email: Yup.string().email("Deve ser um email válido").max(255).required("Campo obrigatório"),
+      password: Yup.string().max(255).required("Campo obrigatório"),
     }),
     onSubmit: () => {
       Router.push("/").catch(console.error);
@@ -38,6 +37,7 @@ const Login = () => {
         }}
       >
         <Container
+          style={{ marginBottom: "60px" }}
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -46,7 +46,6 @@ const Login = () => {
             height: "100%",
             width: "100%",
             marginTop: "60px",
-            marginBottom: "60px",
           }}
         >
           <img src="static/images/auth_logo.svg" alt="logo" width="120" height="120" />
@@ -69,7 +68,6 @@ const Login = () => {
             boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.3)",
           }}
         >
-          
           <form onSubmit={formik.handleSubmit}>
             <Box sx={{ my: 3 }}>
               <Typography color="textPrimary" variant="h4">
@@ -79,12 +77,6 @@ const Login = () => {
                 Estamos contentes por continuares a melhorar o teu local de trabalho.
               </Typography>
             </Box>
-            <Box
-              sx={{
-                pb: 1,
-                pt: 3,
-              }}
-            ></Box>
             <TextField
               error={Boolean(formik.touched.email && formik.errors.email)}
               fullWidth
@@ -95,7 +87,7 @@ const Login = () => {
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
               type="email"
-              value={formik.values.email}
+              //value={formik.values.email}
               variant="outlined"
             />
             <TextField
@@ -108,7 +100,7 @@ const Login = () => {
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
               type="password"
-              value={formik.values.password}
+              //value={formik.values.password}
               variant="outlined"
             />
             <Box sx={{ py: 2 }}>
