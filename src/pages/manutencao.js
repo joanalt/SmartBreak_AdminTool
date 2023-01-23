@@ -27,11 +27,10 @@ const Page = () => (
           }}
         >
           <Typography align="center" color="white" variant="h1">
-            Brevemente disponível
+            Manutenção
           </Typography>
           <Typography align="center" color="white" variant="subtitle2">
-            Estamos a recarregar as nossas baterias para que possas ter esta funcionalidade
-            brevemente.
+            Estamos a recarregar as nossas baterias. Poderás voltar a ser produtivo não tarda.
           </Typography>
           <Box sx={{ textAlign: "center" }}>
             <img

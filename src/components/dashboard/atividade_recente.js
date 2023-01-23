@@ -9,54 +9,48 @@ import {
   ListItemAvatar,
   ListItemText,
 } from "@mui/material";
+import { TaskSquare, UserAdd, Diagram, MedalStar } from "iconsax-react";
 
-const products = [
+const atividade = [
   {
     id: uuid(),
     name: "1 objetivo cumprido",
-    imageUrl: "/static/images/products/product_1.png",
+    imageUrl: <TaskSquare variant="Bold" color="#0051BA" />,
     updatedAt: subHours(Date.now(), 2),
   },
   {
     id: uuid(),
     name: "3 novos funcionários",
-    imageUrl: "/static/images/products/product_2.png",
+    imageUrl: <UserAdd variant="Bold" color="#0051BA" />,
     updatedAt: subHours(Date.now(), 2),
   },
   {
     id: uuid(),
     name: "9 equipamentos adicionados",
-    imageUrl: "/static/images/products/product_3.png",
+    imageUrl: <Diagram variant="Bold" color="#0051BA" />,
     updatedAt: subHours(Date.now(), 3),
   },
   {
     id: uuid(),
     name: "2 prémios atribuídos",
-    imageUrl: "/static/images/products/product_4.png",
+    imageUrl: <MedalStar variant="Bold" color="#0051BA" />,
     updatedAt: subHours(Date.now(), 5),
   },
 ];
 
 export const LatestProducts = (props) => (
   <Card {...props}>
-    <CardHeader subtitle={`${products.length} in total`} title="Atividade recente" />
+    <CardHeader subtitle={`${atividade.length} in total`} title="Atividade recente" />
     <Divider />
     <List>
-      {products.map((product, i) => (
-        <ListItem divider={i < products.length - 1} key={product.id}>
+      {atividade.map((atividade, i) => (
+        <ListItem divider={i < atividade.length - 1} key={atividade.id}>
           <ListItemAvatar>
-            <img
-              alt={product.name}
-              src={product.imageUrl}
-              style={{
-                height: 48,
-                width: 48,
-              }}
-            />
+            <div>{atividade.imageUrl}</div>
           </ListItemAvatar>
           <ListItemText
-            primary={product.name}
-            secondary={`Updated ${formatDistanceToNow(product.updatedAt)}`}
+            primary={atividade.name}
+            secondary={`Updated ${formatDistanceToNow(atividade.updatedAt)}`}
           />
         </ListItem>
       ))}

@@ -10,6 +10,10 @@ import { createEmotionCache } from "../utils/create-emotion-cache";
 import { registerChartJs } from "../utils/register-chart-js";
 import { theme } from "../theme";
 
+//redux
+import { Provider } from "react-redux";
+import store from "../redux/store";
+
 registerChartJs();
 
 const clientSideEmotionCache = createEmotionCache();
@@ -20,22 +24,26 @@ const App = (props) => {
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
-    <CacheProvider value={emotionCache}>
-      <Head>
-        <title>Smart Break</title>
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
-      </Head>
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <AuthProvider>
-            <AuthConsumer>
-              {(auth) => (auth.isLoading ? <Fragment /> : getLayout(<Component {...pageProps} />))}
-            </AuthConsumer>
-          </AuthProvider>
-        </ThemeProvider>
-      </LocalizationProvider>
-    </CacheProvider>
+    <Provider store={store}>
+      <CacheProvider value={emotionCache}>
+        <Head>
+          <title>Smart Break</title>
+          <meta name="viewport" content="initial-scale=1, width=device-width" />
+        </Head>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <AuthProvider>
+              <AuthConsumer>
+                {(auth) =>
+                  auth.isLoading ? <Fragment /> : getLayout(<Component {...pageProps} />)
+                }
+              </AuthConsumer>
+            </AuthProvider>
+          </ThemeProvider>
+        </LocalizationProvider>
+      </CacheProvider>
+    </Provider>
   );
 };
 
