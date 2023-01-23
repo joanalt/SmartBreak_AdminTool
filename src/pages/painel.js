@@ -8,6 +8,8 @@ import { TasksProgress } from "../components/dashboard/objetivos_painel";
 import { TotalCustomers } from "../components/dashboard/pausas";
 import { DashboardLayout } from "../components/dashboard-layout";
 
+//depois apaga-se o comentário, era só para resolver um problema :/
+
 const Page = () => (
   <>
     <Head>

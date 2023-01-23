@@ -41,14 +41,6 @@ const items = [
     icon: <Edit fontSize="small" />,
     title: "Editar perfil",
   },
-  {
-    href: "/login",
-    title: "Login",
-  },
-  {
-    href: "/registar",
-    title: "Registar",
-  },
 ];
 
 export const DashboardSidebar = (props) => {
