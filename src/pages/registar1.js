@@ -4,6 +4,9 @@ import Router from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Box, Button, Container, FormHelperText, Link, TextField, Typography } from "@mui/material";
+import { setDoc, doc, getDoc, collection, updateDoc, addDoc } from "@firebase/firestore"
+import { firestore, auth } from "../firebase_setup/firebase"
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const Register = () => {
   const formik = useFormik({
@@ -94,7 +97,7 @@ const Register = () => {
               error={Boolean(formik.touched.firstName && formik.errors.firstName)}
               fullWidth
               helperText={formik.touched.firstName && formik.errors.firstName}
-              label="Nome prórpio"
+              label="Nome próprio"
               margin="normal"
               name="firstName"
               onBlur={formik.handleBlur}
@@ -149,7 +152,7 @@ const Register = () => {
               name="passwordConfirm"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              type="passwordConfirm"
+              type="password"
               value={formik.values.passwordConfirm}
               variant="outlined"
             />
@@ -165,6 +168,41 @@ const Register = () => {
                   size="large"
                   type="submit"
                   variant="contained"
+                  onClick={async () => {
+                      try {
+                        const res = await createUserWithEmailAndPassword(auth, formik.values.email, formik.values.password);
+                        const user = res.user;
+                        const docRef = await addDoc(collection(firestore, "users_data"), {
+                          name: formik.values.firstName,
+                          lastName: formik.values.lastName,
+                          password: formik.values.password,
+                          rewards: false,
+                          notifications: [true, false, false, false],
+                          shareData: true,
+                          pause: false,
+                          battery : 0,
+                          teams: [],
+                          admin: true,
+                        });
+                        const uid = docRef.id;
+                        await updateDoc(docRef, {
+                          id: docRef.id,
+                        });
+                        await setDoc(doc(firestore, "users_routines", uid), {
+                          routines: [],
+                        });
+                        await setDoc(doc(firestore, "users_devices", uid), {
+                          devices: [],
+                        });
+                        
+                      } catch (err) {
+                        console.error(err);
+                        alert(err.message);
+                      }
+                  
+                    
+                    // console.log(formik.values.password)
+                  }}
                 >
                   Seguinte
                 </Button>
