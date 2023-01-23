@@ -1,21 +1,16 @@
 import {
   Box,
   Button,
-  Card,
-  CardContent,
-  TextField,
   FormControl,
   Select,
   MenuItem,
   OutlinedInput,
   InputLabel,
   Chip,
-  InputAdornment,
-  SvgIcon,
   Typography,
+  TextField
 } from "@mui/material";
 import * as React from 'react';
-import { Search as SearchIcon } from "../../icons/search";
 import { useEffect, useState } from "react";
 import { Theme, useTheme } from '@mui/material/styles';
 
@@ -213,27 +208,6 @@ export const ProductListToolbar = (props) => {
         </Button>
       </Box>
     </Box>
-    <Box sx={{ mt: 3 }}>
-      <Card>
-        <CardContent>
-          <Box sx={{ maxWidth: 500 }}>
-            <TextField
-              fullWidth
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SvgIcon fontSize="small" color="action">
-                      <SearchIcon />
-                    </SvgIcon>
-                  </InputAdornment>
-                ),
-              }}
-              placeholder="Procurar equipa"
-              variant="outlined"
-            />
-          </Box>
-        </CardContent>
-      </Card>
-    </Box>
+    
   </Box>
 )};
