@@ -193,13 +193,13 @@ export const ProductListToolbar = (props) => {
         Equipas da empresa
       </Typography>
       <Box sx={{ m: 1 }}>
-        <Button
+        {/* <Button
           color="primary"
           variant="contained"
           style={{ marginLeft: "10px", marginTop: "10px" }}
         >
           Eliminar equipa
-        </Button>
+        </Button> */}
         <Button
           color="primary"
           variant="contained"
