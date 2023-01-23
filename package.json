@@ -22,6 +22,7 @@
     "@mui/material": "5.10.5",
     "@mui/system": "5.10.5",
     "@mui/x-date-pickers": "5.0.1",
+    "@reduxjs/toolkit": "^1.9.1",
     "@zalter/identity-js": "1.2.1",
     "chart.js": "3.9.1",
     "date-fns": "2.29.3",
@@ -37,7 +38,10 @@
     "react": "^18.2.0",
     "react-chartjs-2": "4.3.1",
     "react-dom": "^18.2.0",
+    "react-firebase-hooks": "^5.1.1",
     "react-perfect-scrollbar": "1.5.8",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.7.0",
     "uuid": "9.0.0",
     "yup": "0.32.11"
   },
