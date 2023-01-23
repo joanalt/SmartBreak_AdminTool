@@ -48,14 +48,49 @@ const Register = () => {
           display: "flex",
           flexGrow: 1,
           minHeight: "100%",
+          backgroundColor: "#0051BA",
+          flexDirection: "column",
         }}
       >
-        <Container maxWidth="sm">
-          <NextLink href="/" passHref>
-            <Button component="a" startIcon={<ArrowBackIcon fontSize="small" />}>
-              Painel
-            </Button>
-          </NextLink>
+        <Container
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "100%",
+            width: "100%",
+            marginTop: "20px",
+            marginBottom: "20px",
+          }}
+        >
+          <img src="static/images/auth_logo.svg" alt="logo" width="120" height="120" />
+          <p
+            style={{
+              color: "#E3ECF7",
+              fontSize: "20px",
+              fontWeight: "bold",
+            }}
+          >
+            Smart Break
+          </p>
+        </Container>
+        <Container
+          maxWidth="sm"
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "100%",
+            width: "100%",
+            marginBottom: "60px",
+            backgroundColor: "#FFFFFF",
+            padding: "20px",
+            borderRadius: "20px",
+            boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.3)",
+          }}
+        >
           <form onSubmit={formik.handleSubmit}>
             <Box sx={{ my: 3 }}>
               <Typography color="textPrimary" variant="h4">
@@ -113,6 +148,19 @@ const Register = () => {
               onChange={formik.handleChange}
               type="password"
               value={formik.values.password}
+              variant="outlined"
+            />
+            <TextField
+              error={Boolean(formik.touched.password && formik.errors.password)}
+              fullWidth
+              helperText={formik.touched.password && formik.errors.password}
+              label="Confirmar palavra-passe"
+              margin="normal"
+              name="passwordConfirm"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              type="passwordConfirm"
+              value={formik.values.passwordConfirm}
               variant="outlined"
             />
             {Boolean(formik.touched.policy && formik.errors.policy) && (

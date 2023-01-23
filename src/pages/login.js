@@ -33,14 +33,43 @@ const Login = () => {
           display: "flex",
           flexGrow: 1,
           minHeight: "100%",
+          backgroundColor: "#0051BA",
+          flexDirection: "column",
         }}
       >
-        <Container maxWidth="sm">
-          <NextLink href="/" passHref>
-            <Button component="a" startIcon={<ArrowBackIcon fontSize="small" />}>
-              Painel
-            </Button>
-          </NextLink>
+        <Container
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "100%",
+            width: "100%",
+            marginTop: "60px",
+            marginBottom: "60px",
+          }}
+        >
+          <img src="static/images/auth_logo.svg" alt="logo" width="120" height="120" />
+          <p
+            style={{
+              color: "#E3ECF7",
+              fontSize: "20px",
+              fontWeight: "bold",
+            }}
+          >
+            Smart Break
+          </p>
+        </Container>
+        <Container
+          maxWidth="sm"
+          sx={{
+            backgroundColor: "#ffffff",
+            borderRadius: "10px",
+            padding: "20px",
+            boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.3)",
+          }}
+        >
+          
           <form onSubmit={formik.handleSubmit}>
             <Box sx={{ my: 3 }}>
               <Typography color="textPrimary" variant="h4">
