@@ -9,7 +9,7 @@ import * as React from 'react';
 
 
 export const ProductCard = ({ product }) => {
-
+  
 
   return (
   <Card
@@ -65,9 +65,8 @@ export const ProductCard = ({ product }) => {
           variant="contained"
           style={{ marginLeft: "10px", marginTop: "10px" }}
           onClick={ () => {
-            alert(teamId)
-            deleteDoc(doc(firestore, "teams", teamId));
-            forceUpdate()
+            deleteDoc(doc(firestore, "teams", product.id));
+            window.location.reload(false);
             }
           }
         >

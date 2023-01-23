@@ -49,6 +49,8 @@ export const ProductListToolbar = (props) => {
   const [allUsers, setAllUsers] = useState({});
   const [users, setUsers] = useState([]);
 
+  
+
   const theme = useTheme();
 
   useEffect(() => {
@@ -175,6 +177,7 @@ export const ProductListToolbar = (props) => {
               id: docRef.id,
             });
             setOpen(false);
+            window.location.reload(false);
             }} autoFocus>
             Adicionar
           </Button>
