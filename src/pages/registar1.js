@@ -75,7 +75,6 @@ const Register = () => {
             Smart Break
           </p>
         </Container>
-
         <Container
           maxWidth="sm"
           sx={{
@@ -151,55 +150,35 @@ const Register = () => {
               value={formik.values.password}
               variant="outlined"
             />
-
             <TextField
               error={Boolean(formik.touched.password && formik.errors.password)}
               fullWidth
               helperText={formik.touched.password && formik.errors.password}
               label="Confirmar palavra-passe"
               margin="normal"
-              name="password"
+              name="passwordConfirm"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              type="password"
-              value={formik.values.password}
+              type="passwordConfirm"
+              value={formik.values.passwordConfirm}
               variant="outlined"
             />
-            <Box
-              sx={{
-                alignItems: "center",
-                display: "flex",
-                ml: -1,
-              }}
-            >
-              <Checkbox
-                checked={formik.values.policy}
-                name="policy"
-                onChange={formik.handleChange}
-              />
-              <Typography color="textSecondary" variant="body2">
-                Eu li os{" "}
-                <NextLink href="#" passHref>
-                  <Link color="primary" underline="always" variant="subtitle2">
-                    Termos e Condições
-                  </Link>
-                </NextLink>
-              </Typography>
-            </Box>
             {Boolean(formik.touched.policy && formik.errors.policy) && (
               <FormHelperText error>{formik.errors.policy}</FormHelperText>
             )}
             <Box sx={{ py: 2 }}>
-              <Button
-                color="primary"
-                disabled={formik.isSubmitting}
-                fullWidth
-                size="large"
-                type="submit"
-                variant="contained"
-              >
-                Registar
-              </Button>
+              <NextLink href="/registar2" passHref>
+                <Button
+                  color="primary"
+                  disabled={formik.isSubmitting}
+                  fullWidth
+                  size="large"
+                  type="submit"
+                  variant="contained"
+                >
+                  Seguinte
+                </Button>
+              </NextLink>
             </Box>
             <Typography color="textSecondary" variant="body2">
               Já tens conta?{" "}

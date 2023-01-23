@@ -51,16 +51,15 @@ const Login = () => {
         >
           <img src="static/images/auth_logo.svg" alt="logo" width="120" height="120" />
           <p
-          style={{
-            color: "#E3ECF7",
-            fontSize: "20px",
-            fontWeight: "bold",
-
-          }}
+            style={{
+              color: "#E3ECF7",
+              fontSize: "20px",
+              fontWeight: "bold",
+            }}
           >
-            Smart Break</p>
+            Smart Break
+          </p>
         </Container>
-
         <Container
           maxWidth="sm"
           sx={{
@@ -126,9 +125,9 @@ const Login = () => {
             </Box>
             <Typography color="textSecondary" variant="body2">
               Ainda não tens conta?{" "}
-              <NextLink href="/registar">
+              <NextLink href="/registar1">
                 <Link
-                  to="/registar"
+                  to="/registar1"
                   variant="subtitle2"
                   underline="hover"
                   sx={{
