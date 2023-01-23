@@ -14,21 +14,22 @@ import {
   Typography,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { setDoc, doc, getDoc, collection, updateDoc, addDoc } from "@firebase/firestore"
+import { firestore, auth } from "../firebase_setup/firebase"
 
 const Register = () => {
   const formik = useFormik({
     initialValues: {
-      email: "",
-      firstName: "",
-      lastName: "",
-      password: "",
+      nameOrg: "",
+      areaOrg: "",
+      numberOrg: "",
+      address: "",
       policy: false,
     },
     validationSchema: Yup.object({
-      email: Yup.string().email("Deve ser um email válido").max(255).required("Campo obrigatório"),
-      firstName: Yup.string().max(255).required("Campo obrigatório"),
-      lastName: Yup.string().max(255).required("Campo obrigatório"),
-      password: Yup.string().max(255).required("Campo obrigatório"),
+      nameOrg: Yup.string().max(255).required("Campo obrigatório"),
+      numberOrg: Yup.string().max(255).required("Campo obrigatório"),
+      address: Yup.string().max(255).required("Campo obrigatório"),
       policy: Yup.boolean().oneOf([true], "Campo obrigatório"),
     }),
     onSubmit: () => {
@@ -111,20 +112,20 @@ const Register = () => {
               helperText={formik.touched.firstName && formik.errors.firstName}
               label="Nome"
               margin="normal"
-              name="firstName"
+              name="nameOrg"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              value={formik.values.firstName}
+              value={formik.values.nameOrg}
               variant="outlined"
             />
             <TextField
               fullWidth
               label="Área de atuação (opcional)"
               margin="normal"
-              name="lastName"
+              name="areaOrg"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              value={formik.values.lastName}
+              value={formik.values.areaOrg}
               variant="outlined"
             />
             <TextField
@@ -133,10 +134,10 @@ const Register = () => {
               helperText={formik.touched.lastName && formik.errors.lastName}
               label="Contacto telefónico"
               margin="normal"
-              name="lastName"
+              name="numberOrg"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              value={formik.values.lastName}
+              value={formik.values.numberOrg}
               variant="outlined"
             />
 
@@ -146,10 +147,10 @@ const Register = () => {
               helperText={formik.touched.lastName && formik.errors.lastName}
               label="Morada"
               margin="normal"
-              name="lastName"
+              name="address"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              value={formik.values.lastName}
+              value={formik.values.address}
               variant="outlined"
             />
             <Box
@@ -184,6 +185,28 @@ const Register = () => {
                 size="large"
                 type="submit"
                 variant="contained"
+                onClick={async () => {
+                  // call validation
+                  try {
+                    const docRef = await addDoc(collection(firestore, "organizations"), {
+                      name: formik.values.nameOrg,
+                      area: formik.values.areaOrg,
+                      phone: formik.values.numberOrg,
+                      address: formik.values.address,
+                    });
+                    const uid = docRef.id;
+                    await updateDoc(docRef, {
+                      id: docRef.id,
+                    });
+                    
+                  } catch (err) {
+                    console.error(err);
+                    alert(err.message);
+                  }
+              
+                
+                // console.log(formik.values.password)
+              }}
               >
                 Registar
               </Button>
