@@ -57,7 +57,7 @@ export const ProductCard = ({ product }) => {
               window.location.reload(false);
             }}
           >
-            Adicionar
+            Eliminar
           </Button>
         </DialogActions>
       </Dialog>
@@ -83,7 +83,6 @@ export const ProductCard = ({ product }) => {
           <Typography align="left" color="textPrimary" variant="body2">
             {product.description}
           </Typography>
-
         </CardContent>
         <Box sx={{ flexGrow: 1 }} />
         <Divider />
@@ -135,7 +134,6 @@ export const ProductCard = ({ product }) => {
           </Grid>
         </Box>
       </Card>
-
     </Box>
   );
 };

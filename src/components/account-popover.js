@@ -28,7 +28,7 @@ export const AccountPopover = (props) => {
       globalThis.sessionStorage.removeItem("skip-auth");
 
       // Redirect to sign-in page
-      Router.push("/login").catch(console.error);
+      Router.push("/").catch(console.error);
       return;
     }
 
@@ -40,7 +40,7 @@ export const AccountPopover = (props) => {
       authContext.signOut();
 
       // Redirect to sign-in page
-      Router.push("/login").catch(console.error);
+      Router.push("/").catch(console.error);
     } catch (err) {
       console.error(err);
     }
