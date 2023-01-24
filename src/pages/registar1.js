@@ -186,6 +186,7 @@ const Register = () => {
                       const docRef = await addDoc(collection(firestore, "users_data"), {
                         name: formik.values.firstName,
                         lastName: formik.values.lastName,
+                        email: formik.values.email,
                         password: formik.values.password,
                         rewards: false,
                         notifications: [true, false, false, false],
