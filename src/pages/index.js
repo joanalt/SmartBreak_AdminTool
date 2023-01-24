@@ -6,7 +6,8 @@ import * as Yup from "yup";
 import { Box, Button, Container, Link, TextField, Typography } from "@mui/material";
 import { firestore, auth } from "../firebase_setup/firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
-import { signInWithEmailAndPassword } from 'firebase/auth'
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { useRouter } from "next/router";
 
 const Login = () => {
   const formik = useFormik({
@@ -22,6 +23,12 @@ const Login = () => {
       Router.push("/").catch(console.error);
     },
   });
+
+  const router = useRouter();
+
+  function handleNavigation() {
+    router.push("/painel");
+  }
 
   return (
     <>
@@ -115,28 +122,33 @@ const Login = () => {
                 type="submit"
                 variant="contained"
                 onClick={async () => {
-                  
-                try {
-                  const q = query(collection(firestore, "users_data"), where("email", "==", formik.values.email));
+                  try {
+                    const q = query(
+                      collection(firestore, "users_data"),
+                      where("email", "==", formik.values.email)
+                    );
 
-                  const querySnapshot = await getDocs(q);
-                  querySnapshot.forEach(async (doc) => {
-                    // doc.data() is never undefined for query doc snapshots
-                    if (doc.data().admin) {
-                      await signInWithEmailAndPassword(auth, formik.values.email, formik.values.password);
-                      alert("HEY")
-                    } else {
-                      alert("Não tem permissões de administrador.")
-                      return null
-                    }
-                  });
-
-
-                  
-                } catch (err) {
-                  console.error(err);
-                  alert(err.message);
-                }}}
+                    const querySnapshot = await getDocs(q);
+                    querySnapshot.forEach(async (doc) => {
+                      // doc.data() is never undefined for query doc snapshots
+                      if (doc.data().admin) {
+                        await signInWithEmailAndPassword(
+                          auth,
+                          formik.values.email,
+                          formik.values.password
+                        );
+                        //lert("HEY");
+                        handleNavigation();
+                      } else {
+                        alert("Não tem permissões de administrador.");
+                        return null;
+                      }
+                    });
+                  } catch (err) {
+                    console.error(err);
+                    alert(err.message);
+                  }
+                }}
               >
                 Entrar
               </Button>

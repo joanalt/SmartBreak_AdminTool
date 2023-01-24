@@ -14,8 +14,9 @@ import {
   Typography,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { setDoc, doc, getDoc, collection, updateDoc, addDoc } from "@firebase/firestore"
-import { firestore, auth } from "../firebase_setup/firebase"
+import { setDoc, doc, getDoc, collection, updateDoc, addDoc } from "@firebase/firestore";
+import { firestore, auth } from "../firebase_setup/firebase";
+import { useRouter } from "next/router";
 
 const Register = () => {
   const formik = useFormik({
@@ -36,6 +37,12 @@ const Register = () => {
       Router.push("/").catch(console.error);
     },
   });
+
+  const router = useRouter();
+
+  function handleNavigation() {
+    router.push("/painel");
+  }
 
   return (
     <>
@@ -198,15 +205,14 @@ const Register = () => {
                     await updateDoc(docRef, {
                       id: docRef.id,
                     });
-                    
+                    handleNavigation();
                   } catch (err) {
                     console.error(err);
                     alert(err.message);
                   }
-              
-                
-                // console.log(formik.values.password)
-              }}
+
+                  // console.log(formik.values.password)
+                }}
               >
                 Registar
               </Button>

@@ -20,7 +20,7 @@ import {
   SvgIcon,
 } from "@mui/material";
 import { Search as SearchIcon } from "../../icons/search";
-import { doc, deleteDoc, updateDoc, getDoc   } from "@firebase/firestore";
+import { doc, deleteDoc, updateDoc, getDoc } from "@firebase/firestore";
 import { firestore } from "../../firebase_setup/firebase";
 
 export const CustomerListResults = ({ customers, ...rest }, props) => {
@@ -57,23 +57,19 @@ export const CustomerListResults = ({ customers, ...rest }, props) => {
     }
 
     setSelectedCustomerIds(newSelectedCustomerIds);
-    
   };
-
 
   const handleChange = (e) => {
     setSearch(e.target.value);
-    console.log(search)
+    console.log(search);
   };
 
-  const filteredCustomers = customers.filter(customer =>
+  const filteredCustomers = customers.filter((customer) =>
     customer.name.toLowerCase().includes(search.toLowerCase())
   );
 
-
   return (
     <>
-
       <Box {...props}>
         <Box
           sx={{
@@ -87,7 +83,6 @@ export const CustomerListResults = ({ customers, ...rest }, props) => {
           <Typography sx={{ m: 1 }} variant="h4">
             Funcionários da empresa
           </Typography>
-         
         </Box>
         <Box sx={{ mt: 3 }}>
           <Card>
@@ -120,86 +115,86 @@ export const CustomerListResults = ({ customers, ...rest }, props) => {
             <Table>
               <TableHead>
                 <TableRow>
-                  
                   <TableCell>Nome</TableCell>
                   <TableCell>Email</TableCell>
                   <TableCell></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {search == "" ?
+                {search == "" ? (
                   <>
-                    {customers && customers.map((customer) => (
-                      <TableRow
-                        hover
-                        key={customer.id}
-                        selected={selectedCustomerIds.indexOf(customer.id) !== -1}
-                      >
-                   
-                        <TableCell >
-                          <Box
-                            sx={{
-                              alignItems: "center",
-                              display: "flex",
-                            }}
-                          >
-                            
-                            <Typography color="textPrimary" variant="body1">
-                              {customer.name}
-                            </Typography>
-                          </Box>
-                        </TableCell>
-                        <TableCell>{customer.email}</TableCell>
-                        <TableCell> 
-                          <Button
-                            color="primary"
-                            variant="contained"
-                            style={{ marginLeft: 10 }}
-                            onClick={async () => {
-                              await deleteDoc(doc(firestore, "users_data", customer.id));
-                              window.location.reload(false);
-                              }
-                            }
-                          >
-                            Eliminar funcionário
-                          </Button>
-                          <Button
-                            color="primary"
-                            variant="contained"
-                            style={{ marginLeft: 40}}
-                            onClick={async () => {
-                              const docRef = doc(firestore, "users_data", customer.id);
-
-                            // Set the "capital" field of the city 'DC'
-                            await updateDoc(docRef, {
-                              admin: true
-                            });
-                            alert("Utilizador " + customer.name + " promovido a administrador.")
-
-                          }}
+                    {customers &&
+                      customers.map((customer) => (
+                        <TableRow
+                          hover
+                          key={customer.id}
+                          selected={selectedCustomerIds.indexOf(customer.id) !== -1}
                         >
-                          Pomover a administrador
-                        </Button>
-                        <Button
-                          color="primary"
-                          variant="outlined"
-                          style={{ marginLeft: 40}}
-                          onClick={async () => {
-                              const docRef = doc(firestore, "users_data", customer.id);
+                          <TableCell>
+                            <Box
+                              sx={{
+                                alignItems: "center",
+                                display: "flex",
+                              }}
+                            >
+                              <Typography color="textPrimary" variant="body1">
+                                {customer.name}
+                              </Typography>
+                            </Box>
+                          </TableCell>
+                          <TableCell>{customer.email}</TableCell>
+                          <TableCell>
+                            <Button
+                              color="primary"
+                              variant="contained"
+                              style={{ marginLeft: 10 }}
+                              onClick={async () => {
+                                await deleteDoc(doc(firestore, "users_data", customer.id));
+                                window.location.reload(false);
+                              }}
+                            >
+                              Eliminar funcionário
+                            </Button>
+                            <Button
+                              color="primary"
+                              variant="contained"
+                              style={{ marginLeft: 40 }}
+                              onClick={async () => {
+                                const docRef = doc(firestore, "users_data", customer.id);
 
-                            // Set the "capital" field of the city 'DC'
-                            await updateDoc(docRef, {
-                              admin: false
-                            });
-                            alert("Utilizador " + customer.name + " desprovido.")
-                          }}
-                        >
-                          Despromover
-                        </Button>
-                      </TableCell>
-                      </TableRow>
-                    ))}
-                  </> : <>
+                                // Set the "capital" field of the city 'DC'
+                                await updateDoc(docRef, {
+                                  admin: true,
+                                });
+                                alert(
+                                  "Utilizador " + customer.name + " promovido a administrador."
+                                );
+                              }}
+                            >
+                              Pomover a administrador
+                            </Button>
+                            <Button
+                              color="primary"
+                              variant="outlined"
+                              style={{ marginLeft: 40 }}
+                              onClick={async () => {
+                                const docRef = doc(firestore, "users_data", customer.id);
+
+                                // Set the "capital" field of the city 'DC'
+                                await updateDoc(docRef, {
+                                  admin: false,
+                                });
+                                alert("Utilizador " + customer.name + " desprovido.");
+                              }}
+                            >
+                              Despromover
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                  </>
+                ) : (
+                  <>
                     {filteredCustomers.map((customer) => (
                       <TableRow
                         hover
@@ -232,15 +227,14 @@ export const CustomerListResults = ({ customers, ...rest }, props) => {
                         <TableCell>{customer.equipa}</TableCell>
                       </TableRow>
                     ))}
-                  </>}              
-                  </TableBody>
+                  </>
+                )}
+              </TableBody>
             </Table>
           </Box>
         </PerfectScrollbar>
-        
       </Card>
     </>
-
   );
 };
 
