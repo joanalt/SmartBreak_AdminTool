@@ -56,7 +56,7 @@ const Register = () => {
           display: "flex",
           flexGrow: 1,
           minHeight: "100%",
-          backgroundColor: "#0051BA",
+          backgroundColor: "#07407B",
           flexDirection: "column",
         }}
       >
@@ -75,6 +75,7 @@ const Register = () => {
           <img src="static/images/auth_logo.svg" alt="logo" width="120" height="120" />
           <p
             style={{
+              paddingTop: "15px",
               color: "#E3ECF7",
               fontSize: "20px",
               fontWeight: "bold",

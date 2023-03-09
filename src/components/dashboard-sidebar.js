@@ -80,7 +80,8 @@ export const DashboardSidebar = (props) => {
               sx={{
                 display: "flex",
                 justifyContent: "center",
-                mt: 2,
+                mt: 5,
+                mb: 3,
                 "& img": {
                   width: "100%",
                 },
@@ -118,7 +119,7 @@ export const DashboardSidebar = (props) => {
         open
         PaperProps={{
           sx: {
-            backgroundColor: "#0051BA",
+            backgroundColor: "#07407B",
             color: "#FFFFFF",
             width: 280,
           },
