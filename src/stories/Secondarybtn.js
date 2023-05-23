@@ -13,6 +13,7 @@ function Button({ bg = true, label, backgroundColor = "#07407B", handleClick, co
     fontSize: 16,
     borderRadius: 8,
     mode,
+    boxShadow: "rgba(7, 64, 123, 100) 0px 0px 0px 0.75px inset",
   };
 
   return (
