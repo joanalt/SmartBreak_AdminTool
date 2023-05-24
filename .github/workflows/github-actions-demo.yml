@@ -31,13 +31,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: npm install
-          npm run lint
+      - run: npm run lint
 
   build:
     runs-on: ubuntu-latest
     needs: [prettier, lint]
     steps:
       - uses: actions/checkout@v3
+      - run: npm install
+      - run: npm run prettier
+      - run: npm run lint
       - uses: actions/setup-node@v3
         with:
           node-version: 16
