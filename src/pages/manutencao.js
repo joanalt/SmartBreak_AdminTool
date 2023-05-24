@@ -51,7 +51,7 @@ const Page = () => (
               sx={{ mt: 10 }}
               style={{ color: "#FFFFFF" }}
             >
-              Volta ao Painel
+              Voltar ao Painel
             </Button>
           </NextLink>
         </Box>
