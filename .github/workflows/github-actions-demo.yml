@@ -42,7 +42,3 @@ jobs:
       - run: npm ci
       - run: npm run build
       - uses: actions/upload-artifact@v3
-        with:
-          name: build-files
-          path: out
-          retention-days: 1
