@@ -43,17 +43,17 @@ export const ProductCard = ({ product }) => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"Eliminar"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{"Eliminar objetivo"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Tem a certeza que deseja eliminar esta equipa permanentemente?
+            Tem a certeza que deseja eliminar este objetivo permanentemente?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancelar</Button>
           <Button
             onClick={async () => {
-              await deleteDoc(doc(firestore, "teams", product.id));
+              await deleteDoc(doc(firestore, "goals", product.id));
               window.location.reload(false);
             }}
           >
@@ -78,7 +78,7 @@ export const ProductCard = ({ product }) => {
           ></Box>
 
           <Typography align="left" color="textPrimary" gutterBottom variant="h5">
-            {product.name}
+            Prioridade: {product.priority}
           </Typography>
           <Typography align="left" color="textPrimary" variant="body2">
             {product.description}
@@ -108,7 +108,7 @@ export const ProductCard = ({ product }) => {
             >
               <People color="#555" onClick={() => setShowMembers(true)} />
               <Typography color="textSecondary" display="inline" sx={{ pl: 1 }} variant="body2">
-                {product.members} Membros
+                {product.teams} Equipas
               </Typography>
             </Grid>
             <Grid
@@ -128,7 +128,7 @@ export const ProductCard = ({ product }) => {
                 style={{ marginLeft: "10px", marginTop: "10px" }}
                 onClick={handleClickOpen}
               >
-                Eliminar equipa
+                Eliminar objetivo
               </Button>
             </Grid>
           </Grid>
