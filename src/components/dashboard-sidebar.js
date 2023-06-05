@@ -17,7 +17,7 @@ const items = [
     title: "Estatísticas",
   },
   {
-    href: "/brevemente_disponivel",
+    href: "/objetivos",
     icon: <TaskSquare fontSize="small" />,
     title: "Objetivos",
   },
