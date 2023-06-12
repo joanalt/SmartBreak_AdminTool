@@ -32,7 +32,7 @@ const items = [
     title: "Funcionários",
   },
   {
-    href: "/brevemente_disponivel",
+    href: "/estruturacao",
     icon: <Magicpen fontSize="small" />,
     title: "Estruturação",
   },
