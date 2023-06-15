@@ -19,8 +19,8 @@ import {
     BarElement,
     Title,
     Tooltip,
-    Legend,
-  } from 'chart.js';
+    Legend,         
+} from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 
 ChartJS.register(
@@ -30,9 +30,19 @@ ChartJS.register(
     Title,
     Tooltip,
     Legend
-  );
+);
 
-export const BarChart = () => {
+export const BateriasDepartamento = () => {
+
+    const departamentos = ['Frontend', 'Backend', 'Recursos Humanos', 'Marketing', 'Financeiro', 'Design'];
+
+    const data = {
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+        datasets: [], 
+    };
+
+    const cores = ['rgba(7, 64, 123, 1)', 'rgba(85, 139, 209, 1)', 'rgba(254, 119, 56, 1)', 'rgba(255, 160, 106, 1)', 'rgba(254, 119, 56, 1)', 'rgba(255, 160, 106, 1)'];
+    
 
     const options = {
         responsive: true,
@@ -42,30 +52,29 @@ export const BarChart = () => {
             },
             title: {
                 display: false,
-                text: 'Qualquer texto',
+                text: '',
             },
         },
     }
 
-    const data = {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-        datasets: [
-            {
-                label: 'Número total de baterias',
-                data: [5, 10, 8, 6, 9, 14],
-                borderColor: 'rgba(7, 64, 123, 1)',
-                backgroundColor: 'rgba(7, 64, 123, 1)',
-            }
-        ],
-    };
+    departamentos.forEach((departamento, index) => {
+        const randomData = Array.from({ length: data.labels.length }, () =>
+            Math.floor(Math.random() * 16) // 0 - 15
+        );
 
-
+        data.datasets.push({
+            label: departamento,
+            data: randomData,
+            borderColor: cores[index],
+        });
+    });
+    
 
     return (
         <>
             <Box sx={{ mt: 3 }}>
                 <Card>
-                    <CardHeader title="Número de baterias enchidas" />
+                    <CardHeader title="Número de baterias enchidas por departamento" />
                     <Divider />
                     <CardContent>
                         <Bar options={options} data={data} />

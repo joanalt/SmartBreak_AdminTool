@@ -34,7 +34,7 @@ ChartJS.register(
   Legend
 );
 
-export const GrauProdutividade = () => {
+export const Poupanca = () => {
 
   const options = {
     responsive: true,
@@ -44,32 +44,35 @@ export const GrauProdutividade = () => {
       },
       title: {
         display: false,
-        text: 'Qualquer texto',
+        text: '',
       },
     },
-  }
+  };
+
+  const labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
+
+  const randomData = Array.from({ length: labels.length }, () =>
+    Math.floor(Math.random() * 1001) // 0 - 1000
+  ); 
 
   const data = {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+    labels: labels,
     datasets: [
       {
         label: 'Produtividade',
-        data: [52, 29, 62, 59, 88, 59],
+        data: randomData,
         borderColor: 'rgba(85, 139, 209, 1)',
         backgroundColor: 'rgba(85, 139, 209, 1)',
       },
     ],
-
-    // legend: ["Rainy Days"], // optional
   };
-
 
 
   return (
     <>
       <Box sx={{ mt: 3 }}>
         <Card>
-          <CardHeader title="Grau de produtividade geral" />
+          <CardHeader title="Poupança em euros de energia" />
           <Divider />
           <CardContent>
             <Line options={options} data={data} />

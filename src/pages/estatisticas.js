@@ -1,8 +1,8 @@
 import Head from "next/head";
 import { Box, Container, Grid, Typography } from "@mui/material";
 import { DashboardLayout } from "../components/dashboard-layout";
-import { GrauProdutividade } from "../components/estatisticas/grauProdutividade";
-import { BarChart } from "../components/estatisticas/barChart";
+import { Poupanca } from "../components/estatisticas/poupanca";
+import { BateriasDepartamento } from "../components/estatisticas/bateriasDepartamento";
 
 const Page = () => (
   <>
@@ -33,13 +33,13 @@ const Page = () => (
 
         <Grid container spacing={3}>
           <Grid item lg={6} md={12} xl={6} xs={12}>
-            <GrauProdutividade />
+            <Poupanca />
           </Grid>
           <Grid item lg={6} md={12} xl={6} xs={12}>
-            <BarChart />
+            <BateriasDepartamento />
           </Grid>
         </Grid>
-      </Container>
+      </Container>  
     </Box>
   </>
 );
