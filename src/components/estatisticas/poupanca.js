@@ -59,10 +59,10 @@ export const Poupanca = () => {
     labels: labels,
     datasets: [
       {
-        label: 'Produtividade',
+        label: 'Poupança',
         data: randomData,
-        borderColor: 'rgba(85, 139, 209, 1)',
-        backgroundColor: 'rgba(85, 139, 209, 1)',
+        borderColor: 'rgba(7, 64, 123, 1)',
+        backgroundColor: 'rgba(7, 64, 123, 1)',
       },
     ],
   };

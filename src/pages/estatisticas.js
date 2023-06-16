@@ -3,6 +3,9 @@ import { Box, Container, Grid, Typography } from "@mui/material";
 import { DashboardLayout } from "../components/dashboard-layout";
 import { Poupanca } from "../components/estatisticas/poupanca";
 import { BateriasDepartamento } from "../components/estatisticas/bateriasDepartamento";
+import { Objetivos } from "../components/estatisticas/objetivos";
+import { TempoMedio } from "../components/estatisticas/tempoMedio";
+import { ValorBaterias } from "../components/estatisticas/valorBaterias";
 
 const Page = () => (
   <>
@@ -37,6 +40,15 @@ const Page = () => (
           </Grid>
           <Grid item lg={6} md={12} xl={6} xs={12}>
             <BateriasDepartamento />
+          </Grid>
+          <Grid item lg={12} md={12} xl={12} xs={12}>
+            <Objetivos />
+          </Grid>
+          <Grid item lg={6} md={12} xl={6} xs={12}>
+            <TempoMedio />
+          </Grid>
+          <Grid item lg={6} md={12} xl={6} xs={12}>
+            <ValorBaterias />
           </Grid>
         </Grid>
       </Container>  
