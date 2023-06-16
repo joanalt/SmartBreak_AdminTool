@@ -1,13 +1,13 @@
 import Head from "next/head";
 import NextLink from "next/link";
-import Router from "next/router";
+//import Router from "next/router";
 //import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Box, Button, Container, Link, TextField, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-
 import axios from "axios";
+
 const apiURL = "https://sb-api.herokuapp.com/auth/login";
 
 const Login = () => {
@@ -40,7 +40,6 @@ const Login = () => {
   }, [responseData]);
 
   const handleLogin = async () => {
-    console.log("entrou veado");
     try {
       setLoading(true);
 
@@ -48,6 +47,13 @@ const Login = () => {
         email: email,
         password: password,
       });
+
+      /*axios.post("https://sb-api.herokuapp.com/auth/login", {
+        email: email,
+        password: password,
+      });
+      .then((response) => displayOutput(response))
+      .catch((err) => console.log(err));*/
 
       if (response.status === 200) {
         const data = response.data;
@@ -66,7 +72,7 @@ const Login = () => {
   const router = useRouter();
 
   const handleNavigate = (uid) => {
-    //router.push("/painel");
+    router.push("/painel");
     console.log("navegou");
   };
 
