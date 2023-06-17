@@ -34,7 +34,17 @@ ChartJS.register(
   Legend
 );
 
-export const Poupanca = () => {
+export const Poupanca = ({ tempos, tempoSelecionado }) => {
+
+  console.log({tempos})
+  console.log({tempoSelecionado})
+
+  const oioi = [
+    { label: 'Hoje', values: [10, 12, 13, 15] },
+    { label: '1 semana', values: [2, 3, 4, 5, 6, 7] },
+    { label: '1 mês', values: [1, 2, 3, 4] }
+  ];
+  
 
   const options = {
     responsive: true,

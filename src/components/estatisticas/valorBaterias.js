@@ -74,7 +74,7 @@ export const ValorBaterias = () => {
         <>
             <Box sx={{ mt: 3 }}>
                 <Card>
-                    <CardHeader title="Número de baterias enchidas por departamento" />
+                    <CardHeader title="Valor da bateria de cada departamento" />
                     <Divider />
                     <CardContent>
                         <Bar options={options} data={data} />
