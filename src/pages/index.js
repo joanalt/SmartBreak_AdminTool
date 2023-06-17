@@ -43,6 +43,8 @@ const Login = () => {
     try {
       setLoading(true);
 
+      console.log("funciona");
+
       const response = await axios.post(apiURL, {
         email: email,
         password: password,
