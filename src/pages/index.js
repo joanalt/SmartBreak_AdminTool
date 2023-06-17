@@ -43,12 +43,10 @@ const Login = () => {
     try {
       setLoading(true);
 
-      console.log("funciona");
-
-      const response = await axios.post(apiURL, {
+      /*const response = await axios.post(apiURL, {
         email: email,
         password: password,
-      });
+      });*/
 
       /*axios.post("https://sb-api.herokuapp.com/auth/login", {
         email: email,
@@ -56,6 +54,20 @@ const Login = () => {
       });
       .then((response) => displayOutput(response))
       .catch((err) => console.log(err));*/
+
+      const response = await fetch("https://sb-api.herokuapp.com/auth/login", {
+        method: "POST",
+        body: JSON.stringify({
+          email: email.trim(),
+          password: password,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }),
+
+        /*const data = await response.json()
+        console.log(data)*/
+      });
 
       if (response.status === 200) {
         const data = response.data;
@@ -75,7 +87,6 @@ const Login = () => {
 
   const handleNavigate = (uid) => {
     router.push("/painel");
-    console.log("navegou");
   };
 
   /*const formik = useFormik({
