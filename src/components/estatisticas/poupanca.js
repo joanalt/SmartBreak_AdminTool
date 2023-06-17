@@ -34,17 +34,15 @@ ChartJS.register(
   Legend
 );
 
-export const Poupanca = ({ tempos, tempoSelecionado }) => {
+export const Poupanca = ({ tempoSelecionado }) => {
 
-  console.log({tempos})
-  console.log({tempoSelecionado})
-
-  const oioi = [
-    { label: 'Hoje', values: [10, 12, 13, 15] },
-    { label: '1 semana', values: [2, 3, 4, 5, 6, 7] },
-    { label: '1 mês', values: [1, 2, 3, 4] }
+  const intervalos = [
+    { tempo: 'Hoje', values: [9, 11, 13, 15, 17, 19, 21], label: 'Poupança ao longo de um dia em horas' },
+    { tempo: 'Esta semana', values: [2, 3, 4, 5, 6, 7], label: 'Poupança ao longo de uma semana em dias' },
+    { tempo: 'Este mês', values: [4, 8, 12, 16, 20, 24, 28], label: 'Poupança ao longo de um mês em dias' }
   ];
-  
+
+  const selectedOption = intervalos.find(option => option.tempo === tempoSelecionado);
 
   const options = {
     responsive: true,
@@ -58,37 +56,38 @@ export const Poupanca = ({ tempos, tempoSelecionado }) => {
       },
     },
   };
+  
 
-  const labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
+  if (selectedOption) {
+    const randomData = Array.from({ length: selectedOption.values.length }, () =>
+      Math.floor(Math.random() * 1001) // 0 - 1000
+    );
 
-  const randomData = Array.from({ length: labels.length }, () =>
-    Math.floor(Math.random() * 1001) // 0 - 1000
-  ); 
+    const data = {
+      labels: selectedOption.values,
+      datasets: [
+        {
+          label: selectedOption.label,
+          data: randomData,
+          borderColor: 'rgba(7, 64, 123, 1)',
+          backgroundColor: 'rgba(7, 64, 123, 1)',
+        },
+      ],
+    };
 
-  const data = {
-    labels: labels,
-    datasets: [
-      {
-        label: 'Poupança',
-        data: randomData,
-        borderColor: 'rgba(7, 64, 123, 1)',
-        backgroundColor: 'rgba(7, 64, 123, 1)',
-      },
-    ],
+
+    return (
+      <>
+        <Box sx={{ mt: 3 }}>
+          <Card>
+            <CardHeader title="Poupança em euros de energia" />
+            <Divider />
+            <CardContent>
+              <Line options={options} data={data} />
+            </CardContent>
+          </Card>
+        </Box>
+      </>
+    );
   };
-
-
-  return (
-    <>
-      <Box sx={{ mt: 3 }}>
-        <Card>
-          <CardHeader title="Poupança em euros de energia" />
-          <Divider />
-          <CardContent>
-            <Line options={options} data={data} />
-          </CardContent>
-        </Card>
-      </Box>
-    </>
-  );
 };

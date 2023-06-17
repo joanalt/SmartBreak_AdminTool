@@ -32,12 +32,20 @@ ChartJS.register(
     Legend
 );
 
-export const ValorBaterias = () => {
+export const ValorBaterias = ({ tempoSelecionado }) => {
+
+    const intervalos = [
+        { tempo: 'Hoje', values: [9, 11, 13, 15, 17, 19, 21], label: 'Poupança ao longo de um dia em horas' },
+        { tempo: 'Esta semana', values: [2, 3, 4, 5, 6, 7], label: 'Poupança ao longo de uma semana em dias' },
+        { tempo: 'Este mês', values: [4, 8, 12, 16, 20, 24, 28], label: 'Poupança ao longo de um mês em dias' }
+    ];
+
+    const selectedOption = intervalos.find(option => option.tempo === tempoSelecionado);
 
     const departamentos = ['Frontend', 'Backend', 'Recursos Humanos', 'Marketing', 'Financeiro', 'Design'];
 
     const data = {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+        labels: '',
         datasets: [], 
     };
 
@@ -57,30 +65,36 @@ export const ValorBaterias = () => {
         },
     }
 
-    departamentos.forEach((departamento, index) => {
-        const randomData = Array.from({ length: data.labels.length }, () =>
-            Math.floor(Math.random() * 16) // 0 - 15
-        );
+    if (selectedOption) {
+        departamentos.forEach((departamento, index) => {
+            const randomData = Array.from({ length: selectedOption.values.length }, () =>
+                Math.floor(Math.random() * 1001) // 0 - 1000
+            );
 
-        data.datasets.push({
-            label: departamento,
-            data: randomData,
-            borderColor: cores[index],
+            const dataset = {
+                label: departamento,
+                data: randomData,
+                borderColor: cores[index],
+                backgroundColor: cores[index],
+            };
+
+            data.datasets.push(dataset);
         });
-    });
-    
 
-    return (
-        <>
-            <Box sx={{ mt: 3 }}>
-                <Card>
-                    <CardHeader title="Valor da bateria de cada departamento" />
-                    <Divider />
-                    <CardContent>
-                        <Bar options={options} data={data} />
-                    </CardContent>
-                </Card>
-            </Box>
-        </>
-    );
+        data.labels = selectedOption.values;
+
+        return (
+            <>
+                <Box sx={{ mt: 3 }}>
+                    <Card>
+                        <CardHeader title="Valor da bateria de cada departamento" />
+                        <Divider />
+                        <CardContent>
+                            <Bar options={options} data={data} />
+                        </CardContent>
+                    </Card>
+                </Box>
+            </>
+        );
+    };
 };

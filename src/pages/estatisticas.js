@@ -55,19 +55,19 @@ const Page = () => {
 
           <Grid container spacing={3}>
             <Grid item lg={6} md={12} xl={6} xs={12}>
-              <Poupanca tempos={tempos} tempoSelecionado={tempoSelecionado} />
+              <Poupanca tempoSelecionado={tempoSelecionado} />
             </Grid>
             <Grid item lg={6} md={12} xl={6} xs={12}>
-              <BateriasDepartamento tempo={tempoSelecionado}/>
+              <BateriasDepartamento tempoSelecionado={tempoSelecionado}/>
             </Grid>
             <Grid item lg={12} md={12} xl={12} xs={12}>
-              <Objetivos tempo={tempoSelecionado}/>
+              <Objetivos tempoSelecionado={tempoSelecionado}/>
             </Grid>
             <Grid item lg={6} md={12} xl={6} xs={12}>
-              <TempoMedio tempo={tempoSelecionado}/>
+              <TempoMedio tempoSelecionado={tempoSelecionado}/>
             </Grid>
             <Grid item lg={6} md={12} xl={6} xs={12}>
-              <ValorBaterias tempo={tempoSelecionado}/>
+              <ValorBaterias tempoSelecionado={tempoSelecionado}/>
             </Grid>
           </Grid>
         </Container >

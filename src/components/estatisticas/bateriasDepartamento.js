@@ -19,7 +19,7 @@ import {
     BarElement,
     Title,
     Tooltip,
-    Legend,         
+    Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 
@@ -32,17 +32,25 @@ ChartJS.register(
     Legend
 );
 
-export const BateriasDepartamento = () => {
+export const BateriasDepartamento = ({ tempoSelecionado }) => {
+
+    const intervalos = [
+        { tempo: 'Hoje', values: [9, 11, 13, 15, 17, 19, 21], label: 'Poupança ao longo de um dia em horas' },
+        { tempo: 'Esta semana', values: [2, 3, 4, 5, 6, 7], label: 'Poupança ao longo de uma semana em dias' },
+        { tempo: 'Este mês', values: [4, 8, 12, 16, 20, 24, 28], label: 'Poupança ao longo de um mês em dias' }
+    ];
+
+    const selectedOption = intervalos.find(option => option.tempo === tempoSelecionado);
 
     const departamentos = ['Frontend', 'Backend', 'Recursos Humanos', 'Marketing', 'Financeiro', 'Design'];
 
     const data = {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-        datasets: [], 
+        labels: '',
+        datasets: [],
     };
 
     const cores = ['rgba(7, 64, 123, 1)', 'rgba(85, 139, 209, 1)', 'rgba(254, 119, 56, 1)', 'rgba(255, 160, 106, 1)', 'rgba(254, 119, 56, 1)', 'rgba(255, 160, 106, 1)'];
-    
+
 
     const options = {
         responsive: true,
@@ -57,30 +65,36 @@ export const BateriasDepartamento = () => {
         },
     }
 
-    departamentos.forEach((departamento, index) => {
-        const randomData = Array.from({ length: data.labels.length }, () =>
-            Math.floor(Math.random() * 16) // 0 - 15
-        );
+    if (selectedOption) {
+        departamentos.forEach((departamento, index) => {
+            const randomData = Array.from({ length: selectedOption.values.length }, () =>
+                Math.floor(Math.random() * 1001) // 0 - 1000
+            );
 
-        data.datasets.push({
-            label: departamento,
-            data: randomData,
-            borderColor: cores[index],
+            const dataset = {
+                label: departamento,
+                data: randomData,
+                borderColor: cores[index],
+                backgroundColor: cores[index],
+            };
+
+            data.datasets.push(dataset);
         });
-    });
-    
 
-    return (
-        <>
-            <Box sx={{ mt: 3 }}>
-                <Card>
-                    <CardHeader title="Número de baterias enchidas por departamento" />
-                    <Divider />
-                    <CardContent>
-                        <Bar options={options} data={data} />
-                    </CardContent>
-                </Card>
-            </Box>
-        </>
-    );
+        data.labels = selectedOption.values;
+
+        return (
+            <>
+                <Box sx={{ mt: 3 }}>
+                    <Card>
+                        <CardHeader title="Número de baterias enchidas por departamento" />
+                        <Divider />
+                        <CardContent>
+                            <Bar options={options} data={data} />
+                        </CardContent>
+                    </Card>
+                </Box>
+            </>
+        );
+    };
 };
