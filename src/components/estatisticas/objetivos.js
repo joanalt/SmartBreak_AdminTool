@@ -20,7 +20,7 @@ import { useState, React } from "react";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 
-export const Objetivos = () => {
+export const Objetivos = ({ tempoSelecionado }) => {
 
     const departamentos = ['Frontend', 'Backend', 'Recursos Humanos', 'Marketing', 'Financeiro', 'Design'];
 
@@ -37,6 +37,17 @@ export const Objetivos = () => {
         },
     };
 
+    const randomData = Array.from({ length: 2 }, () =>
+        Math.floor(Math.random() * 11) // 0 - 10
+    );
+
+    const intervalos = [
+        { tempo: "Hoje", values: randomData },
+        { tempo: "Esta semana", values: randomData },
+        { tempo: "Este mês", values: randomData },
+    ];
+
+    const selectedOption = intervalos.find(option => option.tempo === tempoSelecionado);
 
 
     const data = [];
@@ -49,36 +60,49 @@ export const Objetivos = () => {
                     <Divider />
                     <CardContent>
                         <Grid container spacing={3}>
-                            {departamentos.map((departamento) => {
-                                const randomData = Array.from({ length: 2 }, () =>
-                                    Math.floor(Math.random() * 11) // 0 - 10
-                                );
+                            {selectedOption &&
+                                departamentos.map((departamento) => {
 
-                                const data = {
-                                    labels: ['Objetivos cumpridos', 'Objetivos por cumprir'],
-                                    datasets: [
-                                        {
-                                            data: randomData,
-                                            backgroundColor: [
-                                                'rgba(7, 64, 123, 1)',
-                                                'rgba(255, 160, 106, 1)',
-                                            ],
-                                            borderColor: [
-                                                'rgba(7, 64, 123, 1)',
-                                                'rgba(255, 160, 106, 1)',
-                                            ],
-                                            borderWidth: 1,
-                                        },
-                                    ],
-                                };
+                                    const randomData = Array.from({ length: 2 }, () =>
+                                        Math.floor(Math.random() * 11) // 0 - 10
+                                    );
+                                    const data = {
+                                        labels: ["Objetivos cumpridos", "Objetivos por cumprir"],
+                                        datasets: [
+                                            {
+                                                data: randomData,
+                                                backgroundColor: [
+                                                    "rgba(7, 64, 123, 1)",
+                                                    "rgba(255, 160, 106, 1)",
+                                                ],
+                                                borderColor: [
+                                                    "rgba(7, 64, 123, 1)",
+                                                    "rgba(255, 160, 106, 1)",
+                                                ],
+                                                borderWidth: 1,
+                                            },
+                                        ],
+                                    };
 
-                                return (
-                                    <Grid item key={departamento} lg={2} md={6} xl={2} xs={12}>
-                                        <ListItem sx={{justifyContent: 'center', marginBottom: 1}}>{departamento}</ListItem>
-                                        <Doughnut options={options} data={data} />
-                                    </Grid>
-                                );
-                            })}
+                                    return (
+                                        <Grid
+                                            item
+                                            key={departamento}
+                                            lg={2}
+                                            md={6}
+                                            xl={2}
+                                            xs={12}
+                                        >
+                                            <ListItem
+                                                sx={{ justifyContent: "center", marginBottom: 1 }}
+                                            >
+                                                {departamento}
+                                            </ListItem>
+                                            <Doughnut options={options} data={data} />
+                                        </Grid>
+                                    );
+                                })}
+
                         </Grid>
                     </CardContent>
                 </Card>

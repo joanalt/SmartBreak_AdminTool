@@ -35,8 +35,8 @@ ChartJS.register(
 export const ValorBaterias = ({ tempoSelecionado }) => {
 
     const intervalos = [
-        { tempo: 'Hoje', values: [9, 11, 13, 15, 17, 19, 21], label: 'Poupança ao longo de um dia em horas' },
-        { tempo: 'Esta semana', values: [2, 3, 4, 5, 6, 7], label: 'Poupança ao longo de uma semana em dias' },
+        { tempo: 'Hoje', values: [8, 11, 13, 15, 17, 19, 21], label: 'Poupança ao longo de um dia em horas' },
+        { tempo: 'Esta semana', values: [1, 2, 3, 4, 5, 6, 7], label: 'Poupança ao longo de uma semana em dias' },
         { tempo: 'Este mês', values: [4, 8, 12, 16, 20, 24, 28], label: 'Poupança ao longo de um mês em dias' }
     ];
 
@@ -49,7 +49,7 @@ export const ValorBaterias = ({ tempoSelecionado }) => {
         datasets: [], 
     };
 
-    const cores = ['rgba(7, 64, 123, 1)', 'rgba(85, 139, 209, 1)', 'rgba(254, 119, 56, 1)', 'rgba(255, 160, 106, 1)', 'rgba(254, 119, 56, 1)', 'rgba(255, 160, 106, 1)'];
+    const cores = ['rgba(7, 64, 123, 1)', 'rgba(85, 139, 209, 1)', 'rgba(181, 198, 215, 1)',   'rgba(254, 119, 56, 1)', 'rgba(255, 160, 106, 1)',  'rgba(252, 214, 195, 1)'];
     
 
     const options = {
@@ -59,7 +59,8 @@ export const ValorBaterias = ({ tempoSelecionado }) => {
                 position: 'bottom',
             },
             title: {
-                display: false,
+                display: true,
+                position: 'bottom',
                 text: '',
             },
         },
@@ -71,6 +72,8 @@ export const ValorBaterias = ({ tempoSelecionado }) => {
                 Math.floor(Math.random() * 1001) // 0 - 1000
             );
 
+            const title = selectedOption.label
+
             const dataset = {
                 label: departamento,
                 data: randomData,
@@ -78,6 +81,7 @@ export const ValorBaterias = ({ tempoSelecionado }) => {
                 backgroundColor: cores[index],
             };
 
+            options.plugins.title.text = title;
             data.datasets.push(dataset);
         });
 

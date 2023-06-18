@@ -37,10 +37,11 @@ ChartJS.register(
 export const TempoMedio = ({ tempoSelecionado }) => {
 
     const intervalos = [
-        { tempo: 'Hoje', values: [9, 11, 13, 15, 17, 19, 21], label: 'Poupança ao longo de um dia em horas' },
-        { tempo: 'Esta semana', values: [2, 3, 4, 5, 6, 7], label: 'Poupança ao longo de uma semana em dias' },
+        { tempo: 'Hoje', values: [8, 11, 13, 15, 17, 19, 21], label: 'Poupança ao longo de um dia em horas' },
+        { tempo: 'Esta semana', values: [1, 2, 3, 4, 5, 6, 7], label: 'Poupança ao longo de uma semana em dias' },
         { tempo: 'Este mês', values: [4, 8, 12, 16, 20, 24, 28], label: 'Poupança ao longo de um mês em dias' }
     ];
+
 
     const selectedOption = intervalos.find(option => option.tempo === tempoSelecionado);
 
