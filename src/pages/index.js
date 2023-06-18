@@ -2,13 +2,17 @@ import Head from "next/head";
 import NextLink from "next/link";
 //import Router from "next/router";
 //import { useFormik } from "formik";
-import * as Yup from "yup";
+//import * as Yup from "yup";
 import { Box, Button, Container, Link, TextField, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import axios from "axios";
+//import axios from "axios";
 
-const apiURL = "https://sb-api.herokuapp.com/auth/login";
+//redux
+//import { useDispatch } from "react-redux";
+//import { logUser } from "../../redux/user.js";
+
+//const apiURL = "https://sb-api.herokuapp.com/auth/login";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
