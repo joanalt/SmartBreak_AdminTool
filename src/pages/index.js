@@ -8,13 +8,10 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 //import axios from "axios";
 
-//redux
-//import { useDispatch } from "react-redux";
-//import { logUser } from "../../redux/user.js";
-
 //const apiURL = "https://sb-api.herokuapp.com/auth/login";
 
 const Login = () => {
+  console.log("LOGINNNNNN");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [responseData, setResponseData] = useState(null);
@@ -43,10 +40,10 @@ const Login = () => {
           password: password,
         }),
       });
+      const responseData = await response.json(); // Converter a resposta para JSON
+      console.log(responseData); // Exibir os dados retornados pelo servidor
 
-      alert(response);
-
-      if (response.status === 200) {
+      if (response.ok) {
         const data = response.message;
         setResponseData(data);
         console.log("Login successful");
