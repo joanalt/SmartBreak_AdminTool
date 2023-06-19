@@ -29,6 +29,7 @@ const Login = () => {
           password: password,
         }),
       });
+      console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
       const responseData = await response.json(); // Converter a resposta para JSON
       console.log(responseData); // Exibir os dados retornados pelo servidor
 
