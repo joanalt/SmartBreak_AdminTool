@@ -1,16 +1,73 @@
 import Head from "next/head";
 import NextLink from "next/link";
-import Router from "next/router";
-import { useFormik } from "formik";
-import * as Yup from "yup";
+//import Router from "next/router";
+//import { useFormik } from "formik";
+//import * as Yup from "yup";
 import { Box, Button, Container, Link, TextField, Typography } from "@mui/material";
-import { firestore, auth } from "../firebase_setup/firebase";
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
+//import axios from "axios";
+
+//redux
+//import { useDispatch } from "react-redux";
+//import { logUser } from "../../redux/user.js";
+
+//const apiURL = "https://sb-api.herokuapp.com/auth/login";
 
 const Login = () => {
-  const formik = useFormik({
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [responseData, setResponseData] = useState(null);
+
+  const handleLogin = async () => {
+    try {
+      /*const response = await axios.post(apiURL, {
+        email: email,
+        password: password,
+      });*/
+
+      /*axios.post("https://sb-api.herokuapp.com/auth/login", {
+        email: email,
+        password: password,
+      });
+      .then((response) => displayOutput(response))
+      .catch((err) => console.log(err));*/
+
+      const response = await fetch("https://sb-api.herokuapp.com/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email.trim(),
+          password: password,
+        }),
+      });
+
+      alert(response);
+
+      if (response.status === 200) {
+        const data = response.message;
+        setResponseData(data);
+        console.log("Login successful");
+        console.log("Data:", response.message);
+        // handleNavigate(responseData.user._id);
+      } else {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      console.error(error);
+      console.log("Error", error.message);
+    }
+  };
+
+  const router = useRouter();
+
+  const handleNavigate = (uid) => {
+    router.push("/painel");
+  };
+
+  /*const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
@@ -28,7 +85,7 @@ const Login = () => {
 
   function handleNavigation() {
     router.push("/painel");
-  }
+  }*/
 
   return (
     <>
@@ -79,7 +136,7 @@ const Login = () => {
             boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.3)",
           }}
         >
-          <form onSubmit={formik.handleSubmit}>
+          <form /*onSubmit={formik.handleSubmit}*/>
             <Box sx={{ my: 3 }}>
               <Typography color="textPrimary" variant="h4">
                 Entrar
@@ -89,67 +146,40 @@ const Login = () => {
               </Typography>
             </Box>
             <TextField
-              error={Boolean(formik.touched.email && formik.errors.email)}
+              //error={Boolean(formik.touched.email && formik.errors.email)}
               fullWidth
-              helperText={formik.touched.email && formik.errors.email}
+              //helperText={formik.touched.email && formik.errors.email}
               label="Email"
               margin="normal"
               name="email"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
+              //onBlur={formik.handleBlur}
+              onChange={(text) => setEmail(text.target.value)}
               type="email"
-              value={formik.values.email}
+              //value={formik.values.email}
               variant="outlined"
             />
             <TextField
-              error={Boolean(formik.touched.password && formik.errors.password)}
+              //error={Boolean(formik.touched.password && formik.errors.password)}
               fullWidth
-              helperText={formik.touched.password && formik.errors.password}
+              //helperText={formik.touched.password && formik.errors.password}
               label="Palavra-passe"
               margin="normal"
               name="password"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
+              //onBlur={formik.handleBlur}
+              onChange={(text) => setPassword(text.target.value)}
               type="password"
-              value={formik.values.password}
+              //value={formik.values.password}
               variant="outlined"
             />
             <Box sx={{ py: 2 }}>
               <Button
                 color="primary"
-                disabled={formik.isSubmitting}
+                //disabled={formik.isSubmitting}
                 fullWidth
                 size="large"
                 type="submit"
                 variant="contained"
-                onClick={async () => {
-                  try {
-                    const q = query(
-                      collection(firestore, "users_data"),
-                      where("email", "==", formik.values.email)
-                    );
-
-                    const querySnapshot = await getDocs(q);
-                    querySnapshot.forEach(async (doc) => {
-                      // doc.data() is never undefined for query doc snapshots
-                      if (doc.data().admin) {
-                        await signInWithEmailAndPassword(
-                          auth,
-                          formik.values.email,
-                          formik.values.password
-                        );
-                        //lert("HEY");
-                        handleNavigation();
-                      } else {
-                        alert("Não tem permissões de administrador.");
-                        return null;
-                      }
-                    });
-                  } catch (err) {
-                    console.error(err);
-                    alert(err.message);
-                  }
-                }}
+                onClick={() => handleLogin()}
               >
                 Entrar
               </Button>
