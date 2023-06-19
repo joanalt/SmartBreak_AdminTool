@@ -44,7 +44,7 @@ const Login = () => {
         }),
       });
 
-      alert(response);
+      console.log(response);
 
       if (response.status === 200) {
         const data = response.message;
