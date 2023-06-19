@@ -73,13 +73,11 @@ const Login = () => {
         console.log(data)*/
       });
 
-      console.log(response);
-
       if (response.status === 200) {
-        const data = response.data;
+        const data = response.message;
         setResponseData(data);
       } else {
-        throw new Error(response.data.message);
+        throw new Error(response.message);
       }
     } catch (error) {
       console.error(error);
