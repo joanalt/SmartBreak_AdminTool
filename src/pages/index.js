@@ -21,6 +21,7 @@ const Login = () => {
   const [responseData, setResponseData] = useState(null);
 
   useEffect(() => {
+    console.log(responseData);
     if (responseData && responseData.message === "Logged in successfully") {
       const userData = {
         userID: responseData.user._id,
@@ -45,8 +46,6 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      setLoading(true);
-
       /*const response = await axios.post(apiURL, {
         email: email,
         password: password,
@@ -68,9 +67,6 @@ const Login = () => {
           email: email.trim(),
           password: password,
         }),
-
-        /*const data = await response.json()
-        console.log(data)*/
       });
 
       console.log(response);
@@ -85,8 +81,6 @@ const Login = () => {
     } catch (error) {
       console.error(error);
       console.log("Error", error.message);
-    } finally {
-      setLoading(false);
     }
   };
 
