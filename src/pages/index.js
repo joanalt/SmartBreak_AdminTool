@@ -61,17 +61,19 @@ const Login = () => {
 
       const response = await fetch("https://sb-api.herokuapp.com/auth/login", {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           email: email.trim(),
           password: password,
-          headers: {
-            "Content-Type": "application/json",
-          },
         }),
 
         /*const data = await response.json()
         console.log(data)*/
       });
+
+      console.log(response);
 
       if (response.status === 200) {
         const data = response.data;
