@@ -15,13 +15,12 @@ import { useState, useEffect } from "react";
 //const apiURL = "https://sb-api.herokuapp.com/auth/login";
 
 const Login = () => {
-  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [responseData, setResponseData] = useState(null);
 
   useEffect(() => {
-    console.log(responseData);
+    /*console.log(responseData);
     if (responseData && responseData.message === "Logged in successfully") {
       const userData = {
         userID: responseData.user._id,
@@ -33,16 +32,13 @@ const Login = () => {
         admin: responseData.user.admin,
         organization: responseData.user.organization,
         department: responseData.user.department,
-      };
-
-      // dispatch(logUser(userData)); // dispatch the logUser action to Redux
-
-      console.log("Login successful");
-      handleNavigate(responseData.user._id); // navigate to another page
-    } else if (responseData && responseData.message) {
-      console.log("Login failed", responseData.message);
-    }
-  }, [responseData]);
+      };*/
+    // dispatch(logUser(userData)); // dispatch the logUser action to Redux
+    // navigate to another page
+    // } else if (responseData && responseData.message) {
+    //   console.log("Login failed", responseData.message);
+    // }
+  }, []);
 
   const handleLogin = async () => {
     try {
@@ -75,6 +71,9 @@ const Login = () => {
       if (response.status === 200) {
         const data = response.message;
         setResponseData(data);
+        console.log("Login successful");
+        console.log("Data:", response.message);
+        // handleNavigate(responseData.user._id);
       } else {
         throw new Error(response.message);
       }
