@@ -24,6 +24,7 @@ const Login = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Access-Control-Allow-Headers": "*",
           },
           body: JSON.stringify({
             email: email.trim(),
