@@ -20,8 +20,15 @@ const Login = () => {
     const handleLogin = async () => {
       console.log("TENTEI ENTRAR");
       try {
-        const response = await fetch("https://sb-api.herokuapp.com/emails", {
-          method: "GET",
+        const response = await fetch("https://sb-api.herokuapp.com/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email.trim(),
+            password: password,
+          }),
         });
         console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         const responseData = await response.json();
