@@ -19,27 +19,6 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [responseData, setResponseData] = useState(null);
 
-  useEffect(() => {
-    /*console.log(responseData);
-    if (responseData && responseData.message === "Logged in successfully") {
-      const userData = {
-        userID: responseData.user._id,
-        token: responseData.token,
-        email: email,
-        password: password,
-        name: responseData.user.name,
-        surname: responseData.user.surname,
-        admin: responseData.user.admin,
-        organization: responseData.user.organization,
-        department: responseData.user.department,
-      };*/
-    // dispatch(logUser(userData)); // dispatch the logUser action to Redux
-    // navigate to another page
-    // } else if (responseData && responseData.message) {
-    //   console.log("Login failed", responseData.message);
-    // }
-  }, []);
-
   const handleLogin = async () => {
     try {
       /*const response = await axios.post(apiURL, {
@@ -65,7 +44,6 @@ const Login = () => {
         }),
       });
 
-      console.log(response);
       alert(response);
 
       if (response.status === 200) {
