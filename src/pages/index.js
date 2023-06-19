@@ -73,6 +73,8 @@ const Login = () => {
         console.log(data)*/
       });
 
+      console.log(response);
+
       if (response.status === 200) {
         const data = response.message;
         setResponseData(data);
