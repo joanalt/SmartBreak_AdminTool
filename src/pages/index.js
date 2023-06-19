@@ -17,19 +17,8 @@ const Login = () => {
   const [responseData, setResponseData] = useState(null);
 
   const handleLogin = async () => {
+    console.log("TENTEI ENTRAR");
     try {
-      /*const response = await axios.post(apiURL, {
-        email: email,
-        password: password,
-      });*/
-
-      /*axios.post("https://sb-api.herokuapp.com/auth/login", {
-        email: email,
-        password: password,
-      });
-      .then((response) => displayOutput(response))
-      .catch((err) => console.log(err));*/
-
       const response = await fetch("https://sb-api.herokuapp.com/auth/login", {
         method: "POST",
         headers: {
