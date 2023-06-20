@@ -5,10 +5,7 @@ import NextLink from "next/link";
 //import * as Yup from "yup";
 import { Box, Button, Container, Link, TextField, Typography } from "@mui/material";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
-//import axios from "axios";
-
-//const apiURL = "https://sb-api.herokuapp.com/auth/login";
+import { useState } from "react";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -40,8 +37,6 @@ const Login = () => {
       console.log("Error", error.message);
     }
   };
-
-  useEffect(() => {}, []);
 
   const router = useRouter();
 
@@ -82,7 +77,7 @@ const Login = () => {
         }}
       >
         <Container
-          style={{ marginBottom: "40px" }}
+          style={{ marginTop: "40px", marginBottom: "20px" }}
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -149,6 +144,9 @@ const Login = () => {
               //value={formik.values.password}
               variant="outlined"
             />
+            <Typography color="textSecondary" gutterBottom variant="body2">
+              Se te esqueceste da palavra-passe, recupera-a através da aplicação mobile.
+            </Typography>
             <Box sx={{ py: 2 }}>
               <Button
                 color="primary"
