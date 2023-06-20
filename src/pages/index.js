@@ -5,84 +5,40 @@ import NextLink from "next/link";
 //import * as Yup from "yup";
 import { Box, Button, Container, Link, TextField, Typography } from "@mui/material";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
-//import axios from "axios";
-
-//const apiURL = "https://sb-api.herokuapp.com/auth/login";
+import { useState } from "react";
 
 const Login = () => {
-  console.log("LOGINNNNNN");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [responseData, setResponseData] = useState(null);
-
-  useEffect(() => {
-    const handleLogin = async () => {
-      console.log("TENTEI ENTRAR");
-      try {
-        const response = await fetch("https://sb-api.herokuapp.com/auth/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Headers": "*",
-          },
-          body: JSON.stringify({
-            email: email.trim(),
-            password: password,
-          }),
-        });
-        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        const responseData = await response.json();
-        console.log(responseData);
-
-        if (response.ok) {
-          const data = responseData.message;
-          setResponseData(data);
-          console.log("Login successful");
-          console.log("Data:", responseData.message);
-          // handleNavigate(responseData.user._id);
-        } else {
-          throw new Error(responseData.message);
-        }
-      } catch (error) {
-        console.error(error);
-        console.log("Error", error.message);
-      }
-    };
-
-    handleLogin();
-  }, []);
-
-  /*const handleLogin = async () => {
-    console.log("TENTEI ENTRAR");
+  const [responseData, setResponseData] = useState("");
+  const handleLogin = async () => {
     try {
-      const response = await fetch("https://sb-api.herokuapp.com/emails", {
-        method: "GET",
+      const response = await fetch("https://sb-api.herokuapp.com/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email.trim(),
+          password: password,
+        }),
       });
-      console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-      const responseData = await response.json(); // Converter a resposta para JSON
-      console.log(responseData); // Exibir os dados retornados pelo servidor
 
       if (response.ok) {
-        const data = response.message;
+        const data = response.json();
+        console.log(response);
         setResponseData(data);
-        console.log("Login successful");
-        console.log("Data:", response.message);
-        // handleNavigate(responseData.user._id);
+        router.push("/painel");
       } else {
-        throw new Error(response.message);
+        throw new Error(responseData.message);
       }
     } catch (error) {
       console.error(error);
       console.log("Error", error.message);
     }
-  };*/
+  };
 
   const router = useRouter();
-
-  const handleNavigate = (uid) => {
-    router.push("/painel");
-  };
 
   /*const formik = useFormik({
     initialValues: {
@@ -121,7 +77,7 @@ const Login = () => {
         }}
       >
         <Container
-          style={{ marginBottom: "40px" }}
+          style={{ marginTop: "40px", marginBottom: "20px" }}
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -188,15 +144,19 @@ const Login = () => {
               //value={formik.values.password}
               variant="outlined"
             />
+            <Typography color="textSecondary" gutterBottom variant="body2">
+              Se te esqueceste da palavra-passe, recupera-a através da aplicação mobile.
+            </Typography>
             <Box sx={{ py: 2 }}>
               <Button
                 color="primary"
                 //disabled={formik.isSubmitting}
                 fullWidth
                 size="large"
-                type="submit"
                 variant="contained"
-                onClick={() => handleLogin()}
+                onClick={async () => {
+                  handleLogin();
+                }}
               >
                 Entrar
               </Button>

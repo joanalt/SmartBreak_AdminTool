@@ -68,7 +68,7 @@ export const AccountPopover = (props) => {
       >
         <Typography variant="overline">Conta</Typography>
         <Typography color="text.secondary" variant="body2">
-          Ester Carvalho
+          nome do user logado
         </Typography>
       </Box>
       <MenuList
