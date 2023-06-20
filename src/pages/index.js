@@ -16,42 +16,42 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [responseData, setResponseData] = useState(null);
 
-  useEffect(() => {
-    const handleLogin = async () => {
-      console.log("TENTEI ENTRAR");
-      try {
-        const response = await fetch("https://sb-api.herokuapp.com/auth/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Headers": "*",
-          },
-          body: JSON.stringify({
-            email: email.trim(),
-            password: password,
-          }),
-        });
-        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        const responseData = await response.json();
-        console.log(responseData);
+  //useEffect(() => {
+  const handleLogin = async () => {
+    console.log("TENTEI ENTRAR");
+    try {
+      const response = await fetch("https://sb-api.herokuapp.com/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          //"Access-Control-Allow-Headers": "*",
+        },
+        body: JSON.stringify({
+          email: email.trim(),
+          password: password,
+        }),
+      });
+      console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+      const responseData = await response.json();
+      console.log(responseData);
 
-        if (response.ok) {
-          const data = responseData.message;
-          setResponseData(data);
-          console.log("Login successful");
-          console.log("Data:", responseData.message);
-          // handleNavigate(responseData.user._id);
-        } else {
-          throw new Error(responseData.message);
-        }
-      } catch (error) {
-        console.error(error);
-        console.log("Error", error.message);
+      if (response.ok) {
+        const data = responseData.message;
+        setResponseData(data);
+        console.log("Login successful");
+        console.log("Data:", responseData.message);
+        // handleNavigate(responseData.user._id);
+      } else {
+        throw new Error(responseData.message);
       }
-    };
+    } catch (error) {
+      console.error(error);
+      console.log("Error", error.message);
+    }
+  };
 
-    handleLogin();
-  }, []);
+  //handleLogin();
+  //}, []);
 
   /*const handleLogin = async () => {
     console.log("TENTEI ENTRAR");
