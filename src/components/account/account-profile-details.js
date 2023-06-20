@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
   Button,
@@ -10,25 +10,71 @@ import {
   TextField,
 } from "@mui/material";
 
-export const AccountProfileDetails = (props) => {
-  const [values, setValues] = useState({
-    firstName: "Ester",
-    lastName: "Carvalho",
-    email: "estercarvalho@ua.pt",
-    country: "Portugal",
-  });
+import { doc, collection, updateDoc, getDoc } from "@firebase/firestore";
+import { firestore } from "../../firebase_setup/firebase";
 
-  const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value,
-    });
+export const AccountProfileDetails = (props) => {
+  const id = "EusdGqpC9WYJYIJfYycJVHFf4u72";
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    getInfo();
+  }, []);
+
+  const getInfo = async () => {
+    const docRef = doc(firestore, "users_data", id);
+    const docSnap = await getDoc(docRef);
+    setFirstName(docSnap.data().name);
+    setLastName(docSnap.data().lastName);
+    setEmail(docSnap.data().email);
+  };
+
+  const handleChangefirstName = (e) => {
+    setFirstName(e.target.value);
+    console.log(firstName);
+  };
+
+  const handleChangelastName = (e) => {
+    setLastName(e.target.value);
+    console.log(lastName);
+  };
+
+  const handleChangeEmail = (e) => {
+    setEmail(e.target.value);
+    console.log(email);
+  };
+
+  const editData = async () => {
+    const docRef = doc(firestore, "users_data", id);
+
+    // Set the "capital" field of the city 'DC'
+    if (firstName != "") {
+      await updateDoc(docRef, {
+        name: firstName,
+      });
+    }
+
+    if (lastName != "") {
+      await updateDoc(docRef, {
+        lastName: lastName,
+      });
+    }
+
+    if (email != "") {
+      await updateDoc(docRef, {
+        email: email,
+      });
+    }
+
+    window.location.reload(false);
   };
 
   return (
     <form autoComplete="off" noValidate {...props}>
       <Card>
-        <CardHeader subheader="Esta secção pode ser editada" title="Perfil" />
+        <CardHeader subheader="Estes são os dados que podem ser editados" title="Perfil" />
         <Divider />
         <CardContent>
           <Grid container spacing={3}>
@@ -38,20 +84,21 @@ export const AccountProfileDetails = (props) => {
                 helperText="Escreva o primeiro nome"
                 label="Nome próprio"
                 name="firstName"
-                onChange={handleChange}
+                onChange={handleChangefirstName}
                 required
-                value={values.firstName}
+                value={firstName}
                 variant="outlined"
               />
             </Grid>
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
+                helperText="Escreva o último nome"
                 label="Apelido"
                 name="lastName"
-                onChange={handleChange}
+                onChange={handleChangelastName}
                 required
-                value={values.lastName}
+                value={lastName}
                 variant="outlined"
               />
             </Grid>
@@ -60,20 +107,9 @@ export const AccountProfileDetails = (props) => {
                 fullWidth
                 label="Email"
                 name="email"
-                onChange={handleChange}
+                onChange={handleChangeEmail}
                 required
-                value={values.email}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item md={6} xs={12}>
-              <TextField
-                fullWidth
-                label="País"
-                name="country"
-                onChange={handleChange}
-                required
-                value={values.country}
+                value={email}
                 variant="outlined"
               />
             </Grid>
@@ -87,7 +123,13 @@ export const AccountProfileDetails = (props) => {
             p: 2,
           }}
         >
-          <Button color="primary" variant="contained">
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={() => {
+              editData();
+            }}
+          >
             Guardar alterações
           </Button>
         </Box>

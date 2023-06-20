@@ -12,12 +12,12 @@ const items = [
     title: "Painel",
   },
   {
-    href: "/brevemente_disponivel",
+    href: "/estatisticas",
     icon: <Diagram fontSize="small" />,
     title: "Estatísticas",
   },
   {
-    href: "/brevemente_disponivel",
+    href: "/objetivos",
     icon: <TaskSquare fontSize="small" />,
     title: "Objetivos",
   },
@@ -32,7 +32,7 @@ const items = [
     title: "Funcionários",
   },
   {
-    href: "/brevemente_disponivel",
+    href: "/estruturacao",
     icon: <Magicpen fontSize="small" />,
     title: "Estruturação",
   },
@@ -75,25 +75,31 @@ export const DashboardSidebar = (props) => {
         }}
       >
         <div>
-          <Box sx={{ p: 3 }}>
+          <Box>
             <Box
               sx={{
                 display: "flex",
-                mt: 2,
-                mx: "auto",
-                width: "160px",
+                justifyContent: "center",
+                mt: 5,
+                mb: 3,
                 "& img": {
                   width: "100%",
                 },
               }}
             >
-              <img alt="Smart Break" src="../../public/static/images/navlogo.png" />
+              <img alt="Smart Break" src="static/images/navlogo.png" style={{ width: "60px" }} />
             </Box>
           </Box>
         </div>
         <Box sx={{ flexGrow: 1 }}>
           {items.map((item) => (
-            <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+            <NavItem
+              key={item.title}
+              icon={item.icon}
+              href={item.href}
+              title={item.title}
+              style={{ marginTop: "20px" }}
+            />
           ))}
         </Box>
         <Box
@@ -113,7 +119,7 @@ export const DashboardSidebar = (props) => {
         open
         PaperProps={{
           sx: {
-            backgroundColor: "#0051BA",
+            backgroundColor: "#07407B",
             color: "#FFFFFF",
             width: 280,
           },
@@ -132,7 +138,7 @@ export const DashboardSidebar = (props) => {
       open={open}
       PaperProps={{
         sx: {
-          backgroundColor: "#0051BA",
+          backgroundColor: "#07407B",
           color: "#FFFFFF",
           width: 280,
         },

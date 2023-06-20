@@ -14,27 +14,35 @@ import {
   Typography,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { setDoc, doc, getDoc, collection, updateDoc, addDoc } from "@firebase/firestore";
+import { firestore, auth } from "../firebase_setup/firebase";
+import { useRouter } from "next/router";
 
 const Register = () => {
   const formik = useFormik({
     initialValues: {
-      email: "",
-      firstName: "",
-      lastName: "",
-      password: "",
+      nameOrg: "",
+      areaOrg: "",
+      numberOrg: "",
+      address: "",
       policy: false,
     },
     validationSchema: Yup.object({
-      email: Yup.string().email("Must be a valid email").max(255).required("Email is required"),
-      firstName: Yup.string().max(255).required("First name is required"),
-      lastName: Yup.string().max(255).required("Last name is required"),
-      password: Yup.string().max(255).required("Password is required"),
-      policy: Yup.boolean().oneOf([true], "This field must be checked"),
+      nameOrg: Yup.string().max(255).required("Campo obrigatório"),
+      numberOrg: Yup.string().max(255).required("Campo obrigatório"),
+      address: Yup.string().max(255).required("Campo obrigatório"),
+      policy: Yup.boolean().oneOf([true], "Campo obrigatório"),
     }),
     onSubmit: () => {
       Router.push("/").catch(console.error);
     },
   });
+
+  const router = useRouter();
+
+  function handleNavigation() {
+    router.push("/painel");
+  }
 
   return (
     <>
@@ -48,18 +56,59 @@ const Register = () => {
           display: "flex",
           flexGrow: 1,
           minHeight: "100%",
+          backgroundColor: "#07407B",
+          flexDirection: "column",
         }}
       >
-        <Container maxWidth="sm">
-          <NextLink href="/" passHref>
+        <Container
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "100%",
+            width: "100%",
+            marginTop: "20px",
+            marginBottom: "20px",
+          }}
+        >
+          <img src="static/images/auth_logo.svg" alt="logo" width="120" height="120" />
+          <p
+            style={{
+              paddingTop: "15px",
+              color: "#E3ECF7",
+              fontSize: "20px",
+              fontWeight: "bold",
+            }}
+          >
+            Smart Break
+          </p>
+        </Container>
+        <Container
+          maxWidth="sm"
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "100%",
+            width: "100%",
+            marginBottom: "60px",
+            backgroundColor: "#FFFFFF",
+            padding: "20px",
+            borderRadius: "20px",
+            boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.3)",
+          }}
+        >
+          <NextLink href="/registar1" passHref>
             <Button component="a" startIcon={<ArrowBackIcon fontSize="small" />}>
-              Painel
+              Voltar
             </Button>
           </NextLink>
           <form onSubmit={formik.handleSubmit}>
             <Box sx={{ my: 3 }}>
               <Typography color="textPrimary" variant="h4">
-                Regista-te
+                Regista a tua empresa
               </Typography>
               <Typography color="textSecondary" gutterBottom variant="body2">
                 Estamos contentes por teres tomado esta iniciativa. Vem fazer energy breaks.
@@ -69,50 +118,47 @@ const Register = () => {
               error={Boolean(formik.touched.firstName && formik.errors.firstName)}
               fullWidth
               helperText={formik.touched.firstName && formik.errors.firstName}
-              label="Nome prórpio"
+              label="Nome"
               margin="normal"
-              name="firstName"
+              name="nameOrg"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              value={formik.values.firstName}
+              value={formik.values.nameOrg}
+              variant="outlined"
+            />
+            <TextField
+              fullWidth
+              label="Área de atuação (opcional)"
+              margin="normal"
+              name="areaOrg"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              value={formik.values.areaOrg}
               variant="outlined"
             />
             <TextField
               error={Boolean(formik.touched.lastName && formik.errors.lastName)}
               fullWidth
               helperText={formik.touched.lastName && formik.errors.lastName}
-              label="Apelido"
+              label="Contacto telefónico"
               margin="normal"
-              name="lastName"
+              name="numberOrg"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              value={formik.values.lastName}
+              value={formik.values.numberOrg}
               variant="outlined"
             />
+
             <TextField
-              error={Boolean(formik.touched.email && formik.errors.email)}
+              error={Boolean(formik.touched.lastName && formik.errors.lastName)}
               fullWidth
-              helperText={formik.touched.email && formik.errors.email}
-              label="Email"
+              helperText={formik.touched.lastName && formik.errors.lastName}
+              label="Morada"
               margin="normal"
-              name="email"
+              name="address"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              type="email"
-              value={formik.values.email}
-              variant="outlined"
-            />
-            <TextField
-              error={Boolean(formik.touched.password && formik.errors.password)}
-              fullWidth
-              helperText={formik.touched.password && formik.errors.password}
-              label="Palavra-passe"
-              margin="normal"
-              name="password"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              type="password"
-              value={formik.values.password}
+              value={formik.values.address}
               variant="outlined"
             />
             <Box
@@ -147,13 +193,34 @@ const Register = () => {
                 size="large"
                 type="submit"
                 variant="contained"
+                onClick={async () => {
+                  // call validation
+                  try {
+                    const docRef = await addDoc(collection(firestore, "organizations"), {
+                      name: formik.values.nameOrg,
+                      area: formik.values.areaOrg,
+                      phone: formik.values.numberOrg,
+                      address: formik.values.address,
+                    });
+                    const uid = docRef.id;
+                    await updateDoc(docRef, {
+                      id: docRef.id,
+                    });
+                    handleNavigation();
+                  } catch (err) {
+                    console.error(err);
+                    alert(err.message);
+                  }
+
+                  // console.log(formik.values.password)
+                }}
               >
                 Registar
               </Button>
             </Box>
             <Typography color="textSecondary" variant="body2">
               Já tens conta?{" "}
-              <NextLink href="/login" passHref>
+              <NextLink href="/" passHref>
                 <Link variant="subtitle2" underline="hover">
                   Clica aqui para entrar
                 </Link>

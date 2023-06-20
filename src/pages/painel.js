@@ -3,12 +3,11 @@ import { Box, Container, Grid } from "@mui/material";
 import { Budget } from "../components/dashboard/ganhos";
 import { LatestOrders } from "../components/dashboard/consumos_gerais";
 import { LatestProducts } from "../components/dashboard/atividade_recente";
-import { Sales } from "../components/dashboard/bateria_empresa";
+import { Bateria } from "../components/dashboard/bateria_empresa";
+import { Metricas } from "../components/dashboard/metricas";
 import { TasksProgress } from "../components/dashboard/objetivos_painel";
 import { TotalCustomers } from "../components/dashboard/pausas";
 import { DashboardLayout } from "../components/dashboard-layout";
-
-//depois apaga-se o comentário, era só para resolver um problema :/
 
 const Page = () => (
   <>
@@ -33,13 +32,16 @@ const Page = () => (
           <Grid item xl={4} lg={4} sm={6} xs={12}>
             <TasksProgress />
           </Grid>
-          <Grid item lg={12} md={12} xl={12} xs={12}>
-            <Sales />
+          <Grid item lg={6} md={12} xl={6} xs={12}>
+            <Bateria />
+          </Grid>
+          <Grid item lg={6} md={12} xl={6} xs={12}>
+            <Metricas />
           </Grid>
           <Grid item lg={8} md={12} xl={9} xs={12}>
             <LatestOrders />
           </Grid>
-          <Grid item lg={4} md={6} xl={3} xs={12}>
+          <Grid item lg={4} md={12} xl={3} xs={12}>
             <LatestProducts sx={{ height: "100%" }} />
           </Grid>
         </Grid>

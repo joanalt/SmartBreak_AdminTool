@@ -13,13 +13,19 @@ import {
   TablePagination,
   TableRow,
   Typography,
+  Button,
+  CardContent,
+  TextField,
+  InputAdornment,
+  SvgIcon,
 } from "@mui/material";
-import { getInitials } from "../../utils/get-initials";
+import { Search as SearchIcon } from "../../icons/search";
+import { doc, deleteDoc, updateDoc, getDoc } from "@firebase/firestore";
+import { firestore } from "../../firebase_setup/firebase";
 
-export const CustomerListResults = ({ customers, ...rest }) => {
+export const CustomerListResults = ({ customers, ...rest }, props) => {
   const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
-  const [limit, setLimit] = useState(10);
-  const [page, setPage] = useState(0);
+  const [search, setSearch] = useState("");
 
   const handleSelectAll = (event) => {
     let newSelectedCustomerIds;
@@ -53,84 +59,182 @@ export const CustomerListResults = ({ customers, ...rest }) => {
     setSelectedCustomerIds(newSelectedCustomerIds);
   };
 
-  const handleLimitChange = (event) => {
-    setLimit(event.target.value);
+  const handleChange = (e) => {
+    setSearch(e.target.value);
+    console.log(search);
   };
 
-  const handlePageChange = (event, newPage) => {
-    setPage(newPage);
-  };
+  const filteredCustomers = customers.filter((customer) =>
+    customer.name.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
-    <Card {...rest}>
-      <PerfectScrollbar>
-        <Box sx={{ minWidth: 1050 }}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell padding="checkbox">
-                  <Checkbox
-                    checked={selectedCustomerIds.length === customers.length}
-                    color="primary"
-                    indeterminate={
-                      selectedCustomerIds.length > 0 &&
-                      selectedCustomerIds.length < customers.length
-                    }
-                    onChange={handleSelectAll}
-                  />
-                </TableCell>
-                <TableCell>Nome</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Equipa</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {customers.slice(0, limit).map((customer) => (
-                <TableRow
-                  hover
-                  key={customer.id}
-                  selected={selectedCustomerIds.indexOf(customer.id) !== -1}
-                >
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={selectedCustomerIds.indexOf(customer.id) !== -1}
-                      onChange={(event) => handleSelectOne(event, customer.id)}
-                      value="true"
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <Box
-                      sx={{
-                        alignItems: "center",
-                        display: "flex",
-                      }}
-                    >
-                      <Avatar src={customer.avatarUrl} sx={{ mr: 2 }}>
-                        {getInitials(customer.name)}
-                      </Avatar>
-                      <Typography color="textPrimary" variant="body1">
-                        {customer.name}
-                      </Typography>
-                    </Box>
-                  </TableCell>
-                  <TableCell>{customer.email}</TableCell>
-                  <TableCell>{`${customer.equipa}`}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+    <>
+      <Box {...props}>
+        <Box
+          sx={{
+            alignItems: "center",
+            display: "flex",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+            m: -1,
+          }}
+        >
+          <Typography sx={{ m: 1 }} variant="h4">
+            Funcionários da empresa
+          </Typography>
         </Box>
-      </PerfectScrollbar>
-      <TablePagination
-        component="div"
-        count={customers.length}
-        onPageChange={handlePageChange}
-        onRowsPerPageChange={handleLimitChange}
-        page={page}
-        rowsPerPage={limit}
-        rowsPerPageOptions={[5, 10, 25]}
-      />
-    </Card>
+        <Box sx={{ mt: 3 }}>
+          <Card>
+            <CardContent>
+              <Box sx={{ maxWidth: 500 }}>
+                <TextField
+                  fullWidth
+                  value={search}
+                  onChange={handleChange}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SvgIcon color="action" fontSize="small">
+                          <SearchIcon />
+                        </SvgIcon>
+                      </InputAdornment>
+                    ),
+                  }}
+                  placeholder="Procurar funcionário"
+                  variant="outlined"
+                />
+              </Box>
+            </CardContent>
+          </Card>
+        </Box>
+      </Box>
+      <Card {...rest} sx={{ mt: 3 }}>
+        <PerfectScrollbar>
+          <Box sx={{ minWidth: 1050 }}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Nome</TableCell>
+                  <TableCell>Email</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {search == "" ? (
+                  <>
+                    {customers &&
+                      customers.map((customer) => (
+                        <TableRow
+                          hover
+                          key={customer.id}
+                          selected={selectedCustomerIds.indexOf(customer.id) !== -1}
+                        >
+                          <TableCell>
+                            <Box
+                              sx={{
+                                alignItems: "center",
+                                display: "flex",
+                              }}
+                            >
+                              <Typography color="textPrimary" variant="body1">
+                                {customer.name}
+                              </Typography>
+                            </Box>
+                          </TableCell>
+                          <TableCell>{customer.email}</TableCell>
+                          <TableCell>
+                            <Button
+                              color="primary"
+                              variant="contained"
+                              style={{ marginLeft: 10 }}
+                              onClick={async () => {
+                                await deleteDoc(doc(firestore, "users_data", customer.id));
+                                window.location.reload(false);
+                              }}
+                            >
+                              Eliminar funcionário
+                            </Button>
+                            <Button
+                              color="primary"
+                              variant="contained"
+                              style={{ marginLeft: 40 }}
+                              onClick={async () => {
+                                const docRef = doc(firestore, "users_data", customer.id);
+
+                                // Set the "capital" field of the city 'DC'
+                                await updateDoc(docRef, {
+                                  admin: true,
+                                });
+                                alert(
+                                  "Utilizador " + customer.name + " promovido a administrador."
+                                );
+                              }}
+                            >
+                              Pomover a administrador
+                            </Button>
+                            <Button
+                              color="primary"
+                              variant="outlined"
+                              style={{ marginLeft: 40 }}
+                              onClick={async () => {
+                                const docRef = doc(firestore, "users_data", customer.id);
+
+                                // Set the "capital" field of the city 'DC'
+                                await updateDoc(docRef, {
+                                  admin: false,
+                                });
+                                alert("Utilizador " + customer.name + " desprovido.");
+                              }}
+                            >
+                              Despromover
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                  </>
+                ) : (
+                  <>
+                    {filteredCustomers.map((customer) => (
+                      <TableRow
+                        hover
+                        key={customer.id}
+                        selected={selectedCustomerIds.indexOf(customer.id) !== -1}
+                      >
+                        <TableCell padding="checkbox">
+                          <Checkbox
+                            checked={selectedCustomerIds.indexOf(customer.id) !== -1}
+                            onChange={(event) => handleSelectOne(event, id)}
+                            value="true"
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <Box
+                            sx={{
+                              alignItems: "center",
+                              display: "flex",
+                            }}
+                          >
+                            <Avatar src={customer.avatarUrl} sx={{ mr: 2 }}>
+                              {customer.name}
+                            </Avatar>
+                            <Typography color="textPrimary" variant="body1">
+                              {customer.name}
+                            </Typography>
+                          </Box>
+                        </TableCell>
+                        <TableCell>{customer.email}</TableCell>
+                        <TableCell>{customer.equipa}</TableCell>
+                      </TableRow>
+                    ))}
+                  </>
+                )}
+              </TableBody>
+            </Table>
+          </Box>
+        </PerfectScrollbar>
+      </Card>
+    </>
   );
 };
 
