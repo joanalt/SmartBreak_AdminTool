@@ -82,10 +82,9 @@ export const AccountProfileDetails = (props) => {
               <TextField
                 fullWidth
                 helperText="Escreva o primeiro nome"
-                label="Nome próprio"
+                label="Nome"
                 name="firstName"
                 onChange={handleChangefirstName}
-                required
                 value={firstName}
                 variant="outlined"
               />
@@ -97,7 +96,6 @@ export const AccountProfileDetails = (props) => {
                 label="Apelido"
                 name="lastName"
                 onChange={handleChangelastName}
-                required
                 value={lastName}
                 variant="outlined"
               />
@@ -108,7 +106,16 @@ export const AccountProfileDetails = (props) => {
                 label="Email"
                 name="email"
                 onChange={handleChangeEmail}
-                required
+                value={email}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <TextField
+                fullWidth
+                label="Alterar palavra-passe"
+                name="alterar palavra-passe"
+                //onChange={handleChangeEmail}
                 value={email}
                 variant="outlined"
               />
