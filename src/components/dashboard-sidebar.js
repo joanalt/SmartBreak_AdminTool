@@ -12,7 +12,7 @@ const items = [
     title: "Painel",
   },
   {
-    href: "/brevemente_disponivel",
+    href: "/estatisticas",
     icon: <Diagram fontSize="small" />,
     title: "Estatísticas",
   },
