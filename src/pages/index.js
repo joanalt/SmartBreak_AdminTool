@@ -11,39 +11,59 @@ import { useState, useEffect } from "react";
 //const apiURL = "https://sb-api.herokuapp.com/auth/login";
 
 const Login = () => {
+  console.log("LOGINNNNNN");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [responseData, setResponseData] = useState(null);
 
-  const handleLogin = async () => {
+  useEffect(() => {
+    const handleLogin = async () => {
+      console.log("TENTEI ENTRAR");
+      try {
+        const response = await fetch("https://sb-api.herokuapp.com/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Headers": "*",
+          },
+          body: JSON.stringify({
+            email: email.trim(),
+            password: password,
+          }),
+        });
+        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        const responseData = await response.json();
+        console.log(responseData);
+
+        if (response.ok) {
+          const data = responseData.message;
+          setResponseData(data);
+          console.log("Login successful");
+          console.log("Data:", responseData.message);
+          // handleNavigate(responseData.user._id);
+        } else {
+          throw new Error(responseData.message);
+        }
+      } catch (error) {
+        console.error(error);
+        console.log("Error", error.message);
+      }
+    };
+
+    handleLogin();
+  }, []);
+
+  /*const handleLogin = async () => {
+    console.log("TENTEI ENTRAR");
     try {
-      /*const response = await axios.post(apiURL, {
-        email: email,
-        password: password,
-      });*/
-
-      /*axios.post("https://sb-api.herokuapp.com/auth/login", {
-        email: email,
-        password: password,
+      const response = await fetch("https://sb-api.herokuapp.com/emails", {
+        method: "GET",
       });
-      .then((response) => displayOutput(response))
-      .catch((err) => console.log(err));*/
-
-      const response = await fetch("https://sb-api.herokuapp.com/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email.trim(),
-          password: password,
-        }),
-      });
-
+      console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
       const responseData = await response.json(); // Converter a resposta para JSON
       console.log(responseData); // Exibir os dados retornados pelo servidor
 
-      if (response.status === 200) {
+      if (response.ok) {
         const data = response.message;
         setResponseData(data);
         console.log("Login successful");
@@ -56,7 +76,7 @@ const Login = () => {
       console.error(error);
       console.log("Error", error.message);
     }
-  };
+  };*/
 
   const router = useRouter();
 

@@ -3,6 +3,8 @@ import NextLink from "next/link";
 import { Box, Button, Container, Typography } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
+//depois apaga-se o comentário, era só para resolver um problema :/
+
 const Page = () => (
   <>
     <Head>
