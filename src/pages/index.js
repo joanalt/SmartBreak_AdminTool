@@ -203,9 +203,9 @@ const Login = () => {
             </Box>
             <Typography color="textSecondary" variant="body2">
               Ainda não tens conta?{" "}
-              <NextLink href="/registar1">
+              <NextLink href="/registar">
                 <Link
-                  to="/registar1"
+                  to="/registar"
                   variant="subtitle2"
                   underline="hover"
                   sx={{

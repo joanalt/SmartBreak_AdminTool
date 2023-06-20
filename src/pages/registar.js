@@ -100,11 +100,6 @@ const Register = () => {
             boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.3)",
           }}
         >
-          <NextLink href="/registar1" passHref>
-            <Button component="a" startIcon={<ArrowBackIcon fontSize="small" />}>
-              Voltar
-            </Button>
-          </NextLink>
           <form onSubmit={formik.handleSubmit}>
             <Box sx={{ my: 3 }}>
               <Typography color="textPrimary" variant="h4">
@@ -124,16 +119,6 @@ const Register = () => {
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
               value={formik.values.nameOrg}
-              variant="outlined"
-            />
-            <TextField
-              fullWidth
-              label="Área de atuação (opcional)"
-              margin="normal"
-              name="areaOrg"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              value={formik.values.areaOrg}
               variant="outlined"
             />
             <TextField
@@ -175,7 +160,7 @@ const Register = () => {
               />
               <Typography color="textSecondary" variant="body2">
                 Eu li os{" "}
-                <NextLink href="#" passHref>
+                <NextLink href="/#" passHref>
                   <Link color="primary" underline="always" variant="subtitle2">
                     Termos e Condições
                   </Link>
