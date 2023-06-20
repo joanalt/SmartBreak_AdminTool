@@ -89,10 +89,10 @@ export const ProductListToolbar = (props) => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"Adicionar uma nova equipa"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{"Adicionar um novo departamento"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Preencha os campos corretamente para criar uma nova equipa.
+            Preencha os campos corretamente para criar um novo departamento.
           </DialogContentText>
           <Box>
             <TextField
@@ -101,7 +101,7 @@ export const ProductListToolbar = (props) => {
               defaultValue={""}
               fullWidth
               id="team_name"
-              label="Nome da equipa"
+              label="Nome do departamento"
               variant="outlined"
               required
               size="small"
@@ -113,13 +113,13 @@ export const ProductListToolbar = (props) => {
               fullWidth
               multiline
               id="team_description"
-              label="Descrição da equipa"
+              label="Descrição do departamento"
               required
               rows={4}
               variant="outlined"
               size="small"
             />
-            <FormControl required fullWidth sx={{ marginTop: 3 }}>
+            {/*<FormControl required fullWidth sx={{ marginTop: 3 }}>
               <InputLabel id="demo-simple-select-label">Membros</InputLabel>
               <Select
                 labelId="team_users"
@@ -148,7 +148,7 @@ export const ProductListToolbar = (props) => {
                   </MenuItem>
                 ))}
               </Select>
-            </FormControl>
+                </FormControl>*/}
           </Box>
         </DialogContent>
         <DialogActions>
@@ -156,11 +156,11 @@ export const ProductListToolbar = (props) => {
           <Button
             onClick={async () => {
               if (nameTeam == "") {
-                alert("Preencha o campo do nome da nova equipa.");
+                alert("Preencha o campo do nome do novo departamento.");
               } else if (descriptionTeam == "") {
-                alert("Preencha o campo da descrição da nova equipa.");
+                alert("Preencha o campo da descrição do novo departamento.");
               } else if (usersSelected.length == 0) {
-                alert("Prencha os membros da nova equipa.");
+                alert("Prencha os membros do novo departamento.");
               }
               console.log(nameTeam);
               console.log(descriptionTeam);
@@ -201,23 +201,16 @@ export const ProductListToolbar = (props) => {
         }}
       >
         <Typography sx={{ m: 1 }} variant="h4">
-          Equipas da empresa
+          Departamentos da empresa
         </Typography>
         <Box sx={{ m: 1 }}>
-          {/* <Button
-          color="primary"
-          variant="contained"
-          style={{ marginLeft: "10px", marginTop: "10px" }}
-        >
-          Eliminar equipa
-        </Button> */}
           <Button
             color="primary"
             variant="contained"
             style={{ marginLeft: "10px", marginTop: "10px" }}
             onClick={handleClickOpen}
           >
-            Adicionar equipa
+            Adicionar
           </Button>
         </Box>
       </Box>

@@ -24,7 +24,7 @@ const items = [
   {
     href: "/equipas",
     icon: <People fontSize="small" />,
-    title: "Equipas",
+    title: "Departamentos",
   },
   {
     href: "/funcionarios",

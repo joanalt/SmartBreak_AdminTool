@@ -125,10 +125,10 @@ export const ProductCard = ({ product }) => {
               <Button
                 color="primary"
                 variant="contained"
-                style={{ marginLeft: "10px", marginTop: "10px" }}
+                style={{ marginLeft: "70px", marginTop: "10px" }}
                 onClick={handleClickOpen}
               >
-                Eliminar objetivo
+                Eliminar
               </Button>
             </Grid>
           </Grid>
