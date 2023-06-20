@@ -5,7 +5,7 @@ module.exports = {
     dirs: ["pages", "utils"], // Only run ESLint on the 'pages' and 'utils' directories during production builds (next build)
   },
 
-  async headers() {
+  /*async headers() {
     return [
       {
         // matching all API routes
@@ -22,5 +22,5 @@ module.exports = {
         ],
       },
     ];
-  },
+  },*/
 };
