@@ -17,7 +17,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useState } from "react";
-import { Car, Coffee, DollarCircle, Airplane, CardAdd} from "iconsax-react";
+import { Car, Coffee, DollarCircle, Airplane, CardAdd } from "iconsax-react";
 
 export const Recompensas = (props) => {
   const theme = useTheme();
@@ -31,33 +31,63 @@ export const Recompensas = (props) => {
     setOpen(false);
   };
 
-  const [descriptionRecompensa, setDescriptionRecompensa] = useState()
+  const [descriptionRecompensa, setDescriptionRecompensa] = useState();
 
   const recompensas = [
     {
       id: uuid(),
       name: "Vale de 20€ de combustível em bombas da Galp.",
-      icon: <Car variant="Bold" color="#07407B" aria-label="Ícone na cor azul num fundo branco de um carro"/>,    
+      icon: (
+        <Car
+          variant="Bold"
+          color="#07407B"
+          aria-label="Ícone na cor azul num fundo branco de um carro"
+        />
+      ),
     },
     {
       id: uuid(),
       name: "1 dia de férias programado para o mês de setembro.",
-      icon: <Airplane variant="Bold" color="#07407B" aria-label="Ícone na cor azul num fundo branco de um avião"/>, 
+      icon: (
+        <Airplane
+          variant="Bold"
+          color="#07407B"
+          aria-label="Ícone na cor azul num fundo branco de um avião"
+        />
+      ),
     },
     {
       id: uuid(),
       name: "Extra de 10 cafés grátis durante a semana.",
-      icon: <Coffee variant="Bold" color="#07407B" aria-label="Ícone na cor azul num fundo branco de um café"/>,
+      icon: (
+        <Coffee
+          variant="Bold"
+          color="#07407B"
+          aria-label="Ícone na cor azul num fundo branco de um café"
+        />
+      ),
     },
     {
       id: uuid(),
       name: "Bónus de 50€ mensais.",
-      icon: <DollarCircle variant="Bold" color="#07407B" aria-label="Ícone na cor azul num fundo branco de um dollar"/>,
+      icon: (
+        <DollarCircle
+          variant="Bold"
+          color="#07407B"
+          aria-label="Ícone na cor azul num fundo branco de um dollar"
+        />
+      ),
     },
     {
       id: uuid(),
       name: "Vale de 20€ em refeições.",
-      icon: <CardAdd variant="Bold" color="#07407B" aria-label="Ícone na cor azul num fundo branco de um cartão bancário"/>,
+      icon: (
+        <CardAdd
+          variant="Bold"
+          color="#07407B"
+          aria-label="Ícone na cor azul num fundo branco de um cartão bancário"
+        />
+      ),
     },
   ];
 
@@ -70,9 +100,17 @@ export const Recompensas = (props) => {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title" aria-label="Texto na cor preta num fundo branco escrito Adicionar uma nova recompensa">Adicionar uma nova recompensa</DialogTitle>
+          <DialogTitle
+            id="alert-dialog-title"
+            aria-label="Texto na cor preta num fundo branco escrito Adicionar uma nova recompensa"
+          >
+            Adicionar uma nova recompensa
+          </DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description" aria-label="Texto na cor preta num fundo branco escrito Preencha os campos corretamente para criar uma nova recompensa.">
+            <DialogContentText
+              id="alert-dialog-description"
+              aria-label="Texto na cor preta num fundo branco escrito Preencha os campos corretamente para criar uma nova recompensa."
+            >
               Preencha os campos corretamente para criar uma nova recompensa.
             </DialogContentText>
             <Box>
@@ -93,8 +131,14 @@ export const Recompensas = (props) => {
             </Box>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} aria-label="Botão clicável com texto na cor azul escrito Cancelar">Cancelar</Button>
             <Button
+              onClick={handleClose}
+              aria-label="Botão clicável com texto na cor azul escrito Cancelar"
+            >
+              Cancelar
+            </Button>
+            <Button
+              style={{ color: "#F57738" }}
               onClick={async () => {
                 if (descriptionRecompensa == "") {
                   alert("Preencha o campo da nova recompensa.");
@@ -115,7 +159,7 @@ export const Recompensas = (props) => {
                 window.location.reload(false);
               }}
               autoFocus
-              aria-label="Botão clicável com texto na cor azul escrito Adicionar"
+              aria-label="Botão clicável com texto na cor azul laranja Adicionar"
             >
               Adicionar
             </Button>
@@ -130,7 +174,11 @@ export const Recompensas = (props) => {
             m: -1,
           }}
         >
-          <CardHeader subtitle={`${recompensas.length} in total`} title="Recompensas" aria-label="Texto como título na cor preta num fundo branco escrito Recompensas" />
+          <CardHeader
+            subtitle={`${recompensas.length} in total`}
+            title="Recompensas"
+            aria-label="Texto como título na cor preta num fundo branco escrito Recompensas"
+          />
           <Box sx={{ m: 1 }}>
             <Button
               color="primary"
@@ -139,7 +187,7 @@ export const Recompensas = (props) => {
               onClick={handleClickOpen}
               aria-label="Botão na cor azul e hover laranja clicável com texto na cor branca escrito Adicionar recompensa"
             >
-              Adicionar recompensa
+              Adicionar
             </Button>
           </Box>
         </Box>
@@ -148,8 +196,11 @@ export const Recompensas = (props) => {
       <List>
         {recompensas.map((recompensas, i) => (
           <ListItem divider={i < recompensas.length - 1} key={recompensas.id}>
-            <div style={{marginRight: 10}}>{recompensas.icon}</div>
-            <ListItemText primary={recompensas.name} aria-label={`Texto na cor preta num fundo branco escrito ${recompensas.name}`}/>
+            <div style={{ marginRight: 10 }}>{recompensas.icon}</div>
+            <ListItemText
+              primary={recompensas.name}
+              aria-label={`Texto na cor preta num fundo branco escrito ${recompensas.name}`}
+            />
             <Button
               color="primary"
               variant="outlined"

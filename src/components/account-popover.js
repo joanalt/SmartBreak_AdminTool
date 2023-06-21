@@ -3,18 +3,17 @@ import { Box, MenuItem, MenuList, Popover, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../redux/user";
-import { useSelector } from "react-redux";
-import React, { useEffect } from "react";
-import { updateUserData } from "../redux/user";
 
 export const AccountPopover = (props) => {
+  const user = JSON.parse(localStorage.getItem("userData"));
+  console.log(user);
+
   const { anchorEl, onClose, open, ...other } = props;
 
-  const userData = useSelector((state) => state.user);
-  const { name, surname } = userData;
+  const name = user.name;
+  const surname = user.surname;
 
   const dispatch = useDispatch();
-  const router = useRouter();
 
   const handleLogout = async () => {
     try {
@@ -25,9 +24,7 @@ export const AccountPopover = (props) => {
     }
   };
 
-  useEffect(() => {
-    updateUserData(userData);
-  }, [userData]);
+  const router = useRouter();
 
   return (
     <Popover
@@ -51,8 +48,7 @@ export const AccountPopover = (props) => {
       >
         <Typography variant="overline">Conta</Typography>
         <Typography color="text.secondary" variant="body2">
-          nome do user logado
-          {`${name} ${surname}`}
+          {name + " " + surname}
         </Typography>
       </Box>
       <MenuList
