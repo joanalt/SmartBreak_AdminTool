@@ -1,50 +1,33 @@
-import { useContext } from "react";
-import Router from "next/router";
 import PropTypes from "prop-types";
 import { Box, MenuItem, MenuList, Popover, Typography } from "@mui/material";
-import { AuthContext } from "../contexts/auth-context";
-import { auth, ENABLE_AUTH } from "../lib/auth";
+import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../redux/user";
+import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { updateUserData } from "../redux/user";
 
 export const AccountPopover = (props) => {
   const { anchorEl, onClose, open, ...other } = props;
-  const authContext = useContext(AuthContext);
 
-  const handleSignOut = async () => {
-    onClose?.();
+  const userData = useSelector((state) => state.user);
+  const { name, surname } = userData;
 
-    // Check if authentication with Zalter is enabled
-    // If not enabled, then redirect is not required
-    if (!ENABLE_AUTH) {
-      return;
-    }
+  const dispatch = useDispatch();
+  const router = useRouter();
 
-    // Check if auth has been skipped
-    // From sign-in page we may have set "skip-auth" to "true"
-    // If this has been skipped, then redirect to "sign-in" directly
-    const authSkipped = globalThis.sessionStorage.getItem("skip-auth") === "true";
-
-    if (authSkipped) {
-      // Cleanup the skip auth state
-      globalThis.sessionStorage.removeItem("skip-auth");
-
-      // Redirect to sign-in page
-      Router.push("/").catch(console.error);
-      return;
-    }
-
+  const handleLogout = async () => {
     try {
-      // This can be call inside AuthProvider component, but we do it here for simplicity
-      await auth.signOut();
-
-      // Update Auth Context state
-      authContext.signOut();
-
-      // Redirect to sign-in page
-      Router.push("/").catch(console.error);
+      dispatch(logoutUser());
+      router.push("/");
     } catch (err) {
       console.error(err);
     }
   };
+
+  useEffect(() => {
+    updateUserData(userData);
+  }, [userData]);
 
   return (
     <Popover
@@ -69,6 +52,7 @@ export const AccountPopover = (props) => {
         <Typography variant="overline">Conta</Typography>
         <Typography color="text.secondary" variant="body2">
           nome do user logado
+          {`${name} ${surname}`}
         </Typography>
       </Box>
       <MenuList
@@ -84,7 +68,7 @@ export const AccountPopover = (props) => {
           },
         }}
       >
-        <MenuItem onClick={handleSignOut}>Terminar sessão</MenuItem>
+        <MenuItem onClick={handleLogout}>Terminar sessão</MenuItem>
       </MenuList>
     </Popover>
   );

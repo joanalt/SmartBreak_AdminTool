@@ -212,7 +212,7 @@ const Register = () => {
               />
               <Typography color="textSecondary" variant="body2">
                 Eu li os{" "}
-                <NextLink href="/#" passHref>
+                <NextLink href="/termos_condicoes" passHref>
                   <Link color="primary" underline="always" variant="subtitle2">
                     Termos e Condições
                   </Link>

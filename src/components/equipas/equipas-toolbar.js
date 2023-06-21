@@ -154,6 +154,7 @@ export const ProductListToolbar = (props) => {
         <DialogActions>
           <Button onClick={handleClose}>Cancelar</Button>
           <Button
+            style={{ color: "#F57738" }}
             onClick={async () => {
               if (nameTeam == "") {
                 alert("Preencha o campo do nome do novo departamento.");
