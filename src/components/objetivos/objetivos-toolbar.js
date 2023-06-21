@@ -155,6 +155,7 @@ export const ProductListToolbar = (props) => {
         <DialogActions>
           <Button onClick={handleClose}>Cancelar</Button>
           <Button
+            style={{ color: "#F57738" }}
             onClick={async () => {
               if (priorityGoal == "") {
                 alert("Preencha o campo da prioridade do novo objetivo.");

@@ -52,6 +52,7 @@ export const ProductCard = ({ product }) => {
         <DialogActions>
           <Button onClick={handleClose}>Cancelar</Button>
           <Button
+            style={{ color: "#F55038" }}
             onClick={async () => {
               await deleteDoc(doc(firestore, "goals", product.id));
               window.location.reload(false);
