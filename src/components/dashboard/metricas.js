@@ -19,22 +19,22 @@ export const Metricas = (props) => {
     {
       id: uuid(),
       name: "Carregar um portátil durante 40 horas.",
-      imageUrl: <Monitor variant="Bold" color="#0051BA" />,
+      imageUrl: <Monitor variant="Bold" color="#07407B" />,
     },
     {
       id: uuid(),
       name: "Igual aos gastos de um T3 com as luzes ligadas durante 4 horas.",
-      imageUrl: <Home variant="Bold" color="#0051BA" />,
+      imageUrl: <Home variant="Bold" color="#07407B" />,
     },
     {
       id: uuid(),
       name: "Equivalente a uma viagem de comboio Porto - Vigo.",
-      imageUrl: <Bus variant="Bold" color="#0051BA" />,
+      imageUrl: <Bus variant="Bold" color="#07407B" />,
     },
     {
       id: uuid(),
       name: "Redução de 2,1% das emissões de dióxido carbono.",
-      imageUrl: <Cloud variant="Bold" color="#0051BA" />,
+      imageUrl: <Cloud variant="Bold" color="#07407B" />,
     },
   ];
 

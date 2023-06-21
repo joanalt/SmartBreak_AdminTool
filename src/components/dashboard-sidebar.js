@@ -12,19 +12,19 @@ const items = [
     title: "Painel",
   },
   {
-    href: "/brevemente_disponivel",
+    href: "/estatisticas",
     icon: <Diagram fontSize="small" />,
     title: "Estatísticas",
   },
   {
-    href: "/brevemente_disponivel",
+    href: "/objetivos",
     icon: <TaskSquare fontSize="small" />,
     title: "Objetivos",
   },
   {
     href: "/equipas",
     icon: <People fontSize="small" />,
-    title: "Equipas",
+    title: "Departamentos",
   },
   {
     href: "/funcionarios",
@@ -32,7 +32,7 @@ const items = [
     title: "Funcionários",
   },
   {
-    href: "/brevemente_disponivel",
+    href: "/estruturacao",
     icon: <Magicpen fontSize="small" />,
     title: "Estruturação",
   },
@@ -80,7 +80,8 @@ export const DashboardSidebar = (props) => {
               sx={{
                 display: "flex",
                 justifyContent: "center",
-                mt: 2,
+                mt: 5,
+                mb: 3,
                 "& img": {
                   width: "100%",
                 },
@@ -118,7 +119,7 @@ export const DashboardSidebar = (props) => {
         open
         PaperProps={{
           sx: {
-            backgroundColor: "#0051BA",
+            backgroundColor: "#07407B",
             color: "#FFFFFF",
             width: 280,
           },
@@ -137,7 +138,7 @@ export const DashboardSidebar = (props) => {
       open={open}
       PaperProps={{
         sx: {
-          backgroundColor: "#0051BA",
+          backgroundColor: "#07407B",
           color: "#FFFFFF",
           width: 280,
         },

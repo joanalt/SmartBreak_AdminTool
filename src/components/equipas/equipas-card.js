@@ -43,15 +43,16 @@ export const ProductCard = ({ product }) => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"Adicionar uma nova equipa"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{"Eliminar departamento"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Tem a certeza que deseja eliminar esta equipa permanentemente?
+            Tem a certeza que deseja eliminar este departamento permanentemente?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancelar</Button>
           <Button
+            style={{ color: "#F55038" }}
             onClick={async () => {
               await deleteDoc(doc(firestore, "teams", product.id));
               window.location.reload(false);
@@ -83,7 +84,6 @@ export const ProductCard = ({ product }) => {
           <Typography align="left" color="textPrimary" variant="body2">
             {product.description}
           </Typography>
-
         </CardContent>
         <Box sx={{ flexGrow: 1 }} />
         <Divider />
@@ -107,10 +107,10 @@ export const ProductCard = ({ product }) => {
               xl={12}
               xs={12}
             >
-              <People color="#555" onClick={() => setShowMembers(true)} />
+              {/*<People color="#555" onClick={() => setShowMembers(true)} />
               <Typography color="textSecondary" display="inline" sx={{ pl: 1 }} variant="body2">
                 {product.members} Membros
-              </Typography>
+            </Typography>*/}
             </Grid>
             <Grid
               sx={{
@@ -126,16 +126,15 @@ export const ProductCard = ({ product }) => {
               <Button
                 color="primary"
                 variant="contained"
-                style={{ marginLeft: "10px", marginTop: "10px" }}
+                style={{ marginLeft: "70px", marginTop: "10px" }}
                 onClick={handleClickOpen}
               >
-                Eliminar equipa
+                Eliminar
               </Button>
             </Grid>
           </Grid>
         </Box>
       </Card>
-
     </Box>
   );
 };

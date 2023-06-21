@@ -9,7 +9,7 @@ const Page = () => (
       <title>Smart Break</title>
     </Head>
     <Box
-      style={{ backgroundColor: "#0051BA" }}
+      style={{ backgroundColor: "#F57738" }}
       component="main"
       sx={{
         alignItems: "center",
@@ -37,7 +37,7 @@ const Page = () => (
               alt="Under development"
               src="/static/images/erro.svg"
               style={{
-                marginTop: 50,
+                marginTop: 80,
                 display: "inline-block",
                 maxWidth: "100%",
                 width: 300,
@@ -48,10 +48,10 @@ const Page = () => (
             <Button
               component="a"
               startIcon={<ArrowBackIcon fontSize="small" />}
-              sx={{ mt: 3 }}
-              variant="contained"
+              sx={{ mt: 10 }}
+              style={{ color: "#FFFFFF" }}
             >
-              Volta ao Painel
+              Voltar ao Painel
             </Button>
           </NextLink>
         </Box>

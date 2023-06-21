@@ -10,7 +10,9 @@
     "start": "next start",
     "export": "next export",
     "lint": "next lint",
-    "lint-fix": "next lint --fix"
+    "lint-fix": "next lint --fix",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "@emotion/cache": "11.10.3",
@@ -24,7 +26,9 @@
     "@mui/x-date-pickers": "5.0.1",
     "@reduxjs/toolkit": "^1.9.1",
     "@zalter/identity-js": "1.2.1",
+    "axios": "^1.4.0",
     "chart.js": "3.9.1",
+    "cors": "^2.8.5",
     "date-fns": "2.29.3",
     "firebase": "^9.16.0",
     "formik": "2.2.9",
@@ -39,6 +43,7 @@
     "react-chartjs-2": "4.3.1",
     "react-dom": "^18.2.0",
     "react-firebase-hooks": "^5.1.1",
+    "react-js-dropdavn": "^1.0.4",
     "react-perfect-scrollbar": "1.5.8",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.7.0",
@@ -46,7 +51,19 @@
     "yup": "0.32.11"
   },
   "devDependencies": {
+    "@babel/core": "^7.21.4",
+    "@storybook/addon-actions": "^6.5.16",
+    "@storybook/addon-essentials": "^7.0.15",
+    "@storybook/addon-interactions": "^6.5.16",
+    "@storybook/addon-links": "^6.5.16",
+    "@storybook/builder-webpack5": "^6.5.16",
+    "@storybook/manager-webpack5": "^6.5.16",
+    "@storybook/react": "^7.0.15",
+    "@storybook/testing-library": "^0.0.13",
+    "babel-loader": "^8.3.0",
     "eslint": "8.23.1",
-    "eslint-config-next": "12.3.0"
+    "eslint-config-next": "12.3.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-storybook": "^0.6.11"
   }
 }
