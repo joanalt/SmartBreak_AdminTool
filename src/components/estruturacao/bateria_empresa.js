@@ -19,7 +19,7 @@ export const Bateria = (props) => {
       <CardHeader title="Configurações da bateria" />
       <Divider />
       <CardContent>
-        <div style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>
+        <div style={{ display: "flex", flexDirection: "row", justifyContent: "center" }} aria-label="Bateria da empresa com fundo  branco e preenchimento a azul">
           <div
             style={{
               width: "242px",
@@ -52,12 +52,12 @@ export const Bateria = (props) => {
         </div>
         <Divider style={{ marginTop: "30px" }} />
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
-          <p style={{ marginTop: 20 }}>Utilizar valores default</p>
+          <p style={{ marginTop: 20 }} aria-label="Texto na cor preta num fundo branco escrito Utilizar valores deafult seguido de um switch com a cor azul quando ligado e cinzento quando desligado">Utilizar valores default</p>
           <Switch {...label} defaultChecked />
         </div>
         <div>
-          <p style={{ marginTop: 50 }}>Duração ideal de uma pausa (min)</p>
-          <Box style={{ display: "flex" }}>
+          <p style={{ marginTop: 50 }} aria-label="Texto na cor preta num fundo branco escrito Duração ideal de uma pausa (min)">Duração ideal de uma pausa (min)</p>
+          <Box style={{ display: "flex" }} aria-label="Escala com vários tons de azul onde o centro (azul mais claro) representa o valor ideal e as extrimidades (azul escuro) o oposto">
             <div
               style={{
                 width: "200px",
@@ -66,7 +66,7 @@ export const Bateria = (props) => {
                 backgroundColor: "#000A16",
                 height: "20px",
                 marginTop: "15px",
-              }}
+              }}  
             />
             <div
               style={{
