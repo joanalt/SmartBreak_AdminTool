@@ -36,11 +36,6 @@ const items = [
     icon: <Magicpen fontSize="small" />,
     title: "Estruturação",
   },
-  {
-    href: "/editar_perfil",
-    icon: <Edit fontSize="small" />,
-    title: "Editar perfil",
-  },
 ];
 
 export const DashboardSidebar = (props) => {

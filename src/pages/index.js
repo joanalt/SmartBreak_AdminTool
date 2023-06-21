@@ -5,12 +5,27 @@ import NextLink from "next/link";
 //import * as Yup from "yup";
 import { Box, Button, Container, Link, TextField, Typography } from "@mui/material";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [responseData, setResponseData] = useState("");
+
+  const user = localStorage.getItem("userData");
+  console.log(user);
+
+  function useLocalStorage(key, value) {
+    if (typeof window !== "undefined") {
+      const userData = localStorage.getItem(key);
+
+      if (!userData) {
+        localStorage.setItem(key, JSON.stringify(value));
+        console.log("Data saved to localStorage:", value);
+      }
+    }
+  }
+
   const handleLogin = async () => {
     try {
       const response = await fetch("https://sb-api.herokuapp.com/auth/login", {
@@ -25,12 +40,14 @@ const Login = () => {
       });
 
       if (response.ok) {
-        const data = response.json();
-        console.log(response);
+        const data = await response.json();
         setResponseData(data);
+        useLocalStorage("userData", data.user);
+
         router.push("/painel");
       } else {
-        throw new Error(responseData.message);
+        const errorData = await response.json();
+        throw new Error(errorData.message);
       }
     } catch (error) {
       console.error(error);
@@ -39,7 +56,6 @@ const Login = () => {
   };
 
   const router = useRouter();
-
   /*const formik = useFormik({
     initialValues: {
       email: "",
