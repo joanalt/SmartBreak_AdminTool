@@ -52,7 +52,7 @@ export const ProductCard = ({ product }) => {
         <DialogActions>
           <Button onClick={handleClose}>Cancelar</Button>
           <Button
-            style={{ color: "#F55038" }}
+            style={{ color: "#AA0000" }}
             onClick={async () => {
               await deleteDoc(doc(firestore, "teams", product.id));
               window.location.reload(false);
@@ -125,7 +125,7 @@ export const ProductCard = ({ product }) => {
             >
               <Button
                 color="primary"
-                variant="contained"
+                variant="outlined"
                 style={{ marginLeft: "70px", marginTop: "10px" }}
                 onClick={handleClickOpen}
               >
