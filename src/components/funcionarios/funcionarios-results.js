@@ -153,7 +153,7 @@ export const CustomerListResults = ({ customers, ...rest }, props) => {
                                 window.location.reload(false);
                               }}
                             >
-                              Eliminar funcionário
+                              Eliminar
                             </Button>
                             <Button
                               color="primary"

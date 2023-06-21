@@ -1,16 +1,23 @@
 import Head from "next/head";
-import { Box, Container, Grid, Card, CardContent, TextField, InputAdornment, SvgIcon } from "@mui/material";
+import {
+  Box,
+  Container,
+  Grid,
+  Card,
+  CardContent,
+  TextField,
+  InputAdornment,
+  SvgIcon,
+} from "@mui/material";
 import { Search as SearchIcon } from "../icons/search";
-
 
 import { products } from "../__mocks__/products";
 import { ProductListToolbar } from "../components/equipas/equipas-toolbar";
 import { ProductCard } from "../components/equipas/equipas-card";
 import { DashboardLayout } from "../components/dashboard-layout";
-import { getDocs, collection } from "@firebase/firestore"
-import { firestore } from "../firebase_setup/firebase"
+import { getDocs, collection } from "@firebase/firestore";
+import { firestore } from "../firebase_setup/firebase";
 import { useEffect, useState } from "react";
-
 
 const Page = () => {
   const [allDocs, setAllDocs] = useState([]);
@@ -18,38 +25,35 @@ const Page = () => {
 
   const handleChange = (e) => {
     setSearch(e.target.value);
-    console.log(search)
+    console.log(search);
   };
 
   useEffect(() => {
-    getInfo()
-  }, [])
+    getInfo();
+  }, []);
 
   const getInfo = async () => {
     let temp = [];
 
-    const ref = await getDocs(collection(firestore, 'teams'));
+    const ref = await getDocs(collection(firestore, "teams"));
     ref.forEach((doc) => {
-
       // console.log(doc.id, " => ", doc.data())
       temp.push({
         name: doc.data().name,
         id: doc.data().id,
         description: doc.data().description,
         members: doc.data().users.length,
-        users: [...doc.data().users]
-      })
-    })
+        users: [...doc.data().users],
+      });
+    });
 
     console.log("DEBUG: ", temp);
     setAllDocs(temp);
-  }
+  };
 
-  const filteredCustomers = allDocs.filter(team =>
+  const filteredCustomers = allDocs.filter((team) =>
     team.name.toLowerCase().includes(search.toLowerCase())
   );
-
-
 
   return (
     <>
@@ -63,7 +67,6 @@ const Page = () => {
           py: 8,
         }}
       >
-
         <Container maxWidth={false}>
           <ProductListToolbar />
           <Box sx={{ mt: 3 }}>
@@ -83,7 +86,7 @@ const Page = () => {
                         </InputAdornment>
                       ),
                     }}
-                    placeholder="Procurar equipa"
+                    placeholder="Procurar departamento"
                     variant="outlined"
                   />
                 </Box>
@@ -91,11 +94,11 @@ const Page = () => {
             </Card>
           </Box>
           <Box sx={{ pt: 3 }}>
-            {allDocs && allDocs.length == 0 ?
+            {allDocs && allDocs.length == 0 ? (
               <></>
-              :
+            ) : (
               <Grid container spacing={3}>
-                {search === "" ?
+                {search === "" ? (
                   <>
                     {allDocs.map((product) => (
                       <Grid item key={product.id} lg={4} md={6} xs={12}>
@@ -103,19 +106,17 @@ const Page = () => {
                       </Grid>
                     ))}
                   </>
-                  :
+                ) : (
                   <>
                     {filteredCustomers.map((product) => (
                       <Grid item key={product.id} lg={4} md={6} xs={12}>
                         <ProductCard product={product} />
                       </Grid>
-
                     ))}
-                  </>}
-
+                  </>
+                )}
               </Grid>
-            }
-
+            )}
           </Box>
           {/* <Box
           sx={{
@@ -129,7 +130,7 @@ const Page = () => {
         </Container>
       </Box>
     </>
-  )
+  );
 };
 
 Page.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;

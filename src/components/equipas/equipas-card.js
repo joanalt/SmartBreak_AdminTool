@@ -43,10 +43,10 @@ export const ProductCard = ({ product }) => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"Eliminar"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{"Eliminar departamento"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Tem a certeza que deseja eliminar esta equipa permanentemente?
+            Tem a certeza que deseja eliminar este departamento permanentemente?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -106,10 +106,10 @@ export const ProductCard = ({ product }) => {
               xl={12}
               xs={12}
             >
-              <People color="#555" onClick={() => setShowMembers(true)} />
+              {/*<People color="#555" onClick={() => setShowMembers(true)} />
               <Typography color="textSecondary" display="inline" sx={{ pl: 1 }} variant="body2">
                 {product.members} Membros
-              </Typography>
+            </Typography>*/}
             </Grid>
             <Grid
               sx={{
@@ -125,10 +125,10 @@ export const ProductCard = ({ product }) => {
               <Button
                 color="primary"
                 variant="contained"
-                style={{ marginLeft: "10px", marginTop: "10px" }}
+                style={{ marginLeft: "70px", marginTop: "10px" }}
                 onClick={handleClickOpen}
               >
-                Eliminar equipa
+                Eliminar
               </Button>
             </Grid>
           </Grid>
