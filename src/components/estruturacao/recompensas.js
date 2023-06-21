@@ -159,7 +159,7 @@ export const Recompensas = (props) => {
                 window.location.reload(false);
               }}
               autoFocus
-              aria-label="Botão clicável com texto na cor azul escrito Adicionar"
+              aria-label="Botão clicável com texto na cor azul laranja Adicionar"
             >
               Adicionar
             </Button>
