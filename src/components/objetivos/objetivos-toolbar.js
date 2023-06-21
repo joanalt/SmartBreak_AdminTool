@@ -114,7 +114,7 @@ export const ProductListToolbar = (props) => {
               fullWidth
               multiline
               id="team_description"
-              label="Objetivo"
+              label="Descrição do objetivo"
               required
               rows={4}
               variant="outlined"
@@ -155,6 +155,7 @@ export const ProductListToolbar = (props) => {
         <DialogActions>
           <Button onClick={handleClose}>Cancelar</Button>
           <Button
+            style={{ color: "#F57738" }}
             onClick={async () => {
               if (priorityGoal == "") {
                 alert("Preencha o campo da prioridade do novo objetivo.");
@@ -205,20 +206,13 @@ export const ProductListToolbar = (props) => {
           Objetivos da empresa
         </Typography>
         <Box sx={{ m: 1 }}>
-          {/* <Button
-            color="primary"
-            variant="contained"
-            style={{ marginLeft: "10px", marginTop: "10px" }}
-          >
-            Eliminar objetivo
-          </Button> */}
           <Button
             color="primary"
             variant="contained"
             style={{ marginLeft: "10px", marginTop: "10px" }}
             onClick={handleClickOpen}
           >
-            Adicionar objetivo
+            Adicionar
           </Button>
         </Box>
       </Box>

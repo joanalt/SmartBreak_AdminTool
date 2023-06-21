@@ -74,7 +74,7 @@ export const AccountProfileDetails = (props) => {
   return (
     <form autoComplete="off" noValidate {...props}>
       <Card>
-        <CardHeader subheader="Esta secção pode ser editada" title="Perfil" />
+        <CardHeader subheader="Estes são os dados que podem ser editados" title="Perfil" />
         <Divider />
         <CardContent>
           <Grid container spacing={3}>
@@ -82,10 +82,9 @@ export const AccountProfileDetails = (props) => {
               <TextField
                 fullWidth
                 helperText="Escreva o primeiro nome"
-                label="Nome próprio"
+                label="Nome"
                 name="firstName"
                 onChange={handleChangefirstName}
-                required
                 value={firstName}
                 variant="outlined"
               />
@@ -93,10 +92,10 @@ export const AccountProfileDetails = (props) => {
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
+                helperText="Escreva o último nome"
                 label="Apelido"
                 name="lastName"
                 onChange={handleChangelastName}
-                required
                 value={lastName}
                 variant="outlined"
               />
@@ -107,7 +106,16 @@ export const AccountProfileDetails = (props) => {
                 label="Email"
                 name="email"
                 onChange={handleChangeEmail}
-                required
+                value={email}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <TextField
+                fullWidth
+                label="Alterar palavra-passe"
+                name="alterar palavra-passe"
+                //onChange={handleChangeEmail}
                 value={email}
                 variant="outlined"
               />

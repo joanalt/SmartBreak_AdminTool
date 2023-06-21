@@ -12,7 +12,7 @@ const items = [
     title: "Painel",
   },
   {
-    href: "/brevemente_disponivel",
+    href: "/estatisticas",
     icon: <Diagram fontSize="small" />,
     title: "Estatísticas",
   },
@@ -24,7 +24,7 @@ const items = [
   {
     href: "/equipas",
     icon: <People fontSize="small" />,
-    title: "Equipas",
+    title: "Departamentos",
   },
   {
     href: "/funcionarios",
@@ -32,7 +32,7 @@ const items = [
     title: "Funcionários",
   },
   {
-    href: "/brevemente_disponivel",
+    href: "/estruturacao",
     icon: <Magicpen fontSize="small" />,
     title: "Estruturação",
   },
