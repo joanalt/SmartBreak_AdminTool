@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Box,
   Button,
@@ -10,26 +10,11 @@ import {
   TextField,
 } from "@mui/material";
 
-import { doc, collection, updateDoc, getDoc } from "@firebase/firestore";
-import { firestore } from "../../firebase_setup/firebase";
-
 export const AccountProfileDetails = (props) => {
   const id = "EusdGqpC9WYJYIJfYycJVHFf4u72";
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-
-  useEffect(() => {
-    getInfo();
-  }, []);
-
-  const getInfo = async () => {
-    const docRef = doc(firestore, "users_data", id);
-    const docSnap = await getDoc(docRef);
-    setFirstName(docSnap.data().name);
-    setLastName(docSnap.data().lastName);
-    setEmail(docSnap.data().email);
-  };
 
   const handleChangefirstName = (e) => {
     setFirstName(e.target.value);
