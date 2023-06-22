@@ -11,8 +11,8 @@ import { useRouter } from "next/router";
 import * as React from "react";
 
 const Info = ({ value }) => {
-  const [objPriority, setObjPriority] = useState(value.priority);
-  const [objDescription, setObjDescription] = useState(value.description);
+  console.log(value.active)
+
 
   return (
     <>
@@ -24,10 +24,13 @@ const Info = ({ value }) => {
         }}
       ></Box>
       <Typography align="left" color="textPrimary" gutterBottom variant="h5">
-        Prioridade: {objPriority}
+        Prioridade: {value.priority}
       </Typography>
       <Typography align="left" color="textPrimary" variant="body2">
-        {objDescription}
+        {value.description}
+      </Typography>
+      <Typography align="left" color="textPrimary" variant="body2">
+        {(value.date).slice(0, 10)}
       </Typography>
     </>
   );
@@ -49,6 +52,30 @@ export const ProductCard = ({ product }) => {
       if (response.ok) {
         const data = await response.json();
         console.log("-------------------", data);
+        router.push("/painel");
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+    } catch (error) {
+      console.error(error);
+      //Alert.alert("Error", error.message);
+    }
+  };
+
+  const editGoal = async (value, id) => {
+    try {
+      const response = await fetch("https://sb-api.herokuapp.com/goals/" + id, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + user.token,
+        },
+        body: JSON.stringify({ active: !value }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log("-------------------D", data);
         router.push("/painel");
       } else {
         const errorData = await response.json();
@@ -154,6 +181,31 @@ export const ProductCard = ({ product }) => {
                 >
                   Eliminar
                 </Button>
+
+                {/* {!value.active ? (
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    style={{
+                      marginLeft: "70px",
+                      marginTop: "10px",
+                    }}
+                    onClick={editGoal}
+                  >
+                    Concluído
+                  </Button>
+                ) : <Button
+                  color="primary"
+                  variant="contained"
+                  style={{
+                    marginLeft: "70px",
+                    marginTop: "10px",
+                  }}
+                  onClick={editGoal}
+                >
+                  Por concluir
+                </Button>} */}
+
               </Grid>
             </Grid>
           </Box>
