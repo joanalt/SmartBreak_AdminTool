@@ -1,8 +1,5 @@
 import Head from "next/head";
 import NextLink from "next/link";
-//import Router from "next/router";
-//import { useFormik } from "formik";
-//import * as Yup from "yup";
 import { Box, Button, Container, Link, TextField, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
@@ -11,9 +8,14 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [responseData, setResponseData] = useState("");
+  const [error, setError] = useState(false);
 
   const user = localStorage.getItem("userData");
   console.log(user);
+
+  useEffect(() => {
+    // setError(false);
+  }, [error]);
 
   function useLocalStorage(key, value) {
     if (typeof window !== "undefined") {
@@ -43,38 +45,20 @@ const Login = () => {
         const data = await response.json();
         setResponseData(data);
         useLocalStorage("userData", data.user);
-
         router.push("/painel");
       } else {
         const errorData = await response.json();
+        setError(true);
         throw new Error(errorData.message);
       }
     } catch (error) {
       console.error(error);
       console.log("Error", error.message);
+      setError(true); // Define o erro geral (para campos incorretos, etc.)
     }
   };
 
   const router = useRouter();
-  /*const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    validationSchema: Yup.object({
-      email: Yup.string().email("Deve ser um email válido").max(255).required("Campo obrigatório"),
-      password: Yup.string().max(255).required("Campo obrigatório"),
-    }),
-    onSubmit: () => {
-      Router.push("/").catch(console.error);
-    },
-  });
-
-  const router = useRouter();
-
-  function handleNavigation() {
-    router.push("/painel");
-  }*/
 
   return (
     <>
@@ -125,7 +109,7 @@ const Login = () => {
             boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.3)",
           }}
         >
-          <form /*onSubmit={formik.handleSubmit}*/>
+          <form>
             <Box sx={{ my: 3 }}>
               <Typography color="textPrimary" variant="h4">
                 Entrar
@@ -136,38 +120,36 @@ const Login = () => {
               </Typography>
             </Box>
             <TextField
-              //error={Boolean(formik.touched.email && formik.errors.email)}
               fullWidth
-              //helperText={formik.touched.email && formik.errors.email}
               label="Email"
               margin="normal"
               name="email"
-              //onBlur={formik.handleBlur}
               onChange={(text) => setEmail(text.target.value)}
               type="email"
-              //value={formik.values.email}
               variant="outlined"
             />
             <TextField
-              //error={Boolean(formik.touched.password && formik.errors.password)}
               fullWidth
-              //helperText={formik.touched.password && formik.errors.password}
               label="Palavra-passe"
               margin="normal"
               name="password"
-              //onBlur={formik.handleBlur}
               onChange={(text) => setPassword(text.target.value)}
               type="password"
-              //value={formik.values.password}
               variant="outlined"
             />
+            {error ? (
+              <Typography color="red" gutterBottom variant="body2">
+                Credenciais inválidas.
+              </Typography>
+            ) : (
+              <></>
+            )}
             <Typography color="textSecondary" gutterBottom variant="body2">
               Se te esqueceste da palavra-passe, recupera-a através da aplicação mobile.
             </Typography>
             <Box sx={{ py: 2 }}>
               <Button
                 color="primary"
-                //disabled={formik.isSubmitting}
                 fullWidth
                 size="large"
                 variant="contained"

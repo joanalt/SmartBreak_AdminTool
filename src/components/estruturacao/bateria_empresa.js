@@ -223,9 +223,7 @@ export const Bateria = (props) => {
         <Button
           color="primary"
           variant="contained"
-          onClick={() => {
-            editData();
-          }}
+          //onClick={}
         >
           Guardar alterações
         </Button>
