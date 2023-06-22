@@ -1,20 +1,5 @@
 import PropTypes from "prop-types";
-import {
-  Box,
-  Card,
-  CardContent,
-  Divider,
-  Grid,
-  Typography,
-  Button,
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-} from "@mui/material";
-import { People } from "iconsax-react";
-import { doc, getDoc, collection, deleteDoc } from "@firebase/firestore";
-import { firestore } from "../../firebase_setup/firebase";
+import { Box, Card, CardContent, Divider, Grid, Typography, Button } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -23,6 +8,29 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useState } from "react";
 
 import * as React from "react";
+
+const Info = ({ value }) => {
+  const [objPriority, setObjPriority] = useState(value.priority);
+  const [objDescription, setObjDescription] = useState(value.description);
+
+  return (
+    <>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          pb: 3,
+        }}
+      ></Box>
+      <Typography align="left" color="textPrimary" gutterBottom variant="h5">
+        Prioridade: {objPriority}
+      </Typography>
+      <Typography align="left" color="textPrimary" variant="body2">
+        {objDescription}
+      </Typography>
+    </>
+  );
+};
 
 export const ProductCard = ({ product }) => {
   const [open, setOpen] = useState(false);
@@ -37,104 +45,92 @@ export const ProductCard = ({ product }) => {
 
   return (
     <Box>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{"Eliminar objetivo"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Tem a certeza que deseja eliminar este objetivo permanentemente?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancelar</Button>
-          <Button
-            style={{ color: "#AA0000" }}
-            onClick={async () => {
-              await deleteDoc(doc(firestore, "goals", product.id));
-              window.location.reload(false);
-            }}
-          >
-            Eliminar
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Card
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          height: "100%",
-        }}
-      >
-        <CardContent>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              pb: 3,
-            }}
-          ></Box>
-
-          <Typography align="left" color="textPrimary" gutterBottom variant="h5">
-            Prioridade: {product.priority}
-          </Typography>
-          <Typography align="left" color="textPrimary" variant="body2">
-            {product.description}
-          </Typography>
-        </CardContent>
-        <Box sx={{ flexGrow: 1 }} />
-        <Divider />
-        <Box sx={{ p: 2 }}>
-          <Grid
-            container
-            spacing={2}
-            sx={{
-              alignItems: "center",
-              display: "flex",
-            }}
-          >
+      <>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"Eliminar objetivo"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Tem a certeza que deseja eliminar este objetivo permanentemente?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancelar</Button>
+            <Button
+              style={{ color: "#AA0000" }}
+              onClick={async () => {
+                await deleteDoc(doc(firestore, "goals", product.id));
+                window.location.reload(false);
+              }}
+            >
+              Eliminar
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Card
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            height: "100%",
+          }}
+        >
+          <CardContent>
+            <Info value={product} key={product._id} />
+          </CardContent>
+          <Box sx={{ flexGrow: 1 }} />
+          <Divider />
+          <Box sx={{ p: 2 }}>
             <Grid
-              item
+              container
+              spacing={2}
               sx={{
                 alignItems: "center",
                 display: "flex",
               }}
-              lg={6}
-              sm={6}
-              xl={12}
-              xs={12}
             >
-              {/*<People color="#555" onClick={() => setShowMembers(true)} />
-              <Typography color="textSecondary" display="inline" sx={{ pl: 1 }} variant="body2">
-                {product.teams} Equipas
-            </Typography>*/}
-            </Grid>
-            <Grid
-              sx={{
-                alignItems: "center",
-                display: "flex",
-              }}
-              item
-              lg={6}
-              sm={6}
-              xl={12}
-              xs={12}
-            >
-              <Button
-                color="primary"
-                variant="outlined"
-                style={{ marginLeft: "70px", marginTop: "10px" }}
-                onClick={handleClickOpen}
+              <Grid
+                item
+                sx={{
+                  alignItems: "center",
+                  display: "flex",
+                }}
+                lg={6}
+                sm={6}
+                xl={12}
+                xs={12}
+              ></Grid>
+              <Grid
+                sx={{
+                  alignItems: "center",
+                  display: "flex",
+                }}
+                item
+                lg={6}
+                sm={6}
+                xl={12}
+                xs={12}
               >
-                Eliminar
-              </Button>
+                <Button
+                  variant="outlined"
+                  style={{
+                    marginLeft: "70px",
+                    marginTop: "10px",
+                    borderColor: "#AA0000",
+                    color: "#AA0000",
+                  }}
+                  onClick={handleClickOpen}
+                >
+                  Eliminar
+                </Button>
+              </Grid>
             </Grid>
-          </Grid>
-        </Box>
-      </Card>
+          </Box>
+        </Card>
+      </>
     </Box>
   );
 };

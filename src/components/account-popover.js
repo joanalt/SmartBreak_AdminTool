@@ -17,6 +17,7 @@ export const AccountPopover = (props) => {
 
   const handleLogout = async () => {
     try {
+      localStorage.removeItem("userData");
       dispatch(logoutUser());
       router.push("/");
     } catch (err) {

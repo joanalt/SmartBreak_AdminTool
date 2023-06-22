@@ -131,7 +131,8 @@ const Login = () => {
                 Entrar
               </Typography>
               <Typography color="textSecondary" gutterBottom variant="body2">
-                Estamos contentes por continuares a melhorar o teu local de trabalho.
+                Estamos contentes por continuares a melhorar o teu local de trabalho. Se ainda não
+                tens uma conta pessoal, podes fazê-lo através da aplicação mobile.
               </Typography>
             </Box>
             <TextField
@@ -178,7 +179,7 @@ const Login = () => {
               </Button>
             </Box>
             <Typography color="textSecondary" variant="body2">
-              Ainda não tens conta?{" "}
+              Ainda não tens a tua empresa registada?{" "}
               <NextLink href="/registar">
                 <Link
                   to="/registar"
@@ -188,7 +189,7 @@ const Login = () => {
                     cursor: "pointer",
                   }}
                 >
-                  Regista-te
+                  Regista-a
                 </Link>
               </NextLink>
             </Typography>
