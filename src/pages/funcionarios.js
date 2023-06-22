@@ -31,6 +31,7 @@ const Page = () => {
         const data = await response.json();
         setAllDocs(data.message);
         console.log("-------------------", data.message);
+        router.push("/painel");
       } else {
         const errorData = await response.json();
         throw new Error(errorData.message);

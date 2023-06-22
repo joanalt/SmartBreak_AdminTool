@@ -19,6 +19,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { useRouter } from "next/router";
 
 function getStyles(name, usersSelected, theme) {
   return {
@@ -31,6 +32,7 @@ function getStyles(name, usersSelected, theme) {
 
 export const ProductListToolbar = (props) => {
   const user = JSON.parse(localStorage.getItem("userData"));
+  const router = useRouter();
 
   const [open, setOpen] = useState(false);
   const [nameTeam, setNameTeam] = useState("");
@@ -67,6 +69,7 @@ export const ProductListToolbar = (props) => {
       if (response.ok) {
         const data = await response.json();
         console.log(data);
+        router.push("/painel");
       } else {
         const errorData = await response.json();
         throw new Error(errorData.message);

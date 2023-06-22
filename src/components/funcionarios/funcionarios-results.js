@@ -1,6 +1,8 @@
 import { useState } from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import PropTypes from "prop-types";
+import { useRouter } from "next/router";
+
 import {
   Avatar,
   Box,
@@ -20,14 +22,13 @@ import {
   SvgIcon,
 } from "@mui/material";
 import { Search as SearchIcon } from "../../icons/search";
-import { doc, deleteDoc, updateDoc, getDoc } from "@firebase/firestore";
-import { firestore } from "../../firebase_setup/firebase";
 import { useEffect } from "react";
 import user from "../../redux/user";
 
 export const CustomerListResults = ({ customers, ...rest }, props) => {
   const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
 
+  const router = useRouter();
   const user = JSON.parse(localStorage.getItem("userData"));
   const [search, setSearch] = useState("");
   const [depName, setDepName] = useState("");
@@ -62,13 +63,12 @@ export const CustomerListResults = ({ customers, ...rest }, props) => {
           "Content-Type": "application/json",
           Authorization: "Bearer " + user.token,
         },
-        body: JSON.stringify({
-          admin: !value,
-        }),
+        body: JSON.stringify({ admin: !value }),
       });
       if (response.ok) {
         const data = await response.json();
-        console.log("-------------------", data);
+        console.log("-------------------D", data);
+        router.push("/painel");
       } else {
         const errorData = await response.json();
         throw new Error(errorData.message);
