@@ -19,7 +19,10 @@ export const Bateria = (props) => {
       <CardHeader title="Configurações da bateria" />
       <Divider />
       <CardContent>
-        <div style={{ display: "flex", flexDirection: "row", justifyContent: "center" }} aria-label="Bateria da empresa com fundo  branco e preenchimento a azul">
+        <div
+          style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}
+          aria-label="Bateria da empresa com fundo  branco e preenchimento a azul"
+        >
           <div
             style={{
               width: "242px",
@@ -52,26 +55,31 @@ export const Bateria = (props) => {
         </div>
         <Divider style={{ marginTop: "30px" }} />
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
-          <p style={{ marginTop: 20 }} aria-label="Texto na cor preta num fundo branco escrito Utilizar valores deafult seguido de um switch com a cor azul quando ligado e cinzento quando desligado">Utilizar valores default</p>
+          <p
+            style={{ marginTop: 20 }}
+            aria-label="Texto na cor preta num fundo branco escrito Utilizar valores deafult seguido de um switch com a cor azul quando ligado e cinzento quando desligado"
+          >
+            Utilizar valores default
+          </p>
           <Switch {...label} defaultChecked />
         </div>
         <div>
-          <p style={{ marginTop: 50 }} aria-label="Texto na cor preta num fundo branco escrito Duração ideal de uma pausa (min)">Duração ideal de uma pausa (min)</p>
-          <Box style={{ display: "flex" }} aria-label="Escala com vários tons de azul onde o centro (azul mais claro) representa o valor ideal e as extrimidades (azul escuro) o oposto">
+          <p
+            style={{ marginTop: 50 }}
+            aria-label="Texto na cor preta num fundo branco escrito Duração ideal de uma pausa (min)"
+          >
+            Duração ideal de uma pausa (min)
+          </p>
+          <Box
+            style={{ display: "flex" }}
+            aria-label="Escala com vários tons de azul onde o centro (azul mais claro) representa o valor ideal e as extrimidades (azul escuro) o oposto"
+          >
             <div
               style={{
                 width: "200px",
                 borderTopLeftRadius: "5px",
                 borderBottomLeftRadius: "5px",
-                backgroundColor: "#000A16",
-                height: "20px",
-                marginTop: "15px",
-              }}  
-            />
-            <div
-              style={{
-                width: "200px",
-                backgroundColor: "#062647",
+                backgroundColor: "#F57738",
                 height: "20px",
                 marginTop: "15px",
               }}
@@ -79,7 +87,7 @@ export const Bateria = (props) => {
             <div
               style={{
                 width: "200px",
-                backgroundColor: "#07407B",
+                backgroundColor: "#FFA06A",
                 height: "20px",
                 marginTop: "15px",
               }}
@@ -87,7 +95,15 @@ export const Bateria = (props) => {
             <div
               style={{
                 width: "200px",
-                backgroundColor: "#062647",
+                backgroundColor: "#FFD4BB",
+                height: "20px",
+                marginTop: "15px",
+              }}
+            />
+            <div
+              style={{
+                width: "200px",
+                backgroundColor: "#FFA06A",
                 height: "20px",
                 marginTop: "15px",
               }}
@@ -97,7 +113,7 @@ export const Bateria = (props) => {
                 width: "200px",
                 borderTopRightRadius: "5px",
                 borderBottomRightRadius: "5px",
-                backgroundColor: "#000A16",
+                backgroundColor: "#F57738",
                 height: "20px",
                 marginTop: "15px",
               }}
@@ -131,7 +147,7 @@ export const Bateria = (props) => {
                 width: "200px",
                 borderTopLeftRadius: "5px",
                 borderBottomLeftRadius: "5px",
-                backgroundColor: "#000A16",
+                backgroundColor: "#F57738",
                 height: "20px",
                 marginTop: "15px",
               }}
@@ -139,7 +155,7 @@ export const Bateria = (props) => {
             <div
               style={{
                 width: "200px",
-                backgroundColor: "#062647",
+                backgroundColor: "#FFA06A",
                 height: "20px",
                 marginTop: "15px",
               }}
@@ -147,7 +163,7 @@ export const Bateria = (props) => {
             <div
               style={{
                 width: "200px",
-                backgroundColor: "#07407B",
+                backgroundColor: "#FFD4BB",
                 height: "20px",
                 marginTop: "15px",
               }}
@@ -155,7 +171,7 @@ export const Bateria = (props) => {
             <div
               style={{
                 width: "200px",
-                backgroundColor: "#062647",
+                backgroundColor: "#FFA06A",
                 height: "20px",
                 marginTop: "15px",
               }}
@@ -165,7 +181,7 @@ export const Bateria = (props) => {
                 width: "200px",
                 borderTopRightRadius: "5px",
                 borderBottomRightRadius: "5px",
-                backgroundColor: "#000A16",
+                backgroundColor: "#F57738",
                 height: "20px",
                 marginTop: "15px",
               }}

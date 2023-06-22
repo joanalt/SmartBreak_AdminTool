@@ -110,7 +110,7 @@ export const theme = createTheme({
     MuiTableHead: {
       styleOverrides: {
         root: {
-          backgroundColor: "#F3F4F6",
+          backgroundColor: "white",
           ".MuiTableCell-root": {
             color: "#374151",
           },

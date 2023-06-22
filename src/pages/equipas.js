@@ -11,15 +11,14 @@ import {
 } from "@mui/material";
 import { Search as SearchIcon } from "../icons/search";
 
-import { products } from "../__mocks__/products";
 import { ProductListToolbar } from "../components/equipas/equipas-toolbar";
 import { ProductCard } from "../components/equipas/equipas-card";
 import { DashboardLayout } from "../components/dashboard-layout";
-import { getDocs, collection } from "@firebase/firestore";
-import { firestore } from "../firebase_setup/firebase";
 import { useEffect, useState } from "react";
 
 const Page = () => {
+  const user = JSON.parse(localStorage.getItem("userData"));
+
   const [allDocs, setAllDocs] = useState([]);
   const [search, setSearch] = useState("");
 
@@ -33,22 +32,29 @@ const Page = () => {
   }, []);
 
   const getInfo = async () => {
-    let temp = [];
-
-    const ref = await getDocs(collection(firestore, "teams"));
-    ref.forEach((doc) => {
-      // console.log(doc.id, " => ", doc.data())
-      temp.push({
-        name: doc.data().name,
-        id: doc.data().id,
-        description: doc.data().description,
-        members: doc.data().users.length,
-        users: [...doc.data().users],
-      });
-    });
-
-    console.log("DEBUG: ", temp);
-    setAllDocs(temp);
+    console.log("ENTREI");
+    try {
+      const response = await fetch(
+        "https://sb-api.herokuapp.com/departments/organization/" + user.organization,
+        {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + user.token,
+          },
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setAllDocs(data.message);
+        console.log("-------------------", data.message);
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+    } catch (error) {
+      console.error(error);
+      //Alert.alert("Error", error.message);
+    }
   };
 
   const filteredCustomers = allDocs.filter((team) =>
