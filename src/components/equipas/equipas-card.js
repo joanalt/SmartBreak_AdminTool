@@ -6,6 +6,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 import * as React from "react";
 
@@ -36,6 +37,7 @@ const Info = ({ value }) => {
 export const ProductCard = ({ product }) => {
   const [open, setOpen] = useState(false);
   const user = JSON.parse(localStorage.getItem("userData"));
+  const router = useRouter();
 
   const deleteTeam = async (id) => {
     try {
@@ -48,6 +50,7 @@ export const ProductCard = ({ product }) => {
       if (response.ok) {
         const data = await response.json();
         console.log("-------------------", data);
+        router.push("/painel");
       } else {
         const errorData = await response.json();
         throw new Error(errorData.message);
