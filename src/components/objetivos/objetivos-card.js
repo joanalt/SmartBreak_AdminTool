@@ -11,8 +11,8 @@ import { useRouter } from "next/router";
 import * as React from "react";
 
 const Info = ({ value }) => {
-  const [objPriority, setObjPriority] = useState(value.priority);
-  const [objDescription, setObjDescription] = useState(value.description);
+
+  const state = value.active;
 
   return (
     <>
@@ -24,10 +24,13 @@ const Info = ({ value }) => {
         }}
       ></Box>
       <Typography align="left" color="textPrimary" gutterBottom variant="h5">
-        Prioridade: {objPriority}
+        Prioridade: {value.priority}
       </Typography>
       <Typography align="left" color="textPrimary" variant="body2">
-        {objDescription}
+        {value.description}
+      </Typography>
+      <Typography align="left" color="textPrimary" variant="body2">
+        {(value.date).slice(0, 10)}
       </Typography>
     </>
   );
@@ -49,6 +52,31 @@ export const ProductCard = ({ product }) => {
       if (response.ok) {
         const data = await response.json();
         console.log("-------------------", data);
+        router.push("/painel");
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+    } catch (error) {
+      console.error(error);
+      //Alert.alert("Error", error.message);
+    }
+  };
+
+  const editGoal = async (value, id) => {
+    console.log(value)
+    try {
+      const response = await fetch("https://sb-api.herokuapp.com/goals/" + id, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + user.token,
+        },
+        body: JSON.stringify({ active: !value }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log("-------------------D", data);
         router.push("/painel");
       } else {
         const errorData = await response.json();
@@ -120,17 +148,7 @@ export const ProductCard = ({ product }) => {
                 display: "flex",
               }}
             >
-              <Grid
-                item
-                sx={{
-                  alignItems: "center",
-                  display: "flex",
-                }}
-                lg={6}
-                sm={6}
-                xl={12}
-                xs={12}
-              ></Grid>
+
               <Grid
                 sx={{
                   alignItems: "center",
@@ -138,22 +156,52 @@ export const ProductCard = ({ product }) => {
                 }}
                 item
                 lg={6}
-                sm={6}
-                xl={12}
+                sm={12}
+                xl={6}
                 xs={12}
               >
-                <Button
-                  variant="outlined"
-                  style={{
-                    marginLeft: "70px",
-                    marginTop: "10px",
-                    borderColor: "#AA0000",
-                    color: "#AA0000",
-                  }}
-                  onClick={handleClickOpen}
-                >
-                  Eliminar
-                </Button>
+                <Box sx={{
+                  alignItems: "center",
+                  display: "flex",
+                }}>
+                  {!product.active ? (
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      style={{
+                        marginLeft: "10px",
+                        marginTop: "10px",
+                      }}
+                      onClick={() => editGoal(true, product.id)}
+                    >
+                      Concluído
+                    </Button>
+                  ) : <Button
+                    color="primary"
+                    variant="outlined"
+                    style={{
+                      marginLeft: "10px",
+                      marginTop: "10px",
+                      width: '150px'
+                    }}
+                    onClick={() => editGoal(false, product._id)}
+                  >
+                    Por concluir
+                  </Button>}
+                  <Button
+                    variant="outlined"
+                    style={{
+                      marginLeft: "10px",
+                      marginTop: "10px",
+                      borderColor: "#AA0000",
+                      color: "#AA0000",
+                    }}
+                    onClick={handleClickOpen}
+                  >
+                    Eliminar
+                  </Button>
+                </Box>
+
               </Grid>
             </Grid>
           </Box>
