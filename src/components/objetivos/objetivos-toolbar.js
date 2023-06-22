@@ -9,9 +9,9 @@ import {
   Chip,
   Typography,
   TextField,
+  DatePicker,
 } from "@mui/material";
-import * as React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Theme, useTheme } from "@mui/material/styles";
 
 import Dialog from "@mui/material/Dialog";
@@ -21,24 +21,24 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useRouter } from "next/router";
 
-function getStyles(name, teamsSelected, theme) {
-  return {
-    fontWeight:
-      teamsSelected.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
+// function getStyles(name, teamsSelected, theme) {
+//   return {
+//     fontWeight:
+//       teamsSelected.indexOf(name) === -1
+//         ? theme.typography.fontWeightRegular
+//         : theme.typography.fontWeightMedium,
+//   };
+// }
 
 export const ProductListToolbar = (props) => {
   const user = JSON.parse(localStorage.getItem("userData"));
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
-  const [priorityGoal, setPriorityGoal] = useState("");
-  const [descriptionGoal, setDescriptionGoal] = useState("");
 
-  const [allUsers, setAllUsers] = useState({});
+
+  const [teamsSelected, setTeamsSelected] = useState([]);
+  const [teamsList, setTeamsList] = useState([]);
 
   const theme = useTheme();
 
@@ -50,8 +50,39 @@ export const ProductListToolbar = (props) => {
     setOpen(false);
   };
 
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch(
+          "https://sb-api.herokuapp.com/departments/organization/" + user.organization,
+          {
+            method: "GET",
+            headers: {
+              Authorization: "Bearer " + user.token,
+            },
+          }
+        );
+        if (response.ok) {
+          const data = await response.json();
+          setTeamsList(data.message);
+          console.log(data);
+        } else {
+          const errorData = await response.json();
+          throw new Error(errorData.message);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchData();
+  }, [teamsSelected]);
+
+  console.log(teamsList);
+
   const [addPriority, setAddPriority] = useState("");
   const [addDescription, setAddDescription] = useState("");
+  const [dataFim, setDataFim] = useState();
+
   const addGoal = async () => {
     try {
       const response = await fetch("https://sb-api.herokuapp.com/goals/", {
@@ -63,6 +94,7 @@ export const ProductListToolbar = (props) => {
         body: JSON.stringify({
           priority: addPriority,
           description: addDescription,
+          date: dataFim,
           organization: user.organization,
         }),
       });
@@ -110,22 +142,38 @@ export const ProductListToolbar = (props) => {
               defaultValue={""}
               fullWidth
               multiline
-              id="team_description"
+              id="goal_description"
               label="Descrição do objetivo"
               required
               rows={4}
               variant="outlined"
               size="small"
             />
-            {/*<FormControl required fullWidth sx={{ marginTop: 3 }}>
-              <InputLabel id="demo-simple-select-label">Equipas</InputLabel>
+            <TextField
+              InputLabelProps={{ shrink: true, required: true }}
+              type="date"
+              sx={{ marginTop: 3 }}
+              onChange={(event) => setDataFim(event.target.value)}
+              defaultValue={""}
+              fullWidth
+              multiline
+              id="goal_data"
+              label="Data de fim do objetivo"
+              required
+              rows={4}
+              variant="outlined"
+              size="small"
+            />
+
+            <FormControl required fullWidth sx={{ marginTop: 3 }}>
+              <InputLabel id="demo-simple-select-label">Departamento</InputLabel>
               <Select
                 labelId="team_users"
                 id="demo-simple-select"
                 value={teamsSelected}
                 input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-                label="Users"
-                onChange={handleChange}
+                label="Departamentos"
+                onChange={(value) => setTeamsSelected(value.target.value)}
                 multiple
                 variant="outlined"
                 renderValue={(selected) => (
@@ -136,17 +184,13 @@ export const ProductListToolbar = (props) => {
                   </Box>
                 )}
               >
-                {users.map((element) => (
-                  <MenuItem
-                    key={element}
-                    value={element}
-                    style={getStyles(element, teamsSelected, theme)}
-                  >
-                    {element}
+                {teamsList.map((element) => (
+                  <MenuItem key={element._id} value={element.name}>
+                    {element.name}
                   </MenuItem>
                 ))}
               </Select>
-                </FormControl>*/}
+            </FormControl>
           </Box>
         </DialogContent>
         <DialogActions>
@@ -156,13 +200,13 @@ export const ProductListToolbar = (props) => {
           <Button
             style={{ color: "#07407B" }}
             onClick={async () => {
-              if (addPriority == "") {
+              if (addPriority === "") {
                 alert("Preencha o campo da prioridade do novo objetivo.");
-              } else if (setAddDescription == "") {
+              } else if (addDescription === "") {
                 alert("Preencha o campo do novo objetivo.");
               }
               console.log(addPriority);
-              console.log(setAddDescription);
+              console.log(addDescription);
               addGoal();
               setOpen(false);
               // window.location.reload(false);
