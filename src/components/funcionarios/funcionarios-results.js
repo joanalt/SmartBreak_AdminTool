@@ -24,11 +24,6 @@ import { doc, deleteDoc, updateDoc, getDoc } from "@firebase/firestore";
 import { firestore } from "../../firebase_setup/firebase";
 import { useEffect } from "react";
 import user from "../../redux/user";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 
 export const CustomerListResults = ({ customers, ...rest }, props) => {
   const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
@@ -36,6 +31,53 @@ export const CustomerListResults = ({ customers, ...rest }, props) => {
   const user = JSON.parse(localStorage.getItem("userData"));
   const [search, setSearch] = useState("");
   const [depName, setDepName] = useState("");
+
+  const deleteStaff = async (id) => {
+    try {
+      const response = await fetch("https://sb-api.herokuapp.com/users/" + id, {
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer " + user.token,
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log("-------------------", data);
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+    } catch (error) {
+      console.error(error);
+      //Alert.alert("Error", error.message);
+    }
+  };
+
+  const editStaff = async (value, id) => {
+    console.log(".........................", value);
+    try {
+      const response = await fetch("https://sb-api.herokuapp.com/users/" + id, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + user.token,
+        },
+        body: JSON.stringify({
+          admin: !value,
+        }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log("-------------------", data);
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+    } catch (error) {
+      console.error(error);
+      //Alert.alert("Error", error.message);
+    }
+  };
 
   // useEffect(() => {
   //   fetchData();
@@ -107,197 +149,68 @@ export const CustomerListResults = ({ customers, ...rest }, props) => {
     customer.name.toLowerCase().includes(search.toLowerCase())
   );
 
-  const [open, setOpen] = useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   return (
-    <Box>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{"Eliminar funcionário"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Tem a certeza que deseja eliminar este fnucionário permanentemente?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancelar</Button>
-          <Button
-            style={{ color: "#AA0000" }}
-            onClick={async () => {
-              await deleteDoc(doc(firestore, "teams", product.id));
-              window.location.reload(false);
-            }}
-          >
-            Eliminar
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <>
-        <Box {...props}>
-          <Box
-            sx={{
-              alignItems: "center",
-              display: "flex",
-              justifyContent: "space-between",
-              flexWrap: "wrap",
-              m: -1,
-            }}
-          >
-            <Typography sx={{ m: 1 }} variant="h4">
-              Funcionários da empresa
-            </Typography>
-          </Box>
-          <Box sx={{ mt: 3 }}>
-            <Card>
-              <CardContent>
-                <Box sx={{ maxWidth: 500 }}>
-                  <TextField
-                    fullWidth
-                    value={search}
-                    onChange={handleChange}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <SvgIcon color="action" fontSize="small">
-                            <SearchIcon />
-                          </SvgIcon>
-                        </InputAdornment>
-                      ),
-                    }}
-                    placeholder="Procurar funcionário"
-                    variant="outlined"
-                  />
-                </Box>
-              </CardContent>
-            </Card>
-          </Box>
+    <>
+      <Box {...props}>
+        <Box
+          sx={{
+            alignItems: "center",
+            display: "flex",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+            m: -1,
+          }}
+        >
+          <Typography sx={{ m: 1 }} variant="h4">
+            Funcionários da empresa
+          </Typography>
         </Box>
-        <Card {...rest} sx={{ mt: 3 }}>
-          <PerfectScrollbar>
-            <Box sx={{ minWidth: 1050 }}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Nome</TableCell>
-                    <TableCell>Email</TableCell>
-                    {/* <TableCell>Departamento</TableCell> */}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {search == "" ? (
-                    <>
-                      {customers &&
-                        customers.map((customer) => (
-                          <TableRow
-                            hover
-                            key={customer.id}
-                            selected={selectedCustomerIds.indexOf(customer.id) !== -1}
-                          >
-                            <TableCell>
-                              <Box
-                                sx={{
-                                  alignItems: "center",
-                                  display: "flex",
-                                }}
-                              >
-                                <Typography color="textPrimary" variant="body1">
-                                  {customer.name}
-                                </Typography>
-                              </Box>
-                            </TableCell>
-                            <TableCell>{customer.email}</TableCell>
-                            {/* <TableCell>{depName}</TableCell> */}
-                            <TableCell>
-                              <Button
-                                variant="outlined"
-                                style={{
-                                  marginLeft: 10,
-                                  marginTop: "10px",
-                                  borderColor: "#AA0000",
-                                  color: "#AA0000",
-                                }}
-                                onClick={handleClickOpen}
-                              >
-                                Eliminar
-                              </Button>
-                              {customer._id != user._id ? (
-                                !customer.admin ? (
-                                  <Button
-                                    color="primary"
-                                    variant="contained"
-                                    style={{ marginLeft: 40 }}
-                                    onClick={async () => {
-                                      const docRef = doc(firestore, "users_data", customer.id);
-
-                                      // Set the "capital" field of the city 'DC'
-                                      await updateDoc(docRef, {
-                                        admin: true,
-                                      });
-                                      alert(
-                                        "Utilizador " +
-                                          customer.name +
-                                          " com permissões de administrador."
-                                      );
-                                    }}
-                                  >
-                                    Fornecer permissões
-                                  </Button>
-                                ) : (
-                                  <Button
-                                    color="primary"
-                                    variant="outlined"
-                                    style={{ marginLeft: 40 }}
-                                    onClick={async () => {
-                                      const docRef = doc(firestore, "users_data", customer.id);
-
-                                      // Set the "capital" field of the city 'DC'
-                                      await updateDoc(docRef, {
-                                        admin: false,
-                                      });
-                                      alert(
-                                        "Utilizador " +
-                                          customer.name +
-                                          " sem permissões de administrador."
-                                      );
-                                    }}
-                                  >
-                                    Suspender permissões
-                                  </Button>
-                                )
-                              ) : (
-                                <></>
-                              )}
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                    </>
-                  ) : (
-                    <>
-                      {filteredCustomers.map((customer) => (
+        <Box sx={{ mt: 3 }}>
+          <Card>
+            <CardContent>
+              <Box sx={{ maxWidth: 500 }}>
+                <TextField
+                  fullWidth
+                  value={search}
+                  onChange={handleChange}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SvgIcon color="action" fontSize="small">
+                          <SearchIcon />
+                        </SvgIcon>
+                      </InputAdornment>
+                    ),
+                  }}
+                  placeholder="Procurar funcionário"
+                  variant="outlined"
+                />
+              </Box>
+            </CardContent>
+          </Card>
+        </Box>
+      </Box>
+      <Card {...rest} sx={{ mt: 3 }}>
+        <PerfectScrollbar>
+          <Box sx={{ minWidth: 1050 }}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Nome</TableCell>
+                  <TableCell>Email</TableCell>
+                  {/* <TableCell>Departamento</TableCell> */}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {search == "" ? (
+                  <>
+                    {customers &&
+                      customers.map((customer) => (
                         <TableRow
                           hover
                           key={customer.id}
                           selected={selectedCustomerIds.indexOf(customer.id) !== -1}
                         >
-                          <TableCell padding="checkbox">
-                            <Checkbox
-                              checked={selectedCustomerIds.indexOf(customer.id) !== -1}
-                              onChange={(event) => handleSelectOne(event, id)}
-                              value="true"
-                            />
-                          </TableCell>
                           <TableCell>
                             <Box
                               sx={{
@@ -305,27 +218,107 @@ export const CustomerListResults = ({ customers, ...rest }, props) => {
                                 display: "flex",
                               }}
                             >
-                              <Avatar src={customer.avatarUrl} sx={{ mr: 2 }}>
-                                {customer.name}
-                              </Avatar>
                               <Typography color="textPrimary" variant="body1">
                                 {customer.name}
                               </Typography>
                             </Box>
                           </TableCell>
                           <TableCell>{customer.email}</TableCell>
-                          <TableCell>{customer.equipa}</TableCell>
+                          {/* <TableCell>{depName}</TableCell> */}
+                          <TableCell>
+                            {customer._id != user._id ? (
+                              <Button
+                                variant="outlined"
+                                style={{
+                                  marginLeft: 10,
+                                  borderColor: "#AA0000",
+                                  color: "#AA0000",
+                                }}
+                                onClick={() => {
+                                  console.log(customer._id);
+                                  deleteStaff(customer._id);
+                                  //window.location.reload(false); TODO :)
+                                }}
+                              >
+                                Eliminar
+                              </Button>
+                            ) : (
+                              <></>
+                            )}
+                            {customer._id != user._id ? (
+                              !customer.admin ? (
+                                <Button
+                                  color="primary"
+                                  variant="contained"
+                                  style={{ marginLeft: 40 }}
+                                  onClick={async () => {
+                                    editStaff(customer.admin, customer._id);
+                                    // Set the "capital" field of the city 'DC'
+                                  }}
+                                >
+                                  Fornecer permissões
+                                </Button>
+                              ) : (
+                                <Button
+                                  color="primary"
+                                  variant="outlined"
+                                  style={{ marginLeft: 40 }}
+                                  onClick={async () => {
+                                    editStaff(customer.admin, customer._id);
+                                  }}
+                                >
+                                  Suspender permissões
+                                </Button>
+                              )
+                            ) : (
+                              <></>
+                            )}
+                          </TableCell>
                         </TableRow>
                       ))}
-                    </>
-                  )}
-                </TableBody>
-              </Table>
-            </Box>
-          </PerfectScrollbar>
-        </Card>
-      </>
-    </Box>
+                  </>
+                ) : (
+                  <>
+                    {filteredCustomers.map((customer) => (
+                      <TableRow
+                        hover
+                        key={customer.id}
+                        selected={selectedCustomerIds.indexOf(customer.id) !== -1}
+                      >
+                        <TableCell padding="checkbox">
+                          <Checkbox
+                            checked={selectedCustomerIds.indexOf(customer.id) !== -1}
+                            onChange={(event) => handleSelectOne(event, id)}
+                            value="true"
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <Box
+                            sx={{
+                              alignItems: "center",
+                              display: "flex",
+                            }}
+                          >
+                            <Avatar src={customer.avatarUrl} sx={{ mr: 2 }}>
+                              {customer.name}
+                            </Avatar>
+                            <Typography color="textPrimary" variant="body1">
+                              {customer.name}
+                            </Typography>
+                          </Box>
+                        </TableCell>
+                        <TableCell>{customer.email}</TableCell>
+                        <TableCell>{customer.equipa}</TableCell>
+                      </TableRow>
+                    ))}
+                  </>
+                )}
+              </TableBody>
+            </Table>
+          </Box>
+        </PerfectScrollbar>
+      </Card>
+    </>
   );
 };
 

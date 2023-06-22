@@ -19,8 +19,6 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { getDocs, collection, addDoc, updateDoc } from "@firebase/firestore";
-import { firestore } from "../../firebase_setup/firebase";
 
 function getStyles(name, teamsSelected, theme) {
   return {
@@ -32,47 +30,15 @@ function getStyles(name, teamsSelected, theme) {
 }
 
 export const ProductListToolbar = (props) => {
+  const user = JSON.parse(localStorage.getItem("userData"));
+
   const [open, setOpen] = useState(false);
-  const [teamsSelected, setTeamsSelected] = useState([]);
-  const [nameTeam, setNameTeam] = useState("");
-  const [descriptionTeam, setDescriptionGoal] = useState("");
   const [priorityGoal, setPriorityGoal] = useState("");
+  const [descriptionGoal, setDescriptionGoal] = useState("");
 
   const [allUsers, setAllUsers] = useState({});
-  const [users, setUsers] = useState([]);
 
   const theme = useTheme();
-
-  useEffect(() => {
-    getInfo();
-  }, []);
-
-  const getInfo = async () => {
-    let temp = {};
-    let temp2 = [];
-
-    const ref = await getDocs(collection(firestore, "teams"));
-    ref.forEach((doc) => {
-      // console.log(doc.id, " => ", doc.data())
-      temp[doc.data().uid] = doc.data().name;
-
-      temp2.push(doc.data().name);
-    });
-
-    console.log("DEBUG: ", temp);
-    setUsers(temp2);
-    setAllUsers(temp);
-  };
-
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setTeamsSelected(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -80,6 +46,34 @@ export const ProductListToolbar = (props) => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const [addPriority, setAddPriority] = useState("");
+  const [addDescription, setAddDescription] = useState("");
+  const addGoal = async () => {
+    try {
+      const response = await fetch("https://sb-api.herokuapp.com/goals/", {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + user.token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          priority: addPriority,
+          description: addDescription,
+          organization: user.organization,
+        }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -98,7 +92,7 @@ export const ProductListToolbar = (props) => {
           <Box>
             <TextField
               sx={{ marginTop: 5 }}
-              onChange={(event) => setPriorityGoal(event.target.value)}
+              onChange={(event) => setAddPriority(event.target.value)}
               defaultValue={""}
               fullWidth
               id="priority"
@@ -109,7 +103,7 @@ export const ProductListToolbar = (props) => {
             />
             <TextField
               sx={{ marginTop: 3 }}
-              onChange={(event) => setDescriptionGoal(event.target.value)}
+              onChange={(event) => setAddDescription(event.target.value)}
               defaultValue={""}
               fullWidth
               multiline
@@ -120,7 +114,7 @@ export const ProductListToolbar = (props) => {
               variant="outlined"
               size="small"
             />
-            <FormControl required fullWidth sx={{ marginTop: 3 }}>
+            {/*<FormControl required fullWidth sx={{ marginTop: 3 }}>
               <InputLabel id="demo-simple-select-label">Equipas</InputLabel>
               <Select
                 labelId="team_users"
@@ -149,43 +143,26 @@ export const ProductListToolbar = (props) => {
                   </MenuItem>
                 ))}
               </Select>
-            </FormControl>
+                </FormControl>*/}
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancelar</Button>
+          <Button style={{ color: "#747474" }} onClick={handleClose}>
+            Cancelar
+          </Button>
           <Button
-            style={{ color: "#F57738" }}
+            style={{ color: "#07407B" }}
             onClick={async () => {
-              if (priorityGoal == "") {
+              if (addPriority == "") {
                 alert("Preencha o campo da prioridade do novo objetivo.");
-              } else if (descriptionGoal == "") {
+              } else if (setAddDescription == "") {
                 alert("Preencha o campo do novo objetivo.");
-              } else if (teamsSelected.length == 0) {
-                alert("Prencha as equipas do novo objetivo.");
               }
-              console.log(priorityGoal);
-              console.log(descriptionGoal);
-              console.log(teamsSelected);
-              let arrayTeams = [];
-              teamsSelected.forEach((element) => {
-                arrayTeams.push(Object.keys(allUsers).find((key) => allUsers[key] === element));
-              });
-
-              console.log(arrayTeams);
-              const docRef = await addDoc(collection(firestore, "teams"), {
-                name: nameTeam,
-                description: descriptionTeam,
-                users: arrayUsers,
-                battery: 0,
-              });
-
-              // Set the "capital" field of the city 'DC'
-              await updateDoc(docRef, {
-                id: docRef.id,
-              });
+              console.log(addPriority);
+              console.log(setAddDescription);
+              addGoal();
               setOpen(false);
-              window.location.reload(false);
+              // window.location.reload(false);
             }}
             autoFocus
           >

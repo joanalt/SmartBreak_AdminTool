@@ -35,6 +35,28 @@ const Info = ({ value }) => {
 
 export const ProductCard = ({ product }) => {
   const [open, setOpen] = useState(false);
+  const user = JSON.parse(localStorage.getItem("userData"));
+
+  const deleteTeam = async (id) => {
+    try {
+      const response = await fetch("https://sb-api.herokuapp.com/departments/" + id, {
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer " + user.token,
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log("-------------------", data);
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+    } catch (error) {
+      console.error(error);
+      //Alert.alert("Error", error.message);
+    }
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -60,12 +82,15 @@ export const ProductCard = ({ product }) => {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancelar</Button>
+            <Button style={{ color: "#747474" }} onClick={handleClose}>
+              Cancelar
+            </Button>
             <Button
               style={{ color: "#AA0000" }}
               onClick={async () => {
-                await deleteDoc(doc(firestore, "teams", product.id));
-                window.location.reload(false);
+                console.log(product._id);
+                deleteTeam(product._id);
+                //window.location.reload(false); TODO :)
               }}
             >
               Eliminar
