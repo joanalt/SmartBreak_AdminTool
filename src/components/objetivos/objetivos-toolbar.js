@@ -38,6 +38,7 @@ export const ProductListToolbar = (props) => {
 
 
   const [teamsSelected, setTeamsSelected] = useState([]);
+  const [selectId, setSelectId] = useState("");
   const [teamsList, setTeamsList] = useState([]);
 
   const theme = useTheme();
@@ -95,6 +96,7 @@ export const ProductListToolbar = (props) => {
           priority: addPriority,
           description: addDescription,
           date: dataFim,
+          destination: teamsSelected,
           organization: user.organization,
         }),
       });
@@ -173,19 +175,22 @@ export const ProductListToolbar = (props) => {
                 value={teamsSelected}
                 input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
                 label="Departamentos"
-                onChange={(value) => setTeamsSelected(value.target.value)}
+                onChange={(item) => {
+                  setTeamsSelected(item.target.value)
+                  console.log(item.target.value)
+                }}
                 multiple
                 variant="outlined"
                 renderValue={(selected) => (
                   <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
                     {selected.map((value) => (
-                      <Chip key={value} label={value} />
+                      <Chip key={value.id} label={value.name} />
                     ))}
                   </Box>
                 )}
               >
                 {teamsList.map((element) => (
-                  <MenuItem key={element._id} value={element.name}>
+                  <MenuItem key={element._id} value={element._id}>
                     {element.name}
                   </MenuItem>
                 ))}

@@ -11,8 +11,8 @@ import { useRouter } from "next/router";
 import * as React from "react";
 
 const Info = ({ value }) => {
-  console.log(value.active)
 
+  const state = value.active;
 
   return (
     <>
@@ -182,7 +182,7 @@ export const ProductCard = ({ product }) => {
                   Eliminar
                 </Button>
 
-                {/* {!value.active ? (
+                {!product.active ? (
                   <Button
                     color="primary"
                     variant="contained"
@@ -190,21 +190,21 @@ export const ProductCard = ({ product }) => {
                       marginLeft: "70px",
                       marginTop: "10px",
                     }}
-                    onClick={editGoal}
+                    onClick={() => editGoal(product.active, user.id)}
                   >
                     Concluído
                   </Button>
                 ) : <Button
                   color="primary"
-                  variant="contained"
+                  variant="outlined"
                   style={{
                     marginLeft: "70px",
                     marginTop: "10px",
                   }}
-                  onClick={editGoal}
+                  onClick={() => editGoal(product.active, product._id)}
                 >
                   Por concluir
-                </Button>} */}
+                </Button>}
 
               </Grid>
             </Grid>
