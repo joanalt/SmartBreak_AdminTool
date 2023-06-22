@@ -64,6 +64,7 @@ export const ProductCard = ({ product }) => {
   };
 
   const editGoal = async (value, id) => {
+    console.log(value)
     try {
       const response = await fetch("https://sb-api.herokuapp.com/goals/" + id, {
         method: "PATCH",
@@ -147,17 +148,7 @@ export const ProductCard = ({ product }) => {
                 display: "flex",
               }}
             >
-              <Grid
-                item
-                sx={{
-                  alignItems: "center",
-                  display: "flex",
-                }}
-                lg={6}
-                sm={6}
-                xl={12}
-                xs={12}
-              ></Grid>
+
               <Grid
                 sx={{
                   alignItems: "center",
@@ -165,46 +156,51 @@ export const ProductCard = ({ product }) => {
                 }}
                 item
                 lg={6}
-                sm={6}
-                xl={12}
+                sm={12}
+                xl={6}
                 xs={12}
               >
-                <Button
-                  variant="outlined"
-                  style={{
-                    marginLeft: "70px",
-                    marginTop: "10px",
-                    borderColor: "#AA0000",
-                    color: "#AA0000",
-                  }}
-                  onClick={handleClickOpen}
-                >
-                  Eliminar
-                </Button>
-
-                {!product.active ? (
-                  <Button
+                <Box sx={{
+                  alignItems: "center",
+                  display: "flex",
+                }}>
+                  {!product.active ? (
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      style={{
+                        marginLeft: "10px",
+                        marginTop: "10px",
+                      }}
+                      onClick={() => editGoal(true, product.id)}
+                    >
+                      Concluído
+                    </Button>
+                  ) : <Button
                     color="primary"
-                    variant="contained"
+                    variant="outlined"
                     style={{
-                      marginLeft: "70px",
+                      marginLeft: "10px",
                       marginTop: "10px",
+                      width: '150px'
                     }}
-                    onClick={() => editGoal(product.active, user.id)}
+                    onClick={() => editGoal(false, product._id)}
                   >
-                    Concluído
+                    Por concluir
+                  </Button>}
+                  <Button
+                    variant="outlined"
+                    style={{
+                      marginLeft: "10px",
+                      marginTop: "10px",
+                      borderColor: "#AA0000",
+                      color: "#AA0000",
+                    }}
+                    onClick={handleClickOpen}
+                  >
+                    Eliminar
                   </Button>
-                ) : <Button
-                  color="primary"
-                  variant="outlined"
-                  style={{
-                    marginLeft: "70px",
-                    marginTop: "10px",
-                  }}
-                  onClick={() => editGoal(product.active, product._id)}
-                >
-                  Por concluir
-                </Button>}
+                </Box>
 
               </Grid>
             </Grid>

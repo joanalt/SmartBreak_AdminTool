@@ -38,10 +38,18 @@ export const ProductListToolbar = (props) => {
 
 
   const [teamsSelected, setTeamsSelected] = useState([]);
-  const [selectId, setSelectId] = useState("");
+  const [selectId, setSelectId] = useState([]);
   const [teamsList, setTeamsList] = useState([]);
 
   const theme = useTheme();
+
+  const renderValue = (selected) => (
+    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+      {selected.map((value) => (
+        <Chip key={value} label={teamsList.find((element) => element._id === value)?.name || ''} />
+      ))}
+    </Box>
+  );
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -76,7 +84,7 @@ export const ProductListToolbar = (props) => {
       }
     }
     fetchData();
-  }, [teamsSelected]);
+  }, [selectId]);
 
   console.log(teamsList);
 
@@ -96,7 +104,7 @@ export const ProductListToolbar = (props) => {
           priority: addPriority,
           description: addDescription,
           date: dataFim,
-          destination: teamsSelected,
+          destination: selectId,
           organization: user.organization,
         }),
       });
@@ -113,6 +121,8 @@ export const ProductListToolbar = (props) => {
     }
   };
 
+  console.log('aaaaaaaaaaaaaaaa     ' + teamsSelected)
+  console.log('aaaaaaaaaaaaaaaa     ' + selectId)
   return (
     <Box>
       <Dialog
@@ -176,19 +186,14 @@ export const ProductListToolbar = (props) => {
                 input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
                 label="Departamentos"
                 onChange={(item) => {
-                  setTeamsSelected(item.target.value)
-                  console.log(item.target.value)
+                  setSelectId(item.target.value)
+                  console.log(item.target.id)
                 }}
                 multiple
                 variant="outlined"
-                renderValue={(selected) => (
-                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                    {selected.map((value) => (
-                      <Chip key={value.id} label={value.name} />
-                    ))}
-                  </Box>
-                )}
+                renderValue={(renderValue(selectId))}
               >
+
                 {teamsList.map((element) => (
                   <MenuItem key={element._id} value={element._id}>
                     {element.name}
