@@ -19,8 +19,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { getDocs, collection, addDoc, updateDoc } from "@firebase/firestore";
-import { firestore } from "../../firebase_setup/firebase";
+import { useRouter } from "next/router";
 
 function getStyles(name, usersSelected, theme) {
   return {
@@ -32,46 +31,16 @@ function getStyles(name, usersSelected, theme) {
 }
 
 export const ProductListToolbar = (props) => {
+  const user = JSON.parse(localStorage.getItem("userData"));
+  const router = useRouter();
+
   const [open, setOpen] = useState(false);
-  const [usersSelected, setUsersSelected] = useState([]);
   const [nameTeam, setNameTeam] = useState("");
   const [descriptionTeam, setDescriptionTeam] = useState("");
 
   const [allUsers, setAllUsers] = useState({});
-  const [users, setUsers] = useState([]);
 
   const theme = useTheme();
-
-  useEffect(() => {
-    getInfo();
-  }, []);
-
-  const getInfo = async () => {
-    let temp = {};
-    let temp2 = [];
-
-    const ref = await getDocs(collection(firestore, "users_data"));
-    ref.forEach((doc) => {
-      // console.log(doc.id, " => ", doc.data())
-      temp[doc.data().uid] = doc.data().name + " " + doc.data().lastName;
-
-      temp2.push(doc.data().name + " " + doc.data().lastName);
-    });
-
-    console.log("DEBUG: ", temp);
-    setUsers(temp2);
-    setAllUsers(temp);
-  };
-
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setUsersSelected(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -79,6 +48,35 @@ export const ProductListToolbar = (props) => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const [addName, setAddName] = useState("");
+  const [addDescription, setAddDescription] = useState("");
+  const addDepartment = async () => {
+    try {
+      const response = await fetch("https://sb-api.herokuapp.com/departments/", {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + user.token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: addName,
+          description: addDescription,
+          organization: user.organization,
+        }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        router.push("/painel");
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -97,7 +95,7 @@ export const ProductListToolbar = (props) => {
           <Box>
             <TextField
               sx={{ marginTop: 5 }}
-              onChange={(event) => setNameTeam(event.target.value)}
+              onChange={(event) => setAddName(event.target.value)}
               defaultValue={""}
               fullWidth
               id="team_name"
@@ -108,7 +106,7 @@ export const ProductListToolbar = (props) => {
             />
             <TextField
               sx={{ marginTop: 3 }}
-              onChange={(event) => setDescriptionTeam(event.target.value)}
+              onChange={(event) => setAddDescription(event.target.value)}
               defaultValue={""}
               fullWidth
               multiline
@@ -152,39 +150,22 @@ export const ProductListToolbar = (props) => {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancelar</Button>
+          <Button style={{ color: "#747474" }} onClick={handleClose}>
+            Cancelar
+          </Button>
           <Button
-            style={{ color: "#F57738" }}
+            style={{ color: "#07407B" }}
             onClick={async () => {
-              if (nameTeam == "") {
+              if (addName == "") {
                 alert("Preencha o campo do nome do novo departamento.");
-              } else if (descriptionTeam == "") {
+              } else if (addDescription == "") {
                 alert("Preencha o campo da descrição do novo departamento.");
-              } else if (usersSelected.length == 0) {
-                alert("Prencha os membros do novo departamento.");
               }
-              console.log(nameTeam);
-              console.log(descriptionTeam);
-              console.log(usersSelected);
-              let arrayUsers = [];
-              usersSelected.forEach((element) => {
-                arrayUsers.push(Object.keys(allUsers).find((key) => allUsers[key] === element));
-              });
-
-              console.log(arrayUsers);
-              const docRef = await addDoc(collection(firestore, "teams"), {
-                name: nameTeam,
-                description: descriptionTeam,
-                users: arrayUsers,
-                battery: 0,
-              });
-
-              // Set the "capital" field of the city 'DC'
-              await updateDoc(docRef, {
-                id: docRef.id,
-              });
+              console.log(addName);
+              console.log(addDescription);
+              addDepartment();
               setOpen(false);
-              window.location.reload(false);
+              // window.location.reload(false);
             }}
             autoFocus
           >

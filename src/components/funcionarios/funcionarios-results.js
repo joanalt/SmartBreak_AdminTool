@@ -1,6 +1,8 @@
 import { useState } from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import PropTypes from "prop-types";
+import { useRouter } from "next/router";
+
 import {
   Avatar,
   Box,
@@ -20,12 +22,91 @@ import {
   SvgIcon,
 } from "@mui/material";
 import { Search as SearchIcon } from "../../icons/search";
-import { doc, deleteDoc, updateDoc, getDoc } from "@firebase/firestore";
-import { firestore } from "../../firebase_setup/firebase";
+import { useEffect } from "react";
+import user from "../../redux/user";
 
 export const CustomerListResults = ({ customers, ...rest }, props) => {
   const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
+
+  const router = useRouter();
+  const user = JSON.parse(localStorage.getItem("userData"));
   const [search, setSearch] = useState("");
+  const [depName, setDepName] = useState("");
+
+  const deleteStaff = async (id) => {
+    try {
+      const response = await fetch("https://sb-api.herokuapp.com/users/" + id, {
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer " + user.token,
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log("-------------------", data);
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+    } catch (error) {
+      console.error(error);
+      //Alert.alert("Error", error.message);
+    }
+  };
+
+  const editStaff = async (value, id) => {
+    console.log(".........................", value);
+    try {
+      const response = await fetch("https://sb-api.herokuapp.com/users/" + id, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + user.token,
+        },
+        body: JSON.stringify({ admin: !value }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log("-------------------D", data);
+        router.push("/painel");
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+    } catch (error) {
+      console.error(error);
+      //Alert.alert("Error", error.message);
+    }
+  };
+
+  // useEffect(() => {
+  //   fetchData();
+  // });
+
+  // const fetchData = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       "https://sb-api.herokuapp.com/departments/" + customer.department,
+  //       {
+  //         method: "GET",
+  //         headers: {
+  //           Authorization: "Bearer " + user.token,
+  //         },
+  //       }
+  //     );
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       setDepName(data.message.name);
+  //       console.log("-------------------", data.message);
+  //     } else {
+  //       const errorData = await response.json();
+  //       throw new Error(errorData.message);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //     //Alert.alert("Error", error.message);
+  //   }
+  // };
 
   const handleSelectAll = (event) => {
     let newSelectedCustomerIds;
@@ -117,7 +198,7 @@ export const CustomerListResults = ({ customers, ...rest }, props) => {
                 <TableRow>
                   <TableCell>Nome</TableCell>
                   <TableCell>Email</TableCell>
-                  <TableCell></TableCell>
+                  {/* <TableCell>Departamento</TableCell> */}
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -143,52 +224,55 @@ export const CustomerListResults = ({ customers, ...rest }, props) => {
                             </Box>
                           </TableCell>
                           <TableCell>{customer.email}</TableCell>
+                          {/* <TableCell>{depName}</TableCell> */}
                           <TableCell>
-                            <Button
-                              color="primary"
-                              variant="contained"
-                              style={{ marginLeft: 10 }}
-                              onClick={async () => {
-                                await deleteDoc(doc(firestore, "users_data", customer.id));
-                                window.location.reload(false);
-                              }}
-                            >
-                              Eliminar
-                            </Button>
-                            <Button
-                              color="primary"
-                              variant="contained"
-                              style={{ marginLeft: 40 }}
-                              onClick={async () => {
-                                const docRef = doc(firestore, "users_data", customer.id);
-
-                                // Set the "capital" field of the city 'DC'
-                                await updateDoc(docRef, {
-                                  admin: true,
-                                });
-                                alert(
-                                  "Utilizador " + customer.name + " promovido a administrador."
-                                );
-                              }}
-                            >
-                              Pomover a administrador
-                            </Button>
-                            <Button
-                              color="primary"
-                              variant="outlined"
-                              style={{ marginLeft: 40 }}
-                              onClick={async () => {
-                                const docRef = doc(firestore, "users_data", customer.id);
-
-                                // Set the "capital" field of the city 'DC'
-                                await updateDoc(docRef, {
-                                  admin: false,
-                                });
-                                alert("Utilizador " + customer.name + " desprovido.");
-                              }}
-                            >
-                              Despromover
-                            </Button>
+                            {customer._id != user._id ? (
+                              <Button
+                                variant="outlined"
+                                style={{
+                                  marginLeft: 10,
+                                  borderColor: "#AA0000",
+                                  color: "#AA0000",
+                                }}
+                                onClick={() => {
+                                  console.log(customer._id);
+                                  deleteStaff(customer._id);
+                                  //window.location.reload(false); TODO :)
+                                }}
+                              >
+                                Eliminar
+                              </Button>
+                            ) : (
+                              <></>
+                            )}
+                            {customer._id != user._id ? (
+                              !customer.admin ? (
+                                <Button
+                                  color="primary"
+                                  variant="contained"
+                                  style={{ marginLeft: 40 }}
+                                  onClick={async () => {
+                                    editStaff(customer.admin, customer._id);
+                                    // Set the "capital" field of the city 'DC'
+                                  }}
+                                >
+                                  Fornecer permissões
+                                </Button>
+                              ) : (
+                                <Button
+                                  color="primary"
+                                  variant="outlined"
+                                  style={{ marginLeft: 40 }}
+                                  onClick={async () => {
+                                    editStaff(customer.admin, customer._id);
+                                  }}
+                                >
+                                  Suspender permissões
+                                </Button>
+                              )
+                            ) : (
+                              <></>
+                            )}
                           </TableCell>
                         </TableRow>
                       ))}
