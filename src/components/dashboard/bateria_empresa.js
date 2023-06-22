@@ -12,15 +12,15 @@ export const Bateria = (props) => {
           <div
             style={{
               width: "242px",
-              borderRadius: "22px",
-              border: "2.5px black solid",
+              borderRadius: "18px",
+              border: "2px #07407B solid",
               height: "120px",
             }}
           />
           <div
             style={{
-              width: "10px",
-              backgroundColor: "black",
+              width: "3px",
+              backgroundColor: "#07407B",
               borderTopRightRadius: "5px",
               borderBottomRightRadius: "5px",
               height: "30px",
@@ -31,11 +31,10 @@ export const Bateria = (props) => {
           <div
             style={{
               width: "125px",
-              backgroundColor: "#0051BA",
+              backgroundColor: "#07407B",
               borderRadius: "18px",
-              height: "112px",
+              height: "120px",
               marginLeft: "-124px",
-              marginTop: "4px",
               position: "absolute",
             }}
           />

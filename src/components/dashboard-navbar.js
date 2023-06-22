@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 import { AppBar, Avatar, IconButton, Toolbar } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { UserCircle as UserCircleIcon } from "../icons/user-circle";
 import { AccountPopover } from "./account-popover";
+import { Logout } from "iconsax-react";
 
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -35,6 +35,8 @@ export const DashboardNavbar = (props) => {
             minHeight: 64,
             left: 0,
             px: 2,
+            display: "flex",
+            justifyContent: "space-between",
           }}
         >
           <IconButton
@@ -56,10 +58,12 @@ export const DashboardNavbar = (props) => {
               height: 40,
               width: 40,
               ml: 1,
+              overflow: "hidden",
+              marginLeft: "auto",
+              marginRight: "0",
             }}
-            src="/static/images/avatars/ester.png"
           >
-            <UserCircleIcon fontSize="small" />
+            <Logout />
           </Avatar>
         </Toolbar>
       </DashboardNavbarRoot>

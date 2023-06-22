@@ -15,25 +15,25 @@ const atividade = [
   {
     id: uuid(),
     name: "1 objetivo cumprido",
-    imageUrl: <TaskSquare variant="Bold" color="#0051BA" />,
+    imageUrl: <TaskSquare variant="Bold" color="#07407B" />,
     updatedAt: subHours(Date.now(), 2),
   },
   {
     id: uuid(),
     name: "3 novos funcionários",
-    imageUrl: <UserAdd variant="Bold" color="#0051BA" />,
+    imageUrl: <UserAdd variant="Bold" color="#07407B" />,
     updatedAt: subHours(Date.now(), 2),
   },
   {
     id: uuid(),
     name: "9 equipamentos adicionados",
-    imageUrl: <Diagram variant="Bold" color="#0051BA" />,
+    imageUrl: <Diagram variant="Bold" color="#07407B" />,
     updatedAt: subHours(Date.now(), 3),
   },
   {
     id: uuid(),
     name: "2 prémios atribuídos",
-    imageUrl: <MedalStar variant="Bold" color="#0051BA" />,
+    imageUrl: <MedalStar variant="Bold" color="#07407B" />,
     updatedAt: subHours(Date.now(), 5),
   },
 ];
