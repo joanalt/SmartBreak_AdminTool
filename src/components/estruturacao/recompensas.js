@@ -94,77 +94,6 @@ export const Recompensas = (props) => {
   return (
     <Card {...props}>
       <Box>
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle
-            id="alert-dialog-title"
-            aria-label="Texto na cor preta num fundo branco escrito Adicionar uma nova recompensa"
-          >
-            Adicionar uma nova recompensa
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText
-              id="alert-dialog-description"
-              aria-label="Texto na cor preta num fundo branco escrito Preencha os campos corretamente para criar uma nova recompensa."
-            >
-              Preencha os campos corretamente para criar uma nova recompensa.
-            </DialogContentText>
-            <Box>
-              <TextField
-                sx={{ marginTop: 3 }}
-                onChange={(event) => setDescriptionRecompensa(event.target.value)}
-                defaultValue={""}
-                fullWidth
-                multiline
-                id="recompensa_description"
-                label="Recompensa"
-                required
-                rows={4}
-                variant="outlined"
-                size="small"
-                aria-label="Campo de texto branco para escrever a recompensa"
-              />
-            </Box>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              onClick={handleClose}
-              aria-label="Botão clicável com texto na cor azul escrito Cancelar"
-            >
-              Cancelar
-            </Button>
-            <Button
-              style={{ color: "#F57738" }}
-              onClick={async () => {
-                if (descriptionRecompensa == "") {
-                  alert("Preencha o campo da nova recompensa.");
-                }
-                console.log(descriptionRecompensa);
-                let arrayTeams = [];
-                teamsSelected.forEach((element) => {
-                  arrayTeams.push(Object.keys(allUsers).find((key) => allUsers[key] === element));
-                });
-
-                console.log(arrayTeams);
-
-                // Set the "capital" field of the city 'DC'
-                await updateDoc(docRef, {
-                  id: docRef.id,
-                });
-                setOpen(false);
-                window.location.reload(false);
-              }}
-              autoFocus
-              aria-label="Botão clicável com texto na cor azul laranja Adicionar"
-            >
-              Adicionar
-            </Button>
-          </DialogActions>
-        </Dialog>
         <Box
           sx={{
             alignItems: "center",
@@ -179,17 +108,6 @@ export const Recompensas = (props) => {
             title="Recompensas"
             aria-label="Texto como título na cor preta num fundo branco escrito Recompensas"
           />
-          <Box sx={{ m: 1 }}>
-            <Button
-              color="primary"
-              variant="contained"
-              style={{ marginRight: "10px", marginTop: "10px" }}
-              onClick={handleClickOpen}
-              aria-label="Botão na cor azul e hover laranja clicável com texto na cor branca escrito Adicionar recompensa"
-            >
-              Adicionar
-            </Button>
-          </Box>
         </Box>
       </Box>
       <Divider />
@@ -205,13 +123,10 @@ export const Recompensas = (props) => {
               color="primary"
               variant="outlined"
               style={{ marginLeft: 40 }}
-              onClick={async () => {
-                await deleteDoc(doc(firestore, "users_data", customer.id));
-                window.location.reload(false);
-              }}
-              aria-label="Botão clicável com texto na cor azul escrito Eliminar"
+              //onClick={}
+              aria-label="Botão clicável com texto na cor azul escrito Associar"
             >
-              Eliminar
+              Associar
             </Button>
           </ListItem>
         ))}
